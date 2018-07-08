@@ -1,104 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/home"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/last_workout_label"
-        style="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Workout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias=".2"/>
+    <data>
 
-    <TextView
-        android:id="@+id/workout_date"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="5/13/18"
-        app:layout_constraintEnd_toStartOf="@id/yardage"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/last_workout_label"/>
+        <variable
+            name="item"
+            type="com.slapshotapps.swimyardagetracker.ui.home.HomeViewModel"/>
+    </data>
 
-    <TextView
-        android:id="@+id/yardage"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1500 yards"
-        app:layout_constraintBottom_toBottomOf="@id/workout_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/workout_date"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
 
+        <TextView
+            android:id="@+id/last_workout_label"
+            style="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/last_workout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias=".2"/>
 
-    <TextView
-        android:id="@+id/year_to_date_label"
-        style="@style/Base.TextAppearance.AppCompat.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Year To Date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yardage"
-        app:layout_constraintVertical_bias=".3"/>
+        <TextView
+            android:id="@+id/workout_date"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@{item.lastWorkoutDate()}"
+            app:layout_constraintEnd_toStartOf="@+id/yardage"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/last_workout_label"
+            tools:text="Friday July 6th"/>
 
-    <TextView
-        android:id="@+id/workout_count_label"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Number of Workouts"
-        app:layout_constraintEnd_toStartOf="@id/workout_count"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/year_to_date_label"/>
-
-    <TextView
-        android:id="@+id/workout_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:text="4"
-        app:layout_constraintBottom_toBottomOf="@id/workout_count_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/workout_count_label"/>
+        <TextView
+            android:id="@+id/yardage"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.lastWorkoutYardage()}"
+            app:layout_constraintBottom_toBottomOf="@+id/workout_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/workout_date"
+            tools:text="1500 yards"/>
 
 
-    <TextView
-        android:id="@+id/total_yardage_label"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Total Yards"
-        app:layout_constraintEnd_toStartOf="@id/total_yardage"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/workout_count_label"/>
+        <TextView
+            android:id="@+id/year_to_date_label"
+            style="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/year_to_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yardage"
+            app:layout_constraintVertical_bias=".3"/>
 
-    <TextView
-        android:id="@+id/total_yardage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:text="4000"
-        app:layout_constraintBottom_toBottomOf="@id/total_yardage_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/total_yardage_label"/>
+        <TextView
+            android:id="@+id/workout_count_label"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/number_of_workouts"
+            app:layout_constraintEnd_toStartOf="@+id/workout_count"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/year_to_date_label"/>
+
+        <TextView
+            android:id="@+id/workout_count"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.totalWorkoutsForYear()}"
+            app:layout_constraintBottom_toBottomOf="@+id/workout_count_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/workout_count_label"
+            tools:text="4"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/total_yardage_label"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/total_yards"
+            app:layout_constraintEnd_toStartOf="@+id/total_yardage"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/workout_count_label"/>
+
+        <TextView
+            android:id="@+id/total_yardage"
+            style="@style/Base.TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.totalYardageForYear()}"
+            app:layout_constraintBottom_toBottomOf="@+id/total_yardage_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/total_yardage_label"
+            tools:text="4000"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
