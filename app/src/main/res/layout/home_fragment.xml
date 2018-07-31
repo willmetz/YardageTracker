@@ -113,6 +113,17 @@
             app:layout_constraintStart_toEndOf="@+id/total_yardage_label"
             tools:text="4000"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="12dp"
+            app:fabSize="normal"
+            android:onClick="@{()->item.onAddWorkoutTapped()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_add"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

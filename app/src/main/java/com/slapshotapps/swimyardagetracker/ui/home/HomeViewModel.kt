@@ -4,6 +4,16 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
 
+    interface HomeViewModelListener{
+        fun onAddWorkout()
+    }
+
+    private var listener : HomeViewModelListener ?= null
+
+    fun setListener(listener: HomeViewModelListener){
+        this.listener = listener
+    }
+
     fun lastWorkoutYardage() : String{
         return "1200 yards"
     }
@@ -18,5 +28,9 @@ class HomeViewModel : ViewModel() {
 
     fun totalYardageForYear(): String{
         return "5000"
+    }
+
+    fun onAddWorkoutTapped(){
+        listener?.onAddWorkout()
     }
 }
