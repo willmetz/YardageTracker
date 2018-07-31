@@ -35,12 +35,12 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
 
         viewModel = ViewModelProviders.of(this).get(WorkoutDateViewModel::class.java)
         viewModel.setListener(this)
+        binding.item = viewModel
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_date, container, false)
-        binding.item = viewModel
 
         return binding.root
     }
