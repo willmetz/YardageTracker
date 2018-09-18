@@ -3,6 +3,7 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,8 +65,8 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
         viewModel.onDateChanged(calendar.time)
     }
 
-    override fun onAddWorkoutDetails() {
-        //TODO
+    override fun onSetWorkoutUoM() {
+        //todo
     }
 
     companion object {

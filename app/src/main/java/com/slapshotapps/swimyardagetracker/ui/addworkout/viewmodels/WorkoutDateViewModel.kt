@@ -10,7 +10,7 @@ class WorkoutDateViewModel() : ViewModel() {
 
     interface WorkoutDateViewModelListener {
         fun onShowDateSelection(currentWorkoutDate: Date)
-        fun onAddWorkoutDetails()
+        fun onSetWorkoutUoM()
     }
 
     private var listener: WorkoutDateViewModelListener? = null
@@ -28,7 +28,7 @@ class WorkoutDateViewModel() : ViewModel() {
     }
 
     fun onAddWorkoutInfoTapped() {
-        listener?.onAddWorkoutDetails()
+        listener?.onSetWorkoutUoM()
     }
 
     fun onDateChanged(newDate: Date) {

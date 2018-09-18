@@ -10,4 +10,7 @@
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="x">X</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="unit_of_measure">Unit of Measure</string>
 </resources>

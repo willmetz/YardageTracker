@@ -15,10 +15,25 @@
             app:destination="@id/workoutDateFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            />
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/workoutDateFragment"
         android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutDateFragment"
-        android:label="WorkoutDateFragment"/>
+        android:label="WorkoutDateFragment">
+        <action
+            android:id="@+id/action_workoutDateFragment_to_workoutUnitOfMeasure"
+            app:destination="@id/workoutUnitOfMeasure"/>
+    </fragment>
+    <fragment
+        android:id="@+id/workoutSetFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSetFragment"
+        android:label="fragment_workout_set"
+        tools:layout="@layout/fragment_workout_set"/>
+    <fragment
+        android:id="@+id/workoutUnitOfMeasure"
+        android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutUnitOfMeasure"
+        android:label="fragment_workout_unit_of_measure"
+        tools:layout="@layout/fragment_workout_unit_of_measure"/>
 </navigation>
