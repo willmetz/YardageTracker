@@ -11,6 +11,7 @@ import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutDateBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutDateViewModel
@@ -66,7 +67,7 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
     }
 
     override fun onSetWorkoutUoM() {
-        //todo
+        NavHostFragment.findNavController(this).navigate(R.id.action_workoutDateFragment_to_workoutUnitOfMeasure)
     }
 
     companion object {

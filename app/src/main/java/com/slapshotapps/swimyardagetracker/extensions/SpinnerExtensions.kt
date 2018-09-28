@@ -1,6 +1,6 @@
 package com.slapshotapps.swimyardagetracker.extensions
 
-import android.R
+
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,7 +9,7 @@ import android.widget.Spinner
 
 fun Spinner.setSpinnerEntries(entries: List<Any>?){
     if (entries != null) {
-        val arrayAdapter = ArrayAdapter(context, R.layout.simple_spinner_item, entries)
+        val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, entries)
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         adapter = arrayAdapter
     }

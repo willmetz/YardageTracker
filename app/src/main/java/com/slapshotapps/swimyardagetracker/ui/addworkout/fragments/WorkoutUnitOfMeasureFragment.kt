@@ -6,8 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.NavHostFragment
 
 import com.slapshotapps.swimyardagetracker.R
+import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeasureBinding
+import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMViewModel
 
 
 /**
@@ -16,15 +20,28 @@ import com.slapshotapps.swimyardagetracker.R
  * create an instance of this fragment.
  *
  */
-class WorkoutUnitOfMeasure : Fragment() {
+class WorkoutUnitOfMeasure : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoMListener {
 
+    lateinit var binding : FragmentWorkoutUnitOfMeasureBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_workout_unit_of_measure, container, false)
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_unit_of_measure, container, false)
+
+        binding.item = WorkoutUoMViewModel(this)
+
+        return binding.root
     }
 
+
+    override fun onAddWorkouts() {
+        NavHostFragment.findNavController(this).navigate(R.id.action_workoutUnitOfMeasure_to_workoutSetFragment)
+    }
+
+    override fun onChangeDate() {
+        //TODO
+    }
 
     companion object {
         /**

@@ -24,7 +24,7 @@
         android:label="WorkoutDateFragment">
         <action
             android:id="@+id/action_workoutDateFragment_to_workoutUnitOfMeasure"
-            app:destination="@id/workoutUnitOfMeasure"/>
+            app:destination="@id/workoutUnitOfMeasure" app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
     <fragment
         android:id="@+id/workoutSetFragment"
@@ -35,5 +35,9 @@
         android:id="@+id/workoutUnitOfMeasure"
         android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutUnitOfMeasure"
         android:label="fragment_workout_unit_of_measure"
-        tools:layout="@layout/fragment_workout_unit_of_measure"/>
+        tools:layout="@layout/fragment_workout_unit_of_measure">
+        <action
+            android:id="@+id/action_workoutUnitOfMeasure_to_workoutSetFragment"
+            app:destination="@id/workoutSetFragment" app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"/>
+    </fragment>
 </navigation>
