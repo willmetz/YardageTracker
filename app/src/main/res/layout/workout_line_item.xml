@@ -21,13 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:maxLength="3"
             android:text="@{item.setReps}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/x_symbol"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintEnd_toStartOf="@+id/reps_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="10"/>
+            tools:text="1000"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/reps_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="68dp"/>
 
         <TextView
             android:id="@+id/x_symbol"
@@ -36,9 +43,15 @@
             android:layout_height="wrap_content"
             android:text="@string/x"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/distance"
-            app:layout_constraintStart_toEndOf="@id/reps"
+            app:layout_constraintStart_toEndOf="@+id/reps_guideline"
             app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/distance_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="100dp"/>
 
         <TextView
             android:id="@+id/distance"
@@ -46,12 +59,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:maxLength="5"
             android:text="@{item.setDistance}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/uom"
-            app:layout_constraintStart_toEndOf="@id/x_symbol"
+            app:layout_constraintStart_toEndOf="@+id/distance_guideline"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="100"/>
+            tools:text="99999"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/uom_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="180dp"/>
 
         <TextView
             android:id="@+id/uom"
@@ -60,10 +80,16 @@
             android:layout_height="wrap_content"
             android:text="@{item.uom}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/stroke"
-            app:layout_constraintStart_toEndOf="@id/distance"
+            app:layout_constraintStart_toEndOf="@+id/uom_guideline"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="yards"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/stroke_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="260dp"/>
 
         <TextView
             android:id="@+id/stroke"
@@ -72,10 +98,9 @@
             android:layout_height="wrap_content"
             android:text="@{item.setStroke}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/uom"
+            app:layout_constraintStart_toEndOf="@+id/stroke_guideline"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Fly"/>
+            tools:text="Butterfly"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
