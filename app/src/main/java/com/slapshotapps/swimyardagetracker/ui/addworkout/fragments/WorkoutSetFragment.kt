@@ -2,14 +2,13 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSetBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSetViewModel
@@ -37,6 +36,7 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelIn
 
     override fun onResume() {
         super.onResume()
+        binding.reps.requestFocus()
 
         viewModel.listener = this
     }

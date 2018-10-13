@@ -1,10 +1,12 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,6 +17,8 @@ import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSummaryBin
 import com.slapshotapps.swimyardagetracker.ui.addworkout.adapters.WorkoutSummaryAdapter
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryItemViewModel
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryViewModel
+
+
 
 
 /**
@@ -42,6 +46,8 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
     override fun onResume() {
         super.onResume()
 
+        hideKeyboard()
+
         viewModel.onViewReady()
     }
 
@@ -52,6 +58,11 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         binding.workoutSets.layoutManager = layoutManager
         binding.workoutSets.addItemDecoration(DividerItemDecoration(context, layoutManager.getOrientation()))
         binding.workoutSets.adapter = adapter
+    }
+
+    private fun hideKeyboard(){
+        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.hideSoftInputFromWindow(binding.root.getWindowToken(), 0)
     }
 
     companion object {
