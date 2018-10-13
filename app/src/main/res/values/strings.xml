@@ -5,12 +5,15 @@
     <string name="number_of_workouts">Number of Workouts</string>
     <string name="total_yards">Total Yards</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="submit">Submit</string>
     <string name="cancel">Cancel</string>
     <string name="x">X</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="unit_of_measure">Unit of Measure</string>
+
+    <string name="rep_invalid_entry">Reps must be greater than 0.</string>
+    <string name="distance_invalid_entry">Distance must be greater than 0.</string>
+    <string name="stroke_invalid_entry">Stroke must not be empty.</string>
+    <string name="no_data_entered_msg">Please enter a set first.</string>
 </resources>

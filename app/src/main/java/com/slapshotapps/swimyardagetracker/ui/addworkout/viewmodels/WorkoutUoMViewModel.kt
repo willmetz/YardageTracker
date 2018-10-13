@@ -5,7 +5,7 @@ import com.slapshotapps.swimyardagetracker.extensions.SpinnerItemSelectedListene
 
 
 class WorkoutUoMViewModel(private val listener: WorkoutViewModelUoMListener) : SpinnerItemSelectedListener {
-    
+
     var uomEntries: ObservableField<List<String>>
     var uomValue = "Yards"
 

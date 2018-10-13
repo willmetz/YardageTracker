@@ -30,7 +30,8 @@
         android:id="@+id/workoutSetFragment"
         android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSetFragment"
         android:label="fragment_workout_set"
-        tools:layout="@layout/fragment_workout_set"/>
+        tools:layout="@layout/fragment_workout_set">
+    <action android:id="@+id/action_workoutSetFragment_to_workoutSummaryFragment2" app:destination="@id/workoutSummaryFragment" app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim" app:popExitAnim="@anim/nav_default_pop_exit_anim"/></fragment>
     <fragment
         android:id="@+id/workoutUnitOfMeasure"
         android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutUnitOfMeasure"
@@ -40,4 +41,9 @@
             android:id="@+id/action_workoutUnitOfMeasure_to_workoutSetFragment"
             app:destination="@id/workoutSetFragment" app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
+    <fragment
+        android:id="@+id/workoutSummaryFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSummaryFragment"
+        android:label="fragment_workout_summary"
+        tools:layout="@layout/fragment_workout_summary"/>
 </navigation>
