@@ -1,11 +1,12 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import androidx.databinding.ObservableField
+import androidx.lifecycle.ViewModel
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutSet
 
 
-class WorkoutSetViewModel {
+class WorkoutSetViewModel: ViewModel() {
 
 
     interface WorkoutSetViewModelInterface{

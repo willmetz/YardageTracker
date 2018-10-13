@@ -2,6 +2,7 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +19,6 @@ import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSummaryBin
 import com.slapshotapps.swimyardagetracker.ui.addworkout.adapters.WorkoutSummaryAdapter
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryItemViewModel
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryViewModel
-
-
 
 
 /**
@@ -32,12 +32,17 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
     lateinit var binding: FragmentWorkoutSummaryBinding
     lateinit var viewModel: WorkoutSummaryViewModel
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        viewModel = ViewModelProviders.of(this).get(WorkoutSummaryViewModel::class.java)
+        viewModel.listener = this
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_summary, container, false)
 
-
-        viewModel = WorkoutSummaryViewModel(this)
         binding.item = viewModel
 
         return binding.root
@@ -60,7 +65,7 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         binding.workoutSets.adapter = adapter
     }
 
-    private fun hideKeyboard(){
+    private fun hideKeyboard() {
         val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(binding.root.getWindowToken(), 0)
     }

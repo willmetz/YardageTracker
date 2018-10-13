@@ -1,14 +1,15 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
-
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeasureBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMViewModel
@@ -22,14 +23,22 @@ import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMVi
  */
 class WorkoutUnitOfMeasure : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoMListener {
 
-    lateinit var binding : FragmentWorkoutUnitOfMeasureBinding
+    lateinit var binding: FragmentWorkoutUnitOfMeasureBinding
+    lateinit var viewModel: WorkoutUoMViewModel
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        viewModel = ViewModelProviders.of(this).get(WorkoutUoMViewModel::class.java)
+        viewModel.listener = this
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_unit_of_measure, container, false)
 
-        binding.item = WorkoutUoMViewModel(this)
+        binding.item = viewModel
 
         return binding.root
     }

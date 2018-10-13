@@ -1,6 +1,7 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSetBinding
@@ -24,11 +26,15 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelIn
     private lateinit var binding: FragmentWorkoutSetBinding
     private lateinit var viewModel: WorkoutSetViewModel
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        viewModel = ViewModelProviders.of(this).get(WorkoutSetViewModel::class.java)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_set, container, false)
-        viewModel = WorkoutSetViewModel()
-
         binding.item = viewModel
 
         return binding.root
