@@ -10,12 +10,13 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutDateBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutDateViewModel
+import dagger.android.support.AndroidSupportInjection
 import java.util.*
+import javax.inject.Inject
 
 
 /**
@@ -29,13 +30,14 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
 
 
     private lateinit var datePickerDialog: DatePickerDialog
-    private lateinit var viewModel: WorkoutDateViewModel
     private lateinit var binding: FragmentWorkoutDateBinding
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+    @Inject
+    lateinit var viewModel: WorkoutDateViewModel
 
-        viewModel = ViewModelProviders.of(this).get(WorkoutDateViewModel::class.java)
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this) // Providing the dependency
+        super.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -1,15 +1,18 @@
 package com.slapshotapps.swimyardagetracker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.Navigation
-import com.slapshotapps.swimyardagetracker.ui.home.HomeFragment
+import androidx.appcompat.app.AppCompatActivity
+import dagger.android.AndroidInjection
+
+
 
 class MainActivity : AppCompatActivity() {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this); // Call before super!
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
     }
-
 }
