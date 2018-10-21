@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +18,8 @@ import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSummaryBin
 import com.slapshotapps.swimyardagetracker.ui.addworkout.adapters.WorkoutSummaryAdapter
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryItemViewModel
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryViewModel
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 
 /**
@@ -30,13 +31,13 @@ import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSumma
 class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummaryListener {
 
     lateinit var binding: FragmentWorkoutSummaryBinding
+
+    @Inject
     lateinit var viewModel: WorkoutSummaryViewModel
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
-
-        viewModel = ViewModelProviders.of(this).get(WorkoutSummaryViewModel::class.java)
-        viewModel.listener = this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +53,8 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         super.onResume()
 
         hideKeyboard()
+
+        viewModel.listener = this
 
         viewModel.onViewReady()
     }

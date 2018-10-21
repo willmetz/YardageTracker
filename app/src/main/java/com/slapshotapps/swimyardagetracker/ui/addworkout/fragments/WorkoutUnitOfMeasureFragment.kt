@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeasureBinding
@@ -34,7 +33,6 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
 
-        viewModel = ViewModelProviders.of(this).get(WorkoutUoMViewModel::class.java)
         viewModel.listener = this
     }
 

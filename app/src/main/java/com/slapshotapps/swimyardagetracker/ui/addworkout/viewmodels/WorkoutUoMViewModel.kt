@@ -1,7 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
 import com.slapshotapps.swimyardagetracker.extensions.SpinnerItemSelectedListener
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutUoM
@@ -9,7 +8,7 @@ import javax.inject.Inject
 
 
 class WorkoutUoMViewModel@Inject constructor(private val workoutManager: WorkoutManager)  :
-        ViewModel(), SpinnerItemSelectedListener {
+        SpinnerItemSelectedListener {
 
     var uomEntries: ObservableField<List<String>>
     var uomValue = "Yards"

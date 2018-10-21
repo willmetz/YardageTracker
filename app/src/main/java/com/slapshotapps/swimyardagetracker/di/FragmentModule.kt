@@ -1,6 +1,8 @@
 package com.slapshotapps.swimyardagetracker.di
 
 import com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutDateFragment
+import com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSetFragment
+import com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSummaryFragment
 import com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutUnitOfMeasureFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -13,4 +15,10 @@ abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract fun contributeUomFragment(): WorkoutUnitOfMeasureFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeWorkoutSetFragment(): WorkoutSetFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeWorkoutSummaryFragment(): WorkoutSummaryFragment
 }

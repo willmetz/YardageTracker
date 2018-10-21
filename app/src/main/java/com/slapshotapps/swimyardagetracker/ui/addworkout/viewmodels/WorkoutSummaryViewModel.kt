@@ -1,10 +1,11 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
+import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
+import javax.inject.Inject
 
 
-class WorkoutSummaryViewModel(): ViewModel() {
+class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
 
     interface WorkoutSummaryListener {
         fun onWorkoutDataReady(workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>)
@@ -16,21 +17,14 @@ class WorkoutSummaryViewModel(): ViewModel() {
 
 
     fun onViewReady() {
-        //temp code until a db is added
-        val testData = ArrayList<WorkoutSummaryItemViewModel>(4)
+        val data = workoutManager.getAllWorkoutSets()
 
-        val setOne = WorkoutSummaryItemViewModel("5", "100", "Free", "yards")
-        val setTwo = WorkoutSummaryItemViewModel("2", "75", "Back", "yards")
-        val setThree = WorkoutSummaryItemViewModel("12", "200", "IM", "yards")
-        val setFour = WorkoutSummaryItemViewModel("8", "50", "Breast", "yards")
+        val viewModels = ArrayList<WorkoutSummaryItemViewModel>(data.size)
 
-        testData.add(setOne)
-        testData.add(setTwo)
-        testData.add(setThree)
-        testData.add(setFour)
+        data.forEach({
+            viewModels.add(WorkoutSummaryItemViewModel(it, workoutManager.unitOfMeasure.toString()))
+        })
 
-        workoutDateText.set("Friday, October 12th 2018")
-
-        listener?.onWorkoutDataReady(testData)
+        listener?.onWorkoutDataReady(viewModels)
     }
 }

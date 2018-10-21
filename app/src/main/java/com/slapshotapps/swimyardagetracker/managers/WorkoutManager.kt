@@ -17,6 +17,10 @@ class WorkoutManager {
         workoutSets.add(workoutSet)
     }
 
+    fun clearWorkoutSets(){
+        workoutSets.clear()
+    }
+
     fun getAllWorkoutSets(): List<WorkoutSet>{
         return workoutSets
     }
