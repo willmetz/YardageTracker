@@ -13,20 +13,25 @@ import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeasureBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMViewModel
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 
 /**
  * A simple [Fragment] subclass.
- * Use the [WorkoutUnitOfMeasure.newInstance] factory method to
+ * Use the [WorkoutUnitOfMeasureFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class WorkoutUnitOfMeasure : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoMListener {
+class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoMListener {
 
     lateinit var binding: FragmentWorkoutUnitOfMeasureBinding
+
+    @Inject
     lateinit var viewModel: WorkoutUoMViewModel
 
     override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
 
         viewModel = ViewModelProviders.of(this).get(WorkoutUoMViewModel::class.java)
@@ -57,10 +62,10 @@ class WorkoutUnitOfMeasure : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoM
          * Use this factory method to create a new instance of
          * this fragment
          *
-         * @return A new instance of fragment WorkoutUnitOfMeasure.
+         * @return A new instance of fragment WorkoutUnitOfMeasureFragment.
          */
         @JvmStatic
         fun newInstance() =
-                WorkoutUnitOfMeasure()
+                WorkoutUnitOfMeasureFragment()
     }
 }

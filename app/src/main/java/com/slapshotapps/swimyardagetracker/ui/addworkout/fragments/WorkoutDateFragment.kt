@@ -36,7 +36,7 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
     lateinit var viewModel: WorkoutDateViewModel
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this) // Providing the dependency
+        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
     }
 

@@ -7,7 +7,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class WorkoutDateViewModel @Inject constructor(workoutManager: WorkoutManager) {
+class WorkoutDateViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
 
     interface WorkoutDateViewModelListener {
         fun onShowDateSelection(currentWorkoutDate: Date)
@@ -16,7 +16,6 @@ class WorkoutDateViewModel @Inject constructor(workoutManager: WorkoutManager) {
 
     private var listener: WorkoutDateViewModelListener? = null
     private val dateFormatter = SimpleDateFormat("MMM d yyyy", Locale.US)
-    private val workoutDate = Date()
     val formattedWorkoutDate = ObservableField<String>(formatDate())
 
 
@@ -25,7 +24,7 @@ class WorkoutDateViewModel @Inject constructor(workoutManager: WorkoutManager) {
     }
 
     fun onDateTapped() {
-        listener?.onShowDateSelection(workoutDate)
+        listener?.onShowDateSelection(workoutManager.workoutDate)
     }
 
     fun onAddWorkoutInfoTapped() {
@@ -33,11 +32,12 @@ class WorkoutDateViewModel @Inject constructor(workoutManager: WorkoutManager) {
     }
 
     fun onDateChanged(newDate: Date) {
-        workoutDate.time = newDate.time
+        workoutManager.workoutDate = newDate
         formattedWorkoutDate.set(formatDate())
     }
 
-    private fun formatDate(): String {
-        return dateFormatter.format(workoutDate)
+    private fun formatDate(): String{
+        return dateFormatter.format(workoutManager.workoutDate)
     }
+
 }
