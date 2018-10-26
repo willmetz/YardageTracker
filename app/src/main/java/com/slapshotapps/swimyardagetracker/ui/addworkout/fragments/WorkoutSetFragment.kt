@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -38,6 +39,12 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelIn
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_set, container, false)
         binding.item = viewModel
+
+
+        val hintedStrokes = arrayOf("Fly", "Free", "Back", "Breast", "IM", "Kick")
+        val autoCompleteAdapter = ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
+
+        binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
 
         return binding.root
     }
@@ -75,6 +82,8 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelIn
         binding.reps.error = null
         binding.distance.error = null
         binding.stroke.error = null
+
+        binding.reps.requestFocus()
     }
 
     override fun onShowWorkoutSummary() {

@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:nextFocusRight="@+id/x_symbol"
+            android:nextFocusRight="@+id/distance"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/x_symbol"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -43,7 +43,6 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:nextFocusRight="@+id/distance"
             android:text="X"
             app:layout_constraintBottom_toBottomOf="@+id/reps"
             app:layout_constraintEnd_toStartOf="@+id/distance"
@@ -56,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:nextFocusRight="@id/stroke"
             app:layout_constraintBottom_toBottomOf="@+id/reps"
             app:layout_constraintEnd_toStartOf="@+id/stroke"
             app:layout_constraintStart_toEndOf="@+id/x_symbol"
@@ -80,10 +80,12 @@
             app:layout_constraintStart_toEndOf="@+id/distance"
             app:layout_constraintTop_toTopOf="@+id/reps">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
+                android:id="@+id/stoke_autocomplete_view"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:hint="Stroke"
+                android:completionThreshold="1"
                 android:inputType="text"
                 android:text="@={item.setStroke}"/>
 
@@ -96,6 +98,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{() -> item.onAddAnotherSetTapped()}"
             android:text="Add Another Set"
+            android:nextFocusForward="@id/reps"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
