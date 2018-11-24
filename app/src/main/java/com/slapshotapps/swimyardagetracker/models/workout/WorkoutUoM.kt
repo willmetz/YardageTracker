@@ -1,4 +1,4 @@
-package com.slapshotapps.swimyardagetracker.models.workoutsets
+package com.slapshotapps.swimyardagetracker.models.workout
 
 
 enum class WorkoutUoM(uom: String) {

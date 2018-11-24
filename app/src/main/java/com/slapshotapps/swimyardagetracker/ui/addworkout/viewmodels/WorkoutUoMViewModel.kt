@@ -3,7 +3,7 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.extensions.SpinnerItemSelectedListener
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
-import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutUoM
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import javax.inject.Inject
 
 

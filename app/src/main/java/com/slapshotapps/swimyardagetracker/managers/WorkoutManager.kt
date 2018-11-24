@@ -1,7 +1,7 @@
 package com.slapshotapps.swimyardagetracker.managers
 
-import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutSet
-import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutUoM
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.util.*
 
 

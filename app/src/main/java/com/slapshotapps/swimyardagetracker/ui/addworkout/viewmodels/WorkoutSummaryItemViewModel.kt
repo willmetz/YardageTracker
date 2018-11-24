@@ -1,6 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
-import com.slapshotapps.swimyardagetracker.models.workoutsets.WorkoutSet
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 
 
 class WorkoutSummaryItemViewModel(private val workoutSet: WorkoutSet, unitOfMeasure: String) {
