@@ -4,11 +4,14 @@ import androidx.room.*
 import java.util.*
 
 
-@Entity(tableName = "workouts", indices = arrayOf(Index("createDate")))
-data class Workout(@PrimaryKey(autoGenerate = true) val id: Int,
+@Entity(tableName = "workouts", indices = arrayOf(Index("workoutDate")))
+data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
                    val uoM: WorkoutUoM,
-                   val createDate: Date,
+                   val workoutDate: Date,
                    val updateDate: Date){
+
+    @Ignore
+    constructor(unitOfMeasure: WorkoutUoM, workoutDate: Date, updateDate: Date):this(0, unitOfMeasure, workoutDate, updateDate)
 
 }
 
@@ -17,8 +20,8 @@ data class Workout(@PrimaryKey(autoGenerate = true) val id: Int,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("workoutID"),
         onDelete = ForeignKey.CASCADE)), indices = arrayOf(Index("workoutID")))
-data class WorkoutSet(@PrimaryKey(autoGenerate = true)val id: Int,
-                      val workoutID: Int,
+data class WorkoutSet(@PrimaryKey(autoGenerate = true)val id: Long,
+                      var workoutID: Long,
                       val reps: Int,
                       val distance: Int,
                       val stroke: String,

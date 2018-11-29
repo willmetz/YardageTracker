@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/submit"
+            android:onClick="@{() -> item.onSubmitTapped()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cancel"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/cancel"
+            android:onClick="@{() -> item.onCancelTapped()}"
             app:layout_constraintBottom_toBottomOf="@id/submit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/submit"/>

@@ -8,7 +8,7 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 @Dao
 interface WorkoutDAO {
 
-    @Query("SELECT * FROM workouts ORDER BY createDate DESC LIMIT 1")
+    @Query("SELECT * FROM workouts ORDER BY workoutDate DESC LIMIT 1")
     fun getLatestWorkout() : Workout?
 
     @Query("SELECT * FROM `workout-sets` WHERE workoutID=:workoutID")

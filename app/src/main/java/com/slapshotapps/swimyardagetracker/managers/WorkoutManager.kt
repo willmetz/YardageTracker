@@ -1,5 +1,6 @@
 package com.slapshotapps.swimyardagetracker.managers
 
+import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.util.*
@@ -23,5 +24,9 @@ class WorkoutManager {
 
     fun getAllWorkoutSets(): List<WorkoutSet>{
         return workoutSets
+    }
+
+    fun getWorkout(): Workout{
+        return Workout(unitOfMeasure, workoutDate, Date())
     }
 }
