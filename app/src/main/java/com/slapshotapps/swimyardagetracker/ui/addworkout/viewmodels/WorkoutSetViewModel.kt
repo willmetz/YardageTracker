@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import java.util.*
 import javax.inject.Inject
 
 
@@ -83,7 +84,7 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
             return null
         }
 
-        return WorkoutSet(reps, distance, stroke)
+        return WorkoutSet(reps, distance, stroke, Date())
     }
 
     private fun clearSetInfo() {

@@ -10,4 +10,6 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 @Database(entities = arrayOf(Workout::class, WorkoutSet::class), version = 1)
 @TypeConverters(DatabaseTypeConverters::class)
 abstract class WorkoutDatabase: RoomDatabase() {
+
+    abstract fun workoutDao(): WorkoutDAO
 }

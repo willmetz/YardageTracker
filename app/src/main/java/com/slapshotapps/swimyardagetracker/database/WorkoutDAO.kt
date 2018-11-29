@@ -15,7 +15,7 @@ interface WorkoutDAO {
     fun getSetsForWorkout(workoutID: Int) : List<WorkoutSet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(workout: Workout) : Int
+    fun insert(workout: Workout) : Long
 
     @Insert
     fun insert(workoutSets: List<WorkoutSet>)
