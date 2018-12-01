@@ -1,26 +1,32 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
+import androidx.annotation.StringRes
 import androidx.databinding.ObservableField
-import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
+import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
+import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
+import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 
 class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: WorkoutManager,
-                                                  private val workoutDatabase: WorkoutDatabase) {
+                                                  private val workoutRepository: WorkoutRepository) {
 
     interface WorkoutSummaryListener {
         fun onWorkoutDataReady(workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>)
         fun onWorkAdded()
         fun onCancelAdd()
+        fun onErrorAddingWorkout(@StringRes msgID: Int)
     }
 
-    var listener: WorkoutSummaryListener? = null
+    private var listener: WorkoutSummaryListener? = null
+    private var disposables: CompositeDisposable? = null
 
     val workoutDateText = ObservableField<String>("")
 
 
     fun onViewReady() {
+        disposables = CompositeDisposable()
         val data = workoutManager.getAllWorkoutSets()
 
         val viewModels = ArrayList<WorkoutSummaryItemViewModel>(data.size)
@@ -33,19 +39,15 @@ class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: Wo
     }
 
     fun onSubmitTapped() {
-        //save the workout to the DB
-        val workoutID = workoutDatabase.workoutDao().insert(workoutManager.getWorkout())
+        //save the workout
+        val disposable = workoutRepository.addWorkout(workoutManager.getWorkout(), workoutManager.getAllWorkoutSets())
+                .subscribe({
+                    listener?.onWorkAdded()
+                }, {
+                    listener?.onErrorAddingWorkout(R.string.error_adding_workout)
+                })
 
-        val workoutSets = workoutManager.getAllWorkoutSets()
-
-        //need to set the workout ID to the newly inserted workout for each set
-        workoutSets.forEach({
-            it.workoutID = workoutID
-        })
-
-        workoutDatabase.workoutDao().insert(workoutSets)
-
-        listener?.onWorkAdded()
+        disposables?.add(disposable)
     }
 
     fun onCancelTapped() {

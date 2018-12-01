@@ -1,6 +1,7 @@
 package com.slapshotapps.swimyardagetracker.models.workout
 
 import androidx.room.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -10,8 +11,15 @@ data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
                    val workoutDate: Date,
                    val updateDate: Date){
 
+    private val workoutDateFormatter = SimpleDateFormat("EEE MMMMM d yyyy", Locale.US)
+
     @Ignore
     constructor(unitOfMeasure: WorkoutUoM, workoutDate: Date, updateDate: Date):this(0, unitOfMeasure, workoutDate, updateDate)
+
+    @Ignore
+    fun getFormattedWorkoutDate() : String{
+        return workoutDateFormatter.format(workoutDate)
+    }
 
 }
 

@@ -1,12 +1,11 @@
 package com.slapshotapps.swimyardagetracker.ui.home
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.HomeFragmentBinding
@@ -22,7 +21,7 @@ class HomeFragment : Fragment(), HomeViewModel.HomeViewModelListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        viewModel = HomeViewModel()
         viewModel.setListener(this)
 
         binding.item = viewModel

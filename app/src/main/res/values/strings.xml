@@ -16,4 +16,6 @@
     <string name="distance_invalid_entry">Distance must be greater than 0.</string>
     <string name="stroke_invalid_entry">Stroke must not be empty.</string>
     <string name="no_data_entered_msg">Please enter a set first.</string>
+
+    <string name="error_adding_workout">Unable to add workout, please try again</string>
 </resources>
