@@ -1,29 +1,52 @@
 package com.slapshotapps.swimyardagetracker.ui.home
 
-import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
-import com.slapshotapps.swimyardagetracker.models.workout.Workout
-import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
+import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
 
-class HomeViewModel @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
+class HomeViewModel @Inject constructor(private val workoutRepository: WorkoutRepository) {
 
     interface HomeViewModelListener {
         fun onAddWorkout()
+        fun onShowError(msgID: Int)
     }
 
     private var listener: HomeViewModelListener? = null
-    private var lastWorkout: Workout? = null
-    private var lastWorkoutSets: List<WorkoutSet>? = null
+    private var disposables: CompositeDisposable ?= null
+    private var lastWorkoutDetails: WorkoutWithDetails ?= null
 
     fun onResume() {
-        lastWorkout = workoutDatabase.workoutDao().getLatestWorkout()
+        disposables = CompositeDisposable()
 
-        val workout = lastWorkout
-        if (workout != null) {
-            lastWorkoutSets = workoutDatabase.workoutDao().getSetsForWorkout(workout.id)
+        if(lastWorkoutDetails == null){
+            val disposable = workoutRepository.getMostRecentWorkoutWithDetails()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(this::onFoundLastWorkoutDetails,
+                            this::errorRetrievingLatestWorkout,
+                            this::noWorkoutFound)
+
+            disposables?.add(disposable)
         }
+    }
+
+    private fun onFoundLastWorkoutDetails(workoutWithDetails: WorkoutWithDetails){
+        lastWorkoutDetails = workoutWithDetails
+    }
+
+    private fun errorRetrievingLatestWorkout(throwable: Throwable){
+        //TODO
+        lastWorkoutDetails = null
+    }
+
+    private fun noWorkoutFound() {
+        //TODO
+        lastWorkoutDetails = null
     }
 
     fun setListener(listener: HomeViewModelListener) {
@@ -31,28 +54,27 @@ class HomeViewModel @Inject constructor(private val workoutDatabase: WorkoutData
     }
 
     fun lastWorkoutYardage(): String {
-        val lastRetrievedWorkout = lastWorkout
-        val workoutSets = lastWorkoutSets;
+        val lastRetrievedWorkout = lastWorkoutDetails
 
-        if (workoutSets == null || lastRetrievedWorkout == null) {
+        if (lastRetrievedWorkout == null) {
             return "N/A"
         }
         //add up workout distances
         var distance = 0
-        workoutSets.forEach { distance += it.distance }
+        lastRetrievedWorkout.workoutSets.forEach { distance += it.distance }
 
-        return String.format(Locale.US, "%d %s", distance, lastRetrievedWorkout.uoM.toString())
+        return String.format(Locale.US, "%d %s", distance, lastRetrievedWorkout.workout.uoM.toString())
 
     }
 
     fun lastWorkoutDate(): String {
-        val lastRetrievedWorkout = lastWorkout
+        val lastRetrievedWorkout = lastWorkoutDetails
 
         if(lastRetrievedWorkout == null){
             return "N/A"
         }
 
-        return lastRetrievedWorkout.getFormattedWorkoutDate()
+        return lastRetrievedWorkout.workout.getFormattedWorkoutDate()
     }
 
     fun totalWorkoutsForYear(): String {
@@ -67,3 +89,5 @@ class HomeViewModel @Inject constructor(private val workoutDatabase: WorkoutData
         listener?.onAddWorkout()
     }
 }
+
+

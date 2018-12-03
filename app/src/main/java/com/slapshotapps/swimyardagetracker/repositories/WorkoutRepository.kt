@@ -3,27 +3,35 @@ package com.slapshotapps.swimyardagetracker.repositories
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Maybe
 import javax.inject.Inject
 
 
 class WorkoutRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
 
-    fun addWorkout(workout: Workout, workoutSets: List<WorkoutSet>): Completable{
+    fun addWorkout(workout: Workout, workoutSets: List<WorkoutSet>): Completable {
         return workoutDatabase.workoutDao().insert(workout)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMapCompletable {
-                    val workoutID = it
-
+                .flatMapCompletable { workoutID ->
                     //need to set the workout ID to the newly inserted workout for each set
                     workoutSets.forEach({
                         it.workoutID = workoutID
                     })
 
                     workoutDatabase.workoutDao().insert(workoutSets)
+                }
+    }
+
+    fun getMostRecentWorkoutWithDetails(): Maybe<WorkoutWithDetails>{
+        lateinit var foundWorkout : Workout
+        return workoutDatabase.workoutDao().getLatestWorkout()
+                .flatMap { workout: Workout ->
+                    foundWorkout = workout
+                    workoutDatabase.workoutDao().getSetsForWorkout(workout.id)
+                }
+                .flatMap { workoutSets ->
+                    Maybe.just(WorkoutWithDetails(foundWorkout, workoutSets))
                 }
     }
 }

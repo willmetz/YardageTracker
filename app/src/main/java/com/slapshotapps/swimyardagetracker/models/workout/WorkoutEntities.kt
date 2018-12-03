@@ -42,3 +42,6 @@ data class WorkoutSet(@PrimaryKey(autoGenerate = true)val id: Long,
                 stroke: String,
                 createDate: Date):this(0,1,reps, distance,stroke,createDate,createDate)
 }
+
+
+data class WorkoutWithDetails(val workout: Workout, val workoutSets: List<WorkoutSet>)

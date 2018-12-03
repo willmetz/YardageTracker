@@ -5,7 +5,9 @@ import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
@@ -41,6 +43,8 @@ class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: Wo
     fun onSubmitTapped() {
         //save the workout
         val disposable = workoutRepository.addWorkout(workoutManager.getWorkout(), workoutManager.getAllWorkoutSets())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     listener?.onWorkAdded()
                 }, {
