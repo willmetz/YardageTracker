@@ -11,6 +11,7 @@ data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
                    val workoutDate: Date,
                    val updateDate: Date){
 
+    @Ignore
     private val workoutDateFormatter = SimpleDateFormat("EEE MMMMM d yyyy", Locale.US)
 
     @Ignore

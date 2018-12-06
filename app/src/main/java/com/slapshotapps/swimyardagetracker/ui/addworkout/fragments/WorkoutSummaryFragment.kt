@@ -79,6 +79,10 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         //figure out nav here
     }
 
+    override fun onErrorAddingWorkout(msgID: Int) {
+        //TODO
+    }
+
     private fun hideKeyboard() {
         val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
         imm?.hideSoftInputFromWindow(binding.root.getWindowToken(), 0)

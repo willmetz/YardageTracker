@@ -16,6 +16,9 @@ interface WorkoutDAO {
     @Query("SELECT * FROM `workout-sets` WHERE workoutID=:workoutID")
     fun getSetsForWorkout(workoutID: Long): Maybe<List<WorkoutSet>>
 
+    @Query("SELECT COUNT(`workoutDate`) FROM  workouts WHERE workoutDate > :fromTimeStamp")
+    fun getWorkoutCountFromDate(fromTimeStamp: Long): Maybe<Int>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(workout: Workout): Maybe<Long>
 

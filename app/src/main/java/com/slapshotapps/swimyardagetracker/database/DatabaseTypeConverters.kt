@@ -28,7 +28,13 @@ class DatabaseTypeConverters {
                 return WorkoutUoM.YARDS
             }
 
-            return WorkoutUoM.valueOf(uom!!)
+            return when(uom){
+                WorkoutUoM.YARDS.name ->
+                    WorkoutUoM.YARDS
+                else ->
+                    WorkoutUoM.METERS
+
+            }
         }
 
         @TypeConverter

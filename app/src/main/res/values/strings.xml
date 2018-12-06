@@ -18,4 +18,5 @@
     <string name="no_data_entered_msg">Please enter a set first.</string>
 
     <string name="error_adding_workout">Unable to add workout, please try again</string>
+    <string name="no_workouts">No workouts found</string>
 </resources>

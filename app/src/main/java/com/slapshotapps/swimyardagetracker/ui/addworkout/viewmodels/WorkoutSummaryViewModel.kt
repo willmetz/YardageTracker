@@ -21,7 +21,7 @@ class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: Wo
         fun onErrorAddingWorkout(@StringRes msgID: Int)
     }
 
-    private var listener: WorkoutSummaryListener? = null
+    var listener: WorkoutSummaryListener? = null
     private var disposables: CompositeDisposable? = null
 
     val workoutDateText = ObservableField<String>("")
