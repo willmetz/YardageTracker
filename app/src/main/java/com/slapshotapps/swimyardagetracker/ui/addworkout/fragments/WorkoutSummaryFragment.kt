@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -72,15 +73,15 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
     override fun onWorkAdded() {
         Toast.makeText(context, "Successfully added workout!!", Toast.LENGTH_SHORT).show()
 
-        //figure out nav here
+        NavHostFragment.findNavController(this).navigate(R.id.action_workoutSummaryFragment_to_homeFragment)
     }
 
     override fun onCancelAdd() {
-        //figure out nav here
+        NavHostFragment.findNavController(this).navigate(R.id.action_workoutSummaryFragment_to_homeFragment)
     }
 
     override fun onErrorAddingWorkout(msgID: Int) {
-        //TODO
+        Toast.makeText(context, msgID, Toast.LENGTH_SHORT).show()
     }
 
     private fun hideKeyboard() {

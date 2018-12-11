@@ -45,5 +45,10 @@
         android:id="@+id/workoutSummaryFragment"
         android:name="com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutSummaryFragment"
         android:label="fragment_workout_summary"
-        tools:layout="@layout/fragment_workout_summary"/>
+        tools:layout="@layout/fragment_workout_summary">
+        <action
+            android:id="@+id/action_workoutSummaryFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@+id/homeFragment"/>
+    </fragment>
 </navigation>
