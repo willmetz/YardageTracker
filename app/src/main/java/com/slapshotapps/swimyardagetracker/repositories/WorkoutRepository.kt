@@ -4,6 +4,7 @@ import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import java.util.*
@@ -38,5 +39,9 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
 
     fun getWorkoutsCountSinceDate(fromDate: Date): Maybe<Int>{
         return workoutDatabase.workoutDao().getWorkoutCountFromDate(fromDate.time)
+    }
+
+    fun getAllWorkoutsWithUoMSinceDate(since: Date): Maybe<List<WorkoutWithUoM>>{
+        return workoutDatabase.workoutDao().getWorkoutSetsWithUoMSinceDate(since.time)
     }
 }

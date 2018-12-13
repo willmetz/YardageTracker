@@ -12,7 +12,7 @@ data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
                    val updateDate: Date) {
 
     @Ignore
-    private val workoutDateFormatter = SimpleDateFormat("EEE MMMMM d yyyy", Locale.US)
+    private val workoutDateFormatter = SimpleDateFormat("EEE MMMM d yyyy", Locale.US)
 
     @Ignore
     constructor(unitOfMeasure: WorkoutUoM, workoutDate: Date, updateDate: Date) : this(0, unitOfMeasure, workoutDate, updateDate)
@@ -47,11 +47,11 @@ data class WorkoutSet(@PrimaryKey(autoGenerate = true) val id: Long,
 
 data class WorkoutWithDetails(val workout: Workout, val workoutSets: List<WorkoutSet>)
 
-
-@DatabaseView("SELECT w.uoM, w.workoutDate, s.reps, s.distance, s.stroke " +
-        "FROM workouts AS w " +
-        "INNER JOIN `workout-sets` as s " +
-        "ON w.id = s.workoutID")
+//
+//@DatabaseView("SELECT w.uoM, w.workoutDate, s.reps, s.distance, s.stroke " +
+//        "FROM workouts AS w " +
+//        "INNER JOIN `workout-sets` as s " +
+//        "ON w.id = s.workoutID")
 data class WorkoutWithUoM(val uoM: WorkoutUoM,
                           val workoutDate: Date,
                           val reps: Int,

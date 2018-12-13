@@ -107,7 +107,7 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.totalYardageForYear()}"
+            android:text="@{item.workoutDistanceForYear}"
             app:layout_constraintBottom_toBottomOf="@+id/total_yardage_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/total_yardage_label"

@@ -29,7 +29,7 @@ class DatabaseTypeConverters {
             }
 
             return when(uom){
-                WorkoutUoM.YARDS.name ->
+                WorkoutUoM.YARDS.label ->
                     WorkoutUoM.YARDS
                 else ->
                     WorkoutUoM.METERS
