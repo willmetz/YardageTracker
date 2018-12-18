@@ -32,7 +32,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:hint="Reps"
+                android:hint="@string/reps"
                 android:inputType="number"
                 android:text="@={item.setReps}"/>
 
@@ -43,7 +43,7 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="X"
+            android:text="@string/x_character"
             app:layout_constraintBottom_toBottomOf="@+id/reps"
             app:layout_constraintEnd_toStartOf="@+id/distance"
             app:layout_constraintStart_toEndOf="@+id/reps"
@@ -64,7 +64,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:hint="Distance"
+                android:hint="@string/distance"
                 android:inputType="number"
                 android:text="@={item.setDistance}"/>
 
@@ -84,7 +84,7 @@
                 android:id="@+id/stoke_autocomplete_view"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:hint="Stroke"
+                android:hint="@string/stroke"
                 android:completionThreshold="1"
                 android:inputType="text"
                 android:text="@={item.setStroke}"/>
@@ -96,25 +96,27 @@
             android:id="@+id/add_another"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/YardageTracker.Secondary.Button"
             android:onClick="@{() -> item.onAddAnotherSetTapped()}"
-            android:text="Add Another Set"
+            android:text="@string/add_another_set"
             android:nextFocusForward="@id/reps"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".4"/>
+            app:layout_constraintVertical_bias=".35"/>
 
         <Button
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            style="@style/YardageTracker.Primary.Button"
             android:onClick="@{() -> item.onNextTapped()}"
-            android:text="Next"
+            android:text="@string/next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/add_another"/>
+            app:layout_constraintTop_toBottomOf="@+id/add_another"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

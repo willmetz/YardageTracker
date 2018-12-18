@@ -48,22 +48,25 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/submit"
+            style="@style/YardageTracker.Primary.Button"
             android:onClick="@{() -> item.onSubmitTapped()}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cancel"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toEndOf="@+id/cancel"/>
 
         <Button
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            style="@style/YardageTracker.Secondary.Button"
             android:text="@string/cancel"
             android:onClick="@{() -> item.onCancelTapped()}"
             app:layout_constraintBottom_toBottomOf="@id/submit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/submit"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/submit"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
