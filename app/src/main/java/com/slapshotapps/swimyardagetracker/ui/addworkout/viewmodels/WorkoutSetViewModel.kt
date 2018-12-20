@@ -11,7 +11,7 @@ import javax.inject.Inject
 class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
 
 
-    interface WorkoutSetViewModelInterface {
+    interface WorkoutSetViewModelListener {
         fun onRepsEntryError(resID: Int)
         fun onDistanceEntryError(resID: Int)
         fun onStrokeEntryError(resID: Int)
@@ -24,7 +24,7 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
     val setDistance = ObservableField<String>("")
     val setStroke = ObservableField<String>("")
 
-    var listener: WorkoutSetViewModelInterface? = null
+    var listener: WorkoutSetViewModelListener? = null
 
     private val workoutSets = ArrayList<WorkoutSet>()
 
@@ -45,6 +45,8 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
 
     fun onNextTapped() {
         val workout = getSetInfo()
+
+        clearSetInfo()
 
         if (workout != null) {
             workoutSets.add(workout)

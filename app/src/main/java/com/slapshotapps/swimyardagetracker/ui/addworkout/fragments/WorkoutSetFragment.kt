@@ -23,7 +23,7 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelInterface {
+class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelListener {
 
     private lateinit var binding: FragmentWorkoutSetBinding
 
