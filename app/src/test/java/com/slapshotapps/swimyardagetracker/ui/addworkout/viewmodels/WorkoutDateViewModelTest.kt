@@ -1,6 +1,7 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
+import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.util.*
@@ -24,6 +25,6 @@ class WorkoutDateViewModelTest {
 
         viewModel.onDateChanged(date)
 
-        assert(workoutManager.workoutDate.compareTo(date) == 0)
+        assertEquals(0, workoutManager.workoutDate.compareTo(date))
     }
 }

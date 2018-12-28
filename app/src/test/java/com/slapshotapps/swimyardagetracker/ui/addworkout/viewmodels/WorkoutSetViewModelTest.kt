@@ -7,6 +7,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.CountDownLatch
@@ -150,14 +151,14 @@ class WorkoutSetViewModelTest {
 
             verify(workoutManager, times(2)).addWorkoutSet(capture())
 
-            assert(allValues[0].stroke == "Free")
-            assert(allValues[1].stroke == "Fly")
+            assertEquals("Free", allValues[0].stroke)
+            assertEquals("Fly", allValues[1].stroke)
         }
 
         //set info is cleared
-        assert(viewModel.setDistance.get() == "")
-        assert(viewModel.setReps.get() == "")
-        assert(viewModel.setStroke.get() == "")
+        assertEquals("", viewModel.setDistance.get())
+        assertEquals("", viewModel.setReps.get())
+        assertEquals("", viewModel.setStroke.get())
     }
 
     open class WorkoutSetViewModelListenerHelper() : WorkoutSetViewModel.WorkoutSetViewModelListener {
