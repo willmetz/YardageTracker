@@ -69,7 +69,7 @@ class WorkoutDatabaseTest {
     }
 
     @Test
-    fun test_noWorkoutFound(){
+    fun test_noWorkoutFound() {
         //when
         val latestWorkout = dao.getLatestWorkout().test()
 
@@ -80,7 +80,7 @@ class WorkoutDatabaseTest {
     }
 
     @Test
-    fun test_getSetsForWorkout(){
+    fun test_getSetsForWorkout() {
         //given
         val workout1 = Workout(WorkoutUoM.METERS, Date(), Date())
         val workout2 = Workout(WorkoutUoM.YARDS, Date(), Date())
@@ -88,9 +88,9 @@ class WorkoutDatabaseTest {
         val workoutOneId = dao.insert(workout1).test().values()[0]
         val workoutTwoId = dao.insert(workout2).test().values()[0]
 
-        val set1 = WorkoutSet(1L, workoutOneId, 1, 100, "Free", Date(), Date())
-        val set2 = WorkoutSet(2L, workoutTwoId, 2, 200, "Free", Date(), Date())
-        val set3 = WorkoutSet(3L, workoutTwoId, 1, 100, "Free", Date(), Date())
+        val set1 = WorkoutSet(0L, workoutOneId, 1, 100, "Free", Date(), Date())
+        val set2 = WorkoutSet(0L, workoutTwoId, 2, 200, "Free", Date(), Date())
+        val set3 = WorkoutSet(0L, workoutTwoId, 1, 300, "Free", Date(), Date())
 
         val sets = ArrayList<WorkoutSet>()
 
@@ -108,12 +108,12 @@ class WorkoutDatabaseTest {
         val workoutSetsFound = setsForWorkout.values()[0]
 
         assertEquals(2, workoutSetsFound.count())
-        assertEquals(set2.id, workoutSetsFound[0].id)
-        assertEquals(set3.id, workoutSetsFound[1].id)
+        assertEquals(set2.distance, workoutSetsFound[0].distance)
+        assertEquals(set3.distance, workoutSetsFound[1].distance)
     }
 
     @Test
-    fun test_getSetsForWorkoutIsEmptyIfNoneMatch(){
+    fun test_getSetsForWorkoutIsEmptyIfNoneMatch() {
         //given
         val workout1 = Workout(WorkoutUoM.METERS, Date(), Date())
         val workout2 = Workout(WorkoutUoM.YARDS, Date(), Date())
@@ -121,9 +121,9 @@ class WorkoutDatabaseTest {
         val workoutOneId = dao.insert(workout1).test().values()[0]
         val workoutTwoId = dao.insert(workout2).test().values()[0]
 
-        val set1 = WorkoutSet(1L, workoutOneId, 1, 100, "Free", Date(), Date())
-        val set2 = WorkoutSet(2L, workoutOneId, 2, 200, "Free", Date(), Date())
-        val set3 = WorkoutSet(3L, workoutTwoId, 1, 100, "Free", Date(), Date())
+        val set1 = WorkoutSet(0L, workoutOneId, 1, 100, "Free", Date(), Date())
+        val set2 = WorkoutSet(0L, workoutOneId, 2, 200, "Free", Date(), Date())
+        val set3 = WorkoutSet(0L, workoutTwoId, 1, 100, "Free", Date(), Date())
 
         val sets = ArrayList<WorkoutSet>()
 
@@ -144,10 +144,77 @@ class WorkoutDatabaseTest {
     }
 
     @Test
-    fun test_getWorkoutsSinceDate(){
+    fun test_getWorkoutsSinceDate() {
         //given
         val calendarTestSinceDate = Calendar.getInstance()
         calendarTestSinceDate.set(2016, Calendar.JUNE, 8, 0, 0, 0)
+
+        val workoutOneDate = calendarTestSinceDate.clone() as Calendar
+        workoutOneDate.add(Calendar.YEAR, 1)
+
+        val workoutTwoDate = calendarTestSinceDate.clone() as Calendar
+        workoutTwoDate.add(Calendar.DAY_OF_MONTH, 1)
+
+        val workoutThreeDate = calendarTestSinceDate.clone() as Calendar
+        workoutThreeDate.add(Calendar.DAY_OF_MONTH, -1)
+
+        val workout1 = Workout(WorkoutUoM.METERS, workoutOneDate.time, Date())
+        val workout2 = Workout(WorkoutUoM.YARDS, workoutTwoDate.time, Date())
+        val workout3 = Workout(WorkoutUoM.YARDS, workoutThreeDate.time, Date())
+
+        dao.insert(workout1).test()
+        dao.insert(workout2).test()
+        dao.insert(workout3).test()
+
+        //when
+        val workoutsSinceDate = dao.getWorkoutCountFromDate(calendarTestSinceDate.time.time).test()
+
+        //then
+        workoutsSinceDate.assertComplete()
+        val workoutCountSinceDate = workoutsSinceDate.values()[0]
+        assertEquals(2, workoutCountSinceDate)
+    }
+
+    @Test
+    fun test_getWorkoutsSinceDateNoneFound() {
+        //given
+        val calendarTestSinceDate = Calendar.getInstance()
+        calendarTestSinceDate.set(2016, Calendar.JUNE, 8, 0, 0, 0)
+
+        val workoutOneDate = calendarTestSinceDate.clone() as Calendar
+        workoutOneDate.add(Calendar.YEAR, 1)
+
+        val workoutTwoDate = calendarTestSinceDate.clone() as Calendar
+        workoutTwoDate.add(Calendar.DAY_OF_MONTH, 1)
+
+        val workoutThreeDate = calendarTestSinceDate.clone() as Calendar
+        workoutThreeDate.add(Calendar.DAY_OF_MONTH, -1)
+
+        calendarTestSinceDate.add(Calendar.YEAR, 2)
+
+        val workout1 = Workout(WorkoutUoM.METERS, workoutOneDate.time, Date())
+        val workout2 = Workout(WorkoutUoM.YARDS, workoutTwoDate.time, Date())
+        val workout3 = Workout(WorkoutUoM.YARDS, workoutThreeDate.time, Date())
+
+        dao.insert(workout1).test()
+        dao.insert(workout2).test()
+        dao.insert(workout3).test()
+
+        //when
+        val workoutsSinceDate = dao.getWorkoutCountFromDate(calendarTestSinceDate.time.time).test()
+
+        //then
+        workoutsSinceDate.assertComplete()
+        val workoutCountSinceDate = workoutsSinceDate.values()[0]
+        assertEquals(0, workoutCountSinceDate)
+    }
+
+    @Test
+    fun test_getWorkoutSeteSinceDateWithUoM() {
+        //given
+        val calendarTestSinceDate = Calendar.getInstance()
+        calendarTestSinceDate.clear()
+        calendarTestSinceDate.set(2016, Calendar.JUNE, 8)
 
         val workoutOneDate = calendarTestSinceDate.clone() as Calendar
         workoutOneDate.add(Calendar.YEAR, 1)
@@ -166,12 +233,20 @@ class WorkoutDatabaseTest {
         val workoutTwoID = dao.insert(workout2).test().values()[0]
         val workoutThreeID = dao.insert(workout3).test().values()[0]
 
+        val workoutSetOne = WorkoutSet(0L, workoutOneID, 2, 300, "fly", Date(), Date())
+        val workoutSetTwo = WorkoutSet(0L, workoutTwoID, 2, 400, "free", Date(), Date())
+        val workoutSetThree = WorkoutSet(0L, workoutThreeID, 2, 400, "im", Date(), Date())
+
+        dao.insert(listOf(workoutSetOne, workoutSetTwo, workoutSetThree)).test()
+
         //when
-        val workoutsSinceDate = dao.getWorkoutCountFromDate(calendarTestSinceDate.time.time).test()
+        val workoutsSinceDate = dao.getWorkoutSetsWithUoMSinceDate(calendarTestSinceDate.time.time).test()
 
         //then
         workoutsSinceDate.assertComplete()
-        val workoutCountSinceDate = workoutsSinceDate.values()[0]
-        assertEquals(2, workoutCountSinceDate)
+        val workoutSetsSince = workoutsSinceDate.values()[0]
+        assertEquals(2, workoutSetsSince.size)
+        assertEquals(workoutSetOne.distance, workoutSetsSince[0].distance)
+        assertEquals(workoutSetTwo.distance, workoutSetsSince[1].distance)
     }
 }
