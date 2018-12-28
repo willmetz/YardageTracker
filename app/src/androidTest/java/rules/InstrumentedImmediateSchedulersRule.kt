@@ -9,7 +9,7 @@ import org.junit.runner.Description
 
 
 
-class ImmediateSchedulersRule : TestWatcher() {
+class InstrumentedImmediateSchedulersRule : TestWatcher() {
 
     override fun starting(description: Description?) {
         super.starting(description)
