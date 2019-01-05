@@ -52,7 +52,7 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
     }
 
     override fun onChangeDate() {
-        //TODO
+        NavHostFragment.findNavController(this).popBackStack()
     }
 
     companion object {

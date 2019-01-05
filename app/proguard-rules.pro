@@ -19,3 +19,13 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+## Dagger rules
+-dontwarn com.google.errorprone.annotations.**
+
+
+##Lifecycle
+-keepattributes *Annotation*
+
+-keep class androidx.lifecycle.ProcessLifecycleOwnerInitializer {
+}

@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/reps"
                 android:inputType="number"
+                android:imeOptions="actionNext"
                 android:text="@={item.setReps}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -66,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/distance"
                 android:inputType="number"
+                android:imeOptions="actionNext"
                 android:text="@={item.setDistance}"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -87,6 +89,8 @@
                 android:hint="@string/stroke"
                 android:completionThreshold="1"
                 android:inputType="text"
+                app:onKeyboardActionButton="@{item}"
+                android:imeOptions="actionDone"
                 android:text="@={item.setStroke}"/>
 
         </com.google.android.material.textfield.TextInputLayout>

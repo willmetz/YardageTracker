@@ -1,11 +1,13 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -45,6 +47,9 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelLi
         val autoCompleteAdapter = ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
 
         binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
+
+        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.showSoftInput(binding.reps, 0)
 
         return binding.root
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Swim Yardage Tracker</string>
+    <string name="app_name">Swim Distance Tracker</string>
     <string name="year_to_date">Year To Date</string>
     <string name="last_workout">Last Workout</string>
     <string name="number_of_workouts">Number of Workouts</string>

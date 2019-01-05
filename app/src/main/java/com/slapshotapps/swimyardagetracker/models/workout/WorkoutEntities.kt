@@ -1,10 +1,11 @@
 package com.slapshotapps.swimyardagetracker.models.workout
 
+import androidx.annotation.Keep
 import androidx.room.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+@Keep
 @Entity(tableName = "workouts", indices = arrayOf(Index("workoutDate")))
 data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
                    val uoM: WorkoutUoM,
@@ -24,6 +25,7 @@ data class Workout(@PrimaryKey(autoGenerate = true) var id: Long,
 
 }
 
+@Keep
 @Entity(tableName = "workout-sets", foreignKeys = arrayOf(ForeignKey(
         entity = Workout::class,
         parentColumns = arrayOf("id"),
@@ -44,7 +46,7 @@ data class WorkoutSet(@PrimaryKey(autoGenerate = true) val id: Long,
                 createDate: Date) : this(0, 1, reps, distance, stroke, createDate, createDate)
 }
 
-
+@Keep
 data class WorkoutWithDetails(val workout: Workout, val workoutSets: List<WorkoutSet>)
 
 //
@@ -52,6 +54,7 @@ data class WorkoutWithDetails(val workout: Workout, val workoutSets: List<Workou
 //        "FROM workouts AS w " +
 //        "INNER JOIN `workout-sets` as s " +
 //        "ON w.id = s.workoutID")
+@Keep
 data class WorkoutWithUoM(val uoM: WorkoutUoM,
                           val workoutDate: Date,
                           val reps: Int,

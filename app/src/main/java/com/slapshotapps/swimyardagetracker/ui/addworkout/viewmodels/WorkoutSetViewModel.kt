@@ -4,11 +4,12 @@ import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import com.slapshotapps.swimyardagetracker.utils.KeyboardActionButtonListener
 import java.util.*
 import javax.inject.Inject
 
 
-class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
+class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) : KeyboardActionButtonListener {
 
 
     interface WorkoutSetViewModelListener {
@@ -65,6 +66,10 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
         listener?.onShowWorkoutSummary()
     }
 
+    override fun onDoneSelected() {
+        //add the set
+        onAddAnotherSetTapped()
+    }
 
     private fun getSetInfo(): WorkoutSet? {
         val reps = setReps.get()?.toIntOrNull() ?: 0
