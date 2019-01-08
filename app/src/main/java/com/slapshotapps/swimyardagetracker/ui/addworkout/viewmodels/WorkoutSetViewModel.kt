@@ -45,6 +45,15 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
     }
 
     fun onNextTapped() {
+        addAnotherSet()
+    }
+
+    override fun onDoneSelected() {
+        //add the set
+        addAnotherSet()
+    }
+
+    private fun addAnotherSet() {
         val workout = getSetInfo()
 
         clearSetInfo()
@@ -64,11 +73,6 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
         }
 
         listener?.onShowWorkoutSummary()
-    }
-
-    override fun onDoneSelected() {
-        //add the set
-        onAddAnotherSetTapped()
     }
 
     private fun getSetInfo(): WorkoutSet? {
