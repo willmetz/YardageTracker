@@ -31,29 +31,10 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
 
 
     fun onAddAnotherSetTapped() {
-        val workout = getSetInfo()
-
-        if (workout == null) {
-            return
-        }
-
-        workoutSets.add(workout)
-
-        listener?.onValidSetAdded()
-
-        clearSetInfo()
+        addAnotherSet()
     }
 
     fun onNextTapped() {
-        addAnotherSet()
-    }
-
-    override fun onDoneSelected() {
-        //add the set
-        addAnotherSet()
-    }
-
-    private fun addAnotherSet() {
         val workout = getSetInfo()
 
         clearSetInfo()
@@ -73,6 +54,24 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
         }
 
         listener?.onShowWorkoutSummary()
+    }
+
+    override fun onDoneSelected() {
+       addAnotherSet()
+    }
+
+    private fun addAnotherSet() {
+        val workout = getSetInfo()
+
+        if (workout == null) {
+            return
+        }
+
+        workoutSets.add(workout)
+
+        listener?.onValidSetAdded()
+
+        clearSetInfo()
     }
 
     private fun getSetInfo(): WorkoutSet? {

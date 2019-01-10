@@ -19,6 +19,7 @@ import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSetVi
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
+
 /**
  * A simple [Fragment] subclass.
  * Use the [WorkoutSetFragment.newInstance] factory method to
@@ -48,15 +49,14 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelLi
 
         binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
 
-        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.showSoftInput(binding.reps, 0)
-
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
         binding.reps.requestFocus()
+        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
         viewModel.listener = this
     }
