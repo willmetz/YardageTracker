@@ -29,7 +29,7 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
     @Inject
     lateinit var viewModel: WorkoutUoMViewModel
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
 
