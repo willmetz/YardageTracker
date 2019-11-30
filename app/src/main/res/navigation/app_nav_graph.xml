@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.slapshotapps.swimyardagetracker.HistoryFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
 </navigation>
