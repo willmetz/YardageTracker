@@ -14,8 +14,14 @@ interface WorkoutDAO {
     @Query("SELECT * FROM workouts ORDER BY workoutDate DESC LIMIT 1")
     fun getLatestWorkout(): Maybe<Workout>
 
+    @Query("SELECT * FROM workouts ORDER BY id")
+    fun getAllWorkouts(): Maybe<List<Workout>>
+
     @Query("SELECT * FROM `workout-sets` WHERE workoutID=:workoutID ORDER BY id")
     fun getSetsForWorkout(workoutID: Long): Maybe<List<WorkoutSet>>
+
+    @Query("SELECT * FROM `workout-sets` ORDER BY id")
+    fun getAllWorkoutSets(): Maybe<List<WorkoutSet>>
 
     @Query("SELECT COUNT(`workoutDate`) FROM  workouts WHERE workoutDate > :fromTimeStamp")
     fun getWorkoutCountFromDate(fromTimeStamp: Long): Maybe<Int>
