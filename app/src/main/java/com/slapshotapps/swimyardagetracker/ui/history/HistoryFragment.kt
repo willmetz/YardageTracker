@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
@@ -43,9 +44,10 @@ class HistoryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        history_list.layoutManager = layoutManager
+        val historyList = view.findViewById<RecyclerView>(R.id.history_list)
 
-        history_list.addItemDecoration(DividerItemDecoration(context, layoutManager.getOrientation()))
+        historyList.layoutManager = layoutManager
+        historyList.addItemDecoration(DividerItemDecoration(context, layoutManager.getOrientation()))
 
         return view
     }
@@ -64,6 +66,14 @@ class HistoryFragment : Fragment() {
                         for (workoutsWithDetails: WorkoutWithDetails in it) {
                             workoutList.add(WorkoutSummaryItemViewModel(workoutsWithDetails))
                         }
+
+                        workoutList.sortWith(Comparator<WorkoutSummaryItemViewModel> { w1, w2 ->
+                            when {
+                                w1.workout.workout.workoutDate > w2.workout.workout.workoutDate -> -1
+                                w1.workout.workout.workoutDate == w2.workout.workout.workoutDate -> 0
+                                else -> 1
+                            }
+                        })
 
                         history_list.adapter = WorkoutHistoryAdapter(workoutList)
                     }, {
