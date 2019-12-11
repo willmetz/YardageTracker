@@ -67,7 +67,7 @@ class HistoryFragment : Fragment() {
                             workoutList.add(WorkoutSummaryItemViewModel(workoutsWithDetails))
                         }
 
-                        workoutList.sortWith(Comparator<WorkoutSummaryItemViewModel> { w1, w2 ->
+                        workoutList.sortWith(Comparator { w1, w2 ->
                             when {
                                 w1.workout.workout.workoutDate > w2.workout.workout.workoutDate -> -1
                                 w1.workout.workout.workoutDate == w2.workout.workout.workoutDate -> 0
