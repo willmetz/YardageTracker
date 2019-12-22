@@ -10,7 +10,7 @@ class WorkoutSummaryItemViewModel(val workout: WorkoutWithDetails) {
         get() {
             var totalDistance = 0
             for (workoutSet: WorkoutSet in workout.workoutSets) {
-                totalDistance += workoutSet.distance
+                totalDistance += workoutSet.distance * workoutSet.reps
             }
 
             return "$totalDistance ${workout.workout.uoM.label}"
