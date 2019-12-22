@@ -76,6 +76,13 @@ class HistoryFragment : Fragment() {
                         })
 
                         history_list.adapter = WorkoutHistoryAdapter(workoutList)
+
+                        if(workoutList.size == 0){
+                            no_history_view.visibility = View.VISIBLE;
+                        }else{
+                            no_history_view.visibility = View.GONE;
+                        }
+
                     }, {
                         //TODO
                     })
