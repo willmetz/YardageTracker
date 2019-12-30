@@ -49,11 +49,7 @@ data class WorkoutSet(@PrimaryKey(autoGenerate = true) val id: Long,
 @Keep
 data class WorkoutWithDetails(val workout: Workout, val workoutSets: List<WorkoutSet>)
 
-//
-//@DatabaseView("SELECT w.uoM, w.workoutDate, s.reps, s.distance, s.stroke " +
-//        "FROM workouts AS w " +
-//        "INNER JOIN `workout-sets` as s " +
-//        "ON w.id = s.workoutID")
+
 @Keep
 data class WorkoutWithUoM(val uoM: WorkoutUoM,
                           val workoutDate: Date,

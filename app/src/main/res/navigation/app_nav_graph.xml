@@ -68,4 +68,9 @@
             app:popExitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@+id/homeFragment"/>
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>

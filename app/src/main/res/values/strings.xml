@@ -24,4 +24,6 @@
     <string name="reps">Reps</string>
     <string name="add_another_set">Add Another Set</string>
     <string name="next">Next</string>
+    <string name="history">History</string>
+    <string name="no_history_available">No History Available.</string>
 </resources>

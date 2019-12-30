@@ -7,6 +7,8 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import io.reactivex.Completable
 import io.reactivex.Maybe
+import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
@@ -25,8 +27,8 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
                 }
     }
 
-    fun getMostRecentWorkoutWithDetails(): Maybe<WorkoutWithDetails>{
-        lateinit var foundWorkout : Workout
+    fun getMostRecentWorkoutWithDetails(): Maybe<WorkoutWithDetails> {
+        lateinit var foundWorkout: Workout
         return workoutDatabase.workoutDao().getLatestWorkout()
                 .flatMap { workout: Workout ->
                     foundWorkout = workout
@@ -37,11 +39,29 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
                 }
     }
 
-    fun getWorkoutsCountSinceDate(fromDate: Date): Maybe<Int>{
+    fun getAllWorkoutsWithDetails(): Maybe<List<WorkoutWithDetails>> {
+
+        val getAllWorkoutsRequest = workoutDatabase.workoutDao().getAllWorkouts().subscribeOn(Schedulers.io())
+
+        val getAllWorkoutSetsRequest = workoutDatabase.workoutDao().getAllWorkoutSets().subscribeOn(Schedulers.io())
+
+        return Maybe.zip(getAllWorkoutsRequest, getAllWorkoutSetsRequest, BiFunction { allWorkouts, allWorkoutSets ->
+
+            val workoutsWithDetails = ArrayList<WorkoutWithDetails>()
+
+            for (workout: Workout in allWorkouts) {
+                workoutsWithDetails.add(WorkoutWithDetails(workout, allWorkoutSets.filter {set -> set.workoutID == workout.id }))
+            }
+
+            workoutsWithDetails
+        });
+    }
+
+    fun getWorkoutsCountSinceDate(fromDate: Date): Maybe<Int> {
         return workoutDatabase.workoutDao().getWorkoutCountFromDate(fromDate.time)
     }
 
-    fun getAllWorkoutsWithUoMSinceDate(since: Date): Maybe<List<WorkoutWithUoM>>{
+    fun getAllWorkoutsWithUoMSinceDate(since: Date): Maybe<List<WorkoutWithUoM>> {
         return workoutDatabase.workoutDao().getWorkoutSetsWithUoMSinceDate(since.time)
     }
 }
