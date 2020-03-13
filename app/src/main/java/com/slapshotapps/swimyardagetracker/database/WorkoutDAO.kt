@@ -1,5 +1,6 @@
 package com.slapshotapps.swimyardagetracker.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
@@ -46,4 +47,10 @@ interface WorkoutDAO {
 
     @Delete
     fun delete(workoutSet: WorkoutSet): Completable
+
+    @Query("SELECT * FROM workouts ORDER BY id")
+    fun getWorkouts(): LiveData<List<Workout>>
+
+    @Query("SELECT * FROM `workout-sets` ORDER BY id")
+    fun getWorkoutSets(): LiveData<List<WorkoutSet>>
 }

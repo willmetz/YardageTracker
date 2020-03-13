@@ -1,5 +1,7 @@
 package com.slapshotapps.swimyardagetracker.repositories
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
@@ -11,6 +13,7 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 
 class WorkoutRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
@@ -50,11 +53,45 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
             val workoutsWithDetails = ArrayList<WorkoutWithDetails>()
 
             for (workout: Workout in allWorkouts) {
-                workoutsWithDetails.add(WorkoutWithDetails(workout, allWorkoutSets.filter {set -> set.workoutID == workout.id }))
+                workoutsWithDetails.add(WorkoutWithDetails(workout, allWorkoutSets.filter { set -> set.workoutID == workout.id }))
             }
 
             workoutsWithDetails
         });
+    }
+
+    fun getWorkoutsWithDetails(): LiveData<List<WorkoutWithDetails>> {
+        val workouts = workoutDatabase.workoutDao().getWorkouts()
+        val workoutSets = workoutDatabase.workoutDao().getWorkoutSets()
+
+        val allWorkouts = MediatorLiveData<List<WorkoutWithDetails>>()
+
+        allWorkouts.addSource(workouts) {
+            allWorkouts.value = buildAllWorkouts(workouts, workoutSets)
+        }
+
+        allWorkouts.addSource(workoutSets) {
+            allWorkouts.value = buildAllWorkouts(workouts, workoutSets)
+        }
+
+        return allWorkouts
+    }
+
+    private fun buildAllWorkouts(workoutResult: LiveData<List<Workout>>, setResult: LiveData<List<WorkoutSet>>): List<WorkoutWithDetails> {
+        val workouts = workoutResult.value
+        val sets = setResult.value
+
+        val allWorkoutInfo = ArrayList<WorkoutWithDetails>()
+
+        if (workouts == null || sets == null) {
+            return allWorkoutInfo
+        }
+
+        for (workout: Workout in workouts) {
+            allWorkoutInfo.add(WorkoutWithDetails(workout, sets.filter { set -> set.workoutID == workout.id }))
+        }
+
+        return allWorkoutInfo
     }
 
     fun getWorkoutsCountSinceDate(fromDate: Date): Maybe<Int> {
