@@ -32,8 +32,6 @@ class HistoryFragment : Fragment() {
     @Inject
     lateinit var viewModel: HistoryViewModel
 
-    var workoutDisposable: Disposable? = null
-
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
@@ -63,13 +61,6 @@ class HistoryFragment : Fragment() {
         })
 
         return view
-    }
-
-
-    override fun onPause() {
-        super.onPause()
-
-        workoutDisposable?.dispose()
     }
 
 

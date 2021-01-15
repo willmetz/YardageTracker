@@ -18,13 +18,16 @@ class HistoryViewModel @Inject constructor(private val workoutRepository: Workou
                 workoutList.add(WorkoutSummaryItemViewModel(workoutsWithDetails))
             }
 
-            workoutList.sortWith(Comparator { w1, w2 ->
-                when {
-                    w1.workout.workout.workoutDate > w2.workout.workout.workoutDate -> -1
-                    w1.workout.workout.workoutDate == w2.workout.workout.workoutDate -> 0
-                    else -> 1
-                }
-            })
+            if(workoutList.isNotEmpty()){
+                workoutList.sortWith(Comparator { w1, w2 ->
+                    when {
+                        w1.workout.workout.workoutDate > w2.workout.workout.workoutDate -> -1
+                        w1.workout.workout.workoutDate == w2.workout.workout.workoutDate -> 0
+                        else -> 1
+                    }
+                })
+            }
+
 
             workoutList
         }

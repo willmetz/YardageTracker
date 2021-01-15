@@ -42,23 +42,6 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
                 }
     }
 
-    fun getAllWorkoutsWithDetails(): Maybe<List<WorkoutWithDetails>> {
-
-        val getAllWorkoutsRequest = workoutDatabase.workoutDao().getAllWorkouts().subscribeOn(Schedulers.io())
-
-        val getAllWorkoutSetsRequest = workoutDatabase.workoutDao().getAllWorkoutSets().subscribeOn(Schedulers.io())
-
-        return Maybe.zip(getAllWorkoutsRequest, getAllWorkoutSetsRequest, BiFunction { allWorkouts, allWorkoutSets ->
-
-            val workoutsWithDetails = ArrayList<WorkoutWithDetails>()
-
-            for (workout: Workout in allWorkouts) {
-                workoutsWithDetails.add(WorkoutWithDetails(workout, allWorkoutSets.filter { set -> set.workoutID == workout.id }))
-            }
-
-            workoutsWithDetails
-        });
-    }
 
     fun getWorkoutsWithDetails(): LiveData<List<WorkoutWithDetails>> {
         val workouts = workoutDatabase.workoutDao().getWorkouts()
