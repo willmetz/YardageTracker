@@ -45,7 +45,7 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelLi
 
 
         val hintedStrokes = arrayOf("Fly", "Free", "Back", "Breast", "IM", "Kick")
-        val autoCompleteAdapter = ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
+        val autoCompleteAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
 
         binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
 
