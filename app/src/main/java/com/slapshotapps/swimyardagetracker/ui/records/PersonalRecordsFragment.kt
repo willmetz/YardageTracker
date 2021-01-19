@@ -1,5 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.records
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.ui.history.HistoryViewModel
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_personal_records.view.*
 import javax.inject.Inject
 
@@ -27,6 +29,11 @@ class PersonalRecordsFragment : Fragment() {
     @Inject
     lateinit var viewModel: PersonalRecordsViewModel
 
+
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -76,7 +76,7 @@ class PersonalRecordItemViewModel(private val record: PersonalRecord) {
                 if(time == null) {
                     ""
                 }else {
-                    getHours(time) + getMinutes(time) + getSeconds(time) + getMilliseconds(time)
+                    "Meters: " + getHours(time) + getMinutes(time) + getSeconds(time) + getMilliseconds(time)
                 }
             }
             WorkoutUoM.YARDS -> {
@@ -86,7 +86,7 @@ class PersonalRecordItemViewModel(private val record: PersonalRecord) {
                 if(time == null) {
                     ""
                 }else {
-                    getHours(time) + getMinutes(time) + getSeconds(time) + getMilliseconds(time)
+                    "Yards: " + getHours(time) + getMinutes(time) + getSeconds(time) + getMilliseconds(time)
                 }
             }
         }

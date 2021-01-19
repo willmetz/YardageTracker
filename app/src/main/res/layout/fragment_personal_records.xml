@@ -11,6 +11,7 @@
         android:id="@+id/records_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
         tools:itemCount="3"
         tools:listitem="@layout/personal_record_line_item" />
 
