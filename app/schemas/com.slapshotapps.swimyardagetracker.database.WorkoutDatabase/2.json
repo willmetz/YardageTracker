@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "afab6676f7cad64507102ff9c74de5f2",
+    "identityHash": "7bbc8fa3bb91da4e81b6d8f5c2ccf009",
     "entities": [
       {
         "tableName": "workouts",
@@ -130,7 +130,7 @@
       },
       {
         "tableName": "personal-records",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `stroke` TEXT NOT NULL, `distance` INTEGER NOT NULL, `time` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `stroke` TEXT NOT NULL, `distance` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -148,12 +148,6 @@
             "fieldPath": "distance",
             "columnName": "distance",
             "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "time",
-            "columnName": "time",
-            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -185,7 +179,7 @@
       },
       {
         "tableName": "record-time",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recordID` INTEGER NOT NULL, `date` INTEGER NOT NULL, `unitOfMeasure` TEXT NOT NULL, `hours` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `seconds` INTEGER NOT NULL, `milliseconds` INTEGER NOT NULL, FOREIGN KEY(`recordID`) REFERENCES `workouts`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recordID` INTEGER NOT NULL, `date` INTEGER NOT NULL, `unitOfMeasure` TEXT NOT NULL, `hours` INTEGER NOT NULL, `minutes` INTEGER NOT NULL, `seconds` INTEGER NOT NULL, `milliseconds` INTEGER NOT NULL, FOREIGN KEY(`recordID`) REFERENCES `personal-records`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -254,7 +248,7 @@
         ],
         "foreignKeys": [
           {
-            "table": "workouts",
+            "table": "personal-records",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
@@ -270,7 +264,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'afab6676f7cad64507102ff9c74de5f2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bbc8fa3bb91da4e81b6d8f5c2ccf009')"
     ]
   }
 }

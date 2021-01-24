@@ -2,31 +2,42 @@ package com.slapshotapps.swimyardagetracker.ui.records
 
 import androidx.lifecycle.MutableLiveData
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
+import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordEventsWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class PersonalRecordsViewModel @Inject constructor(private val workoutRepository: WorkoutRepository){
     val allRecords : MutableLiveData<ArrayList<PersonalRecordItemViewModel>> by lazy {
         val testData = ArrayList<PersonalRecordItemViewModel>()
 
-        testData.add(PersonalRecordItemViewModel( PersonalRecord( "Free",
-                100, arrayListOf( RecordTime(Date(), WorkoutUoM.YARDS,
-                0,0,55,75 ))) ))
+        val recordTimes = HashMap<WorkoutUoM, RecordTime>()
+        recordTimes.put(WorkoutUoM.YARDS, RecordTime(1,
+                1, Date(), WorkoutUoM.YARDS,
+                0,0,22,44))
 
-        testData.add(PersonalRecordItemViewModel( PersonalRecord( "Fly",
-                100, arrayListOf( RecordTime(Date(), WorkoutUoM.YARDS,
-                0,1,9,0 ))) ))
+        testData.add(PersonalRecordItemViewModel(
+                RecordEventsWithTimes(
+                        PersonalRecord( 1L, "Free", 50),
+                        recordTimes
+                ) ))
 
-        testData.add(PersonalRecordItemViewModel( PersonalRecord( "Free",
-                200, arrayListOf(
-                RecordTime(Date(), WorkoutUoM.YARDS,
-                0,1,55,75 ),
-                RecordTime(Date(), WorkoutUoM.METERS,
-                        0,2,10,0 ))) ))
+        testData.add(PersonalRecordItemViewModel(
+                RecordEventsWithTimes(
+                        PersonalRecord( 1L, "Free", 100),
+                        recordTimes
+                ) ))
+
+        testData.add(PersonalRecordItemViewModel(
+                RecordEventsWithTimes(
+                        PersonalRecord( 1L, "Back", 50),
+                        recordTimes
+                ) ))
+
 
         MutableLiveData(testData)
     }
