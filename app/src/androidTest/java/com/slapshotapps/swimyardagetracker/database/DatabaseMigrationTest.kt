@@ -3,23 +3,17 @@ package com.slapshotapps.swimyardagetracker.database
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
-import com.slapshotapps.swimyardagetracker.extensions.blockingObserve
+import com.slapshotapps.swimyardagetracker.database.extensions.blockingObserve
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.IOException
 import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import kotlin.jvm.Throws
 
 
 @RunWith(AndroidJUnit4::class)
@@ -37,7 +31,6 @@ class DatabaseMigrationTest {
     )
 
     @Test
-    @Throws(IOException::class)
     fun migrate1To2() {
 
         val recordDate = Date()

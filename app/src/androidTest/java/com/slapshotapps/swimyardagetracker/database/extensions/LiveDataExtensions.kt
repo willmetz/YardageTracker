@@ -1,4 +1,4 @@
-package com.slapshotapps.swimyardagetracker.extensions
+package com.slapshotapps.swimyardagetracker.database.extensions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
