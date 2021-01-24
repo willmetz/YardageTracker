@@ -10,6 +10,7 @@ import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
+import com.slapshotapps.swimyardagetracker.extensions.blockingObserve
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import org.junit.Rule
 import org.junit.Test
@@ -76,18 +77,5 @@ class DatabaseMigrationTest {
         assert(workouts?.get(0)?.uoM == WorkoutUoM.YARDS)
     }
 
-    private fun <T> LiveData<T>.blockingObserve(): T? {
-        var value: T? = null
-        val latch = CountDownLatch(1)
 
-        val observer = Observer<T> { t ->
-            value = t
-            latch.countDown()
-        }
-
-        observeForever(observer)
-
-        latch.await(2, TimeUnit.SECONDS)
-        return value
-    }
 }
