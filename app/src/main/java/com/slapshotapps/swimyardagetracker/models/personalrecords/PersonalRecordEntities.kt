@@ -1,10 +1,7 @@
 package com.slapshotapps.swimyardagetracker.models.personalrecords
 
 import androidx.annotation.Keep
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.util.*
@@ -31,5 +28,8 @@ data class RecordTime(@PrimaryKey(autoGenerate = true) val id: Long,
                       val seconds: Int,
                       val milliseconds: Int)
 
+data class PersonalRecordWithTimes(
+        @Embedded val record: PersonalRecord,
+        @Relation(parentColumn = "id", entityColumn = "recordID")val times: List<RecordTime>)
 
 data class RecordEventsWithTimes(val record: PersonalRecord, val recordTimes: HashMap<WorkoutUoM, RecordTime>)
