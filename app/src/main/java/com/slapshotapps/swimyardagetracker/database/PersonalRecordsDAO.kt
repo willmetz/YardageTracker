@@ -5,24 +5,43 @@ import androidx.room.*
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
-import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+
 
 
 @Dao
-interface PersonalRecordsDAO {
+abstract class PersonalRecordsDAO {
 
     @Transaction
     @Query("SELECT * FROM `personal-records`")
-    fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
+    abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
 
     @Insert
-    fun AddPersonalRecordWithTime(record: PersonalRecord, times: List<RecordTime>)
+    suspend abstract fun insertPersonalRecord(record: PersonalRecord): Long
+
+    @Insert
+    suspend abstract fun insertRecordTime(time: RecordTime)
+
+    @Insert
+    suspend abstract fun insertRecordTimes(time: List<RecordTime>)
 
     @Update
-    fun UpdatePersonalRecord(record: PersonalRecord)
+    suspend abstract fun updatePersonalRecord(record: PersonalRecord)
 
     @Update
-    fun UpdateRecordTime(time: RecordTime)
+    suspend abstract fun updateRecordTime(time: RecordTime)
+
+    @Transaction
+    @Delete
+    abstract fun deleteRecordAndTimes(record: PersonalRecord, time: List<RecordTime>)
+
+    suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>)
+    {
+        val recordId = insertPersonalRecord(record)
+
+        times.forEach{r -> r.recordID = recordId}
+
+        insertRecordTimes(times)
+    }
 
 
 }

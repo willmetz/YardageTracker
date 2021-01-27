@@ -9,7 +9,7 @@ import kotlin.collections.HashMap
 
 @Keep
 @Entity(tableName = "personal-records", indices = [Index("stroke"), Index("distance")])
-data class PersonalRecord(@PrimaryKey(autoGenerate = true) var id: Long,
+data class PersonalRecord(@PrimaryKey(autoGenerate = true) var id: Long = 0,
                           val stroke: String,
                           val distance: Int)
 
@@ -19,7 +19,7 @@ data class PersonalRecord(@PrimaryKey(autoGenerate = true) var id: Long,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("recordID"),
         onDelete = ForeignKey.CASCADE)), indices = arrayOf(Index("recordID")))
-data class RecordTime(@PrimaryKey(autoGenerate = true) val id: Long,
+data class RecordTime(@PrimaryKey(autoGenerate = true) val id: Long = 0,
                       var recordID: Long,
                       val date: Date,
                       val unitOfMeasure: WorkoutUoM,

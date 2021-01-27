@@ -16,6 +16,7 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 abstract class WorkoutDatabase: RoomDatabase() {
 
     abstract fun workoutDao(): WorkoutDAO
+    abstract fun personalRecordDao(): PersonalRecordsDAO
 }
 
 
