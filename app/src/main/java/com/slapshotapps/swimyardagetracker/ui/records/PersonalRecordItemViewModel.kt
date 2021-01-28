@@ -1,14 +1,14 @@
 package com.slapshotapps.swimyardagetracker.ui.records
 
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
-import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordEventsWithTimes
+import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class PersonalRecordItemViewModel(private val eventsWithTimes: RecordEventsWithTimes) {
+class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWithTimes) {
 
     val dateFormatter: SimpleDateFormat = SimpleDateFormat("M/d/yyyy", Locale.US)
 
@@ -45,7 +45,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: RecordEventsWithT
     private fun getDateForRecord(unitOfMeasure: WorkoutUoM) : String{
         return when(unitOfMeasure){
             WorkoutUoM.METERS -> {
-                val record = eventsWithTimes.recordTimes.get(WorkoutUoM.METERS)
+                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.METERS}
                 if(record != null) {
                     dateFormatter.format(record.date)
                 }else {
@@ -53,7 +53,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: RecordEventsWithT
                 }
             }
             WorkoutUoM.YARDS -> {
-                val record = eventsWithTimes.recordTimes.get(WorkoutUoM.YARDS)
+                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.YARDS}
                 if(record == null) {
                     ""
                 }else {
@@ -67,7 +67,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: RecordEventsWithT
     private fun getTimeForRecord(uOfm: WorkoutUoM) : String{
         return when(uOfm){
             WorkoutUoM.METERS -> {
-                val record = eventsWithTimes.recordTimes.get(WorkoutUoM.METERS)
+                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.METERS}
                 if(record == null) {
                     ""
                 }else {
@@ -75,7 +75,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: RecordEventsWithT
                 }
             }
             WorkoutUoM.YARDS -> {
-                val record = eventsWithTimes.recordTimes.get(WorkoutUoM.YARDS)
+                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.YARDS}
                 if(record == null) {
                     ""
                 }else {

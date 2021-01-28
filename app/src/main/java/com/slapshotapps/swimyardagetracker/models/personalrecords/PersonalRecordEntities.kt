@@ -31,5 +31,3 @@ data class RecordTime(@PrimaryKey(autoGenerate = true) val id: Long = 0,
 data class PersonalRecordWithTimes(
         @Embedded val record: PersonalRecord,
         @Relation(parentColumn = "id", entityColumn = "recordID")val times: List<RecordTime>)
-
-data class RecordEventsWithTimes(val record: PersonalRecord, val recordTimes: HashMap<WorkoutUoM, RecordTime>)

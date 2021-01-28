@@ -11,7 +11,6 @@ import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 @Dao
 abstract class PersonalRecordsDAO {
 
-    @Transaction
     @Query("SELECT * FROM `personal-records`")
     abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
 
@@ -30,9 +29,8 @@ abstract class PersonalRecordsDAO {
     @Update
     suspend abstract fun updateRecordTime(time: RecordTime)
 
-    @Transaction
     @Delete
-    abstract fun deleteRecordAndTimes(record: PersonalRecord, time: List<RecordTime>)
+    abstract fun deleteRecordAndTimes(record: PersonalRecord)
 
     suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>)
     {
