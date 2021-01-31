@@ -30,7 +30,7 @@ abstract class PersonalRecordsDAO {
     suspend abstract fun updateRecordTime(time: RecordTime)
 
     @Delete
-    abstract fun deleteRecordAndTimes(record: PersonalRecord)
+    suspend abstract fun deleteRecordAndTimes(record: PersonalRecord)
 
     suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>)
     {

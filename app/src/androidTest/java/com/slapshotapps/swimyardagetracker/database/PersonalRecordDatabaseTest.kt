@@ -10,6 +10,7 @@ import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -90,6 +91,57 @@ class PersonalRecordDatabaseTest {
         assertEquals(record2.times.get(1).seconds, remainingRecord?.get(0)?.times?.get(1)?.seconds)
         assertEquals(record2.times.get(1).milliseconds, remainingRecord?.get(0)?.times?.get(1)?.milliseconds)
 
+    }
+
+    @Test
+    fun test_updateRecord() = runBlocking {
+        val originalRecord = generateRecordsWithRandomTimes("Free", 100);
+
+        dao.insertRecordWithTimes(originalRecord.record, originalRecord.times)
+
+        val recordFromDB = dao.getPersonalRecordsWithTimes().blockingObserve()
+
+        val newRecord = PersonalRecord(recordFromDB!!.get(0).record.id, "Fly", recordFromDB.get(0).record.distance)
+
+        dao.updatePersonalRecord(newRecord)
+
+        val updatedRecordFromDb = dao.getPersonalRecordsWithTimes().blockingObserve()
+
+        val updatedRecord = updatedRecordFromDb!!.get(0)
+        assertEquals(originalRecord.record.id, updatedRecord.record.id)
+        assertEquals(originalRecord.record.distance, updatedRecord.record.distance)
+        assertEquals(newRecord.stroke, updatedRecord.record.stroke)
+
+        assertEquals(originalRecord.times[0].unitOfMeasure, updatedRecord.times[0].unitOfMeasure)
+        assertEquals(originalRecord.times[0].seconds, updatedRecord.times[0].seconds)
+
+        assertEquals(originalRecord.times[1].unitOfMeasure, updatedRecord.times[1].unitOfMeasure)
+        assertEquals(originalRecord.times[1].seconds, updatedRecord.times[1].seconds)
+    }
+
+    fun test_addTimesToRecord() = runBlocking {
+        val originalRecord = generateRecordsWithRandomTimes("Free", 100);
+
+        dao.insertRecordWithTimes(originalRecord.record, originalRecord.times)
+
+        val recordFromDB = dao.getPersonalRecordsWithTimes().blockingObserve()
+
+        val addedTime = RecordTime(recordID = recordFromDB!![0].record.id, unitOfMeasure = WorkoutUoM.YARDS, date = Date(),
+            hours = 0, minutes = 2, seconds = 32, milliseconds = 0)
+
+        dao.insertRecordTime(addedTime)
+
+        val recordsWithAddedTime = dao.getPersonalRecordsWithTimes().blockingObserve()
+
+        val retrievedTimeRecords = recordsWithAddedTime!![0].times
+        assertEquals(3, retrievedTimeRecords.count())
+        assertTrue(retrievedTimeRecords.find { r -> r.unitOfMeasure == WorkoutUoM.YARDS && r.seconds == addedTime.seconds } != null)
+        assertTrue(retrievedTimeRecords.find { r -> r.unitOfMeasure == WorkoutUoM.YARDS && r.seconds == addedTime.seconds } != null)
+        assertTrue(retrievedTimeRecords.find { r -> r.unitOfMeasure == originalRecord.times[0].unitOfMeasure
+                && r.seconds == originalRecord.times[0].seconds } != null)
+
+        assertTrue(retrievedTimeRecords.find { r -> r.unitOfMeasure == originalRecord.times[1].unitOfMeasure
+                && r.seconds == originalRecord.times[1].seconds } != null)
     }
 
     private fun generateRecordsWithRandomTimes(stroke: String, distance: Int) : PersonalRecordWithTimes {
