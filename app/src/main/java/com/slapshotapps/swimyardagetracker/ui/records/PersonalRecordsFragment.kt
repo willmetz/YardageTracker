@@ -13,8 +13,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slapshotapps.swimyardagetracker.R
+import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
 import com.slapshotapps.swimyardagetracker.ui.history.HistoryViewModel
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_personal_records.*
 import kotlinx.android.synthetic.main.fragment_personal_records.view.*
 import javax.inject.Inject
 
@@ -29,6 +31,10 @@ class PersonalRecordsFragment : Fragment() {
     @Inject
     lateinit var viewModel: PersonalRecordsViewModel
 
+    private var _binding: FragmentPersonalRecordsBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
@@ -37,7 +43,7 @@ class PersonalRecordsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_personal_records, container, false)
+        _binding = FragmentPersonalRecordsBinding.inflate(inflater, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val decoration = DividerItemDecoration(context, layoutManager.orientation)
@@ -45,20 +51,38 @@ class PersonalRecordsFragment : Fragment() {
         if(drawable != null){
             decoration.setDrawable(drawable)
         }
-        view.records_list.layoutManager = layoutManager
-        view.records_list.addItemDecoration(decoration)
+
+        binding.recordsList.layoutManager = layoutManager
+        binding.recordsList.addItemDecoration(decoration)
 
         viewModel.allRecords.observe(viewLifecycleOwner, Observer{
-            if(it.count() > 0){
-                view.records_list.adapter = PersonalRecordsItemAdapter(it, this::onEditRecordSelected)
-            }
+            onListChanged(it)
         })
 
-        view.add_new_record.setOnClickListener {
+
+        binding.addNewRecord.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_personalRecordCrudFragment)
         }
 
-        return view
+        return binding.root
+    }
+
+    private fun onListChanged(items: List<PersonalRecordItemViewModel>){
+
+        //TODO - not best to renew the adapter as you lose scroll position, switch this over to the DiffUtil instead
+        if(items.count() > 0){
+            binding.noRecords.visibility = View.GONE
+            binding.recordsList.visibility = View.VISIBLE
+            binding.recordsList.adapter = PersonalRecordsItemAdapter(items, this::onEditRecordSelected)
+        }else{
+            binding.noRecords.visibility = View.VISIBLE
+            binding.recordsList.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel){

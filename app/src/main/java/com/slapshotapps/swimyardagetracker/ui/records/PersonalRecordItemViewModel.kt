@@ -12,6 +12,20 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
 
     val dateFormatter: SimpleDateFormat = SimpleDateFormat("M/d/yyyy", Locale.US)
 
+    val mostRecentRecordDate: Date
+        get(){
+            var recordDate = eventsWithTimes.times[0].date
+            if(eventsWithTimes.times.size > 1){
+                eventsWithTimes.times.forEach{
+                    if(it.date.after(recordDate)){
+                        recordDate = it.date
+                    }
+                }
+            }
+
+            return recordDate
+        }
+
     var event: String = ""
     get() {
         return "${eventsWithTimes.record.distance} ${eventsWithTimes.record.stroke}"

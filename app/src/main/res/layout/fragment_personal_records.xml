@@ -15,6 +15,15 @@
         tools:itemCount="3"
         tools:listitem="@layout/personal_record_line_item" />
 
+    <TextView
+        android:id="@+id/no_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        android:text="@string/no_records_yet_create_one" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_new_record"
