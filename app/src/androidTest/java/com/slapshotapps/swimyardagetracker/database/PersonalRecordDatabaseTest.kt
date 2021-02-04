@@ -108,7 +108,6 @@ class PersonalRecordDatabaseTest {
         val updatedRecordFromDb = dao.getPersonalRecordsWithTimes().blockingObserve()
 
         val updatedRecord = updatedRecordFromDb!!.get(0)
-        assertEquals(originalRecord.record.id, updatedRecord.record.id)
         assertEquals(originalRecord.record.distance, updatedRecord.record.distance)
         assertEquals(newRecord.stroke, updatedRecord.record.stroke)
 
@@ -119,6 +118,7 @@ class PersonalRecordDatabaseTest {
         assertEquals(originalRecord.times[1].seconds, updatedRecord.times[1].seconds)
     }
 
+    @Test
     fun test_addTimesToRecord() = runBlocking {
         val originalRecord = generateRecordsWithRandomTimes("Free", 100);
 
