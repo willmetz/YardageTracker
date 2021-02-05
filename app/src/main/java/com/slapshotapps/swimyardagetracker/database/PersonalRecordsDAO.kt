@@ -14,6 +14,9 @@ abstract class PersonalRecordsDAO {
     @Query("SELECT * FROM `personal-records`")
     abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
 
+    @Query("SELECT * FROM `personal-records`")
+    suspend abstract fun getAllRecords(): List<PersonalRecordWithTimes>
+
     @Insert
     suspend abstract fun insertPersonalRecord(record: PersonalRecord): Long
 

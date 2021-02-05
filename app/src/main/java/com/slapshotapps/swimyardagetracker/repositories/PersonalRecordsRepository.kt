@@ -38,4 +38,9 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
     fun getAllRecordsWithTimes() : LiveData<List<PersonalRecordWithTimes>>{
         return workoutDatabase.personalRecordDao().getPersonalRecordsWithTimes()
     }
+
+    suspend fun getAllRecords(): List<PersonalRecordWithTimes>
+    {
+        return workoutDatabase.personalRecordDao().getAllRecords()
+    }
 }
