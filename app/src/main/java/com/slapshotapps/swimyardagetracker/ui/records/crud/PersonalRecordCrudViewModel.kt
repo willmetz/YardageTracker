@@ -1,106 +1,79 @@
 package com.slapshotapps.swimyardagetracker.ui.records.crud
 
+import android.app.Person
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
-import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import com.slapshotapps.swimyardagetracker.repositories.PersonalRecordsRepository
 import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.min
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-data class RawRecord @ExperimentalTime constructor(val stroke: String?,
-                                                   val distance: Int?,
-                                                   val dateOfRecord: Date?,
-                                                   val unitOfMeasure: WorkoutUoM?,
-                                                   val recordTime: Duration?)
 
-enum class RecordCrudResult{
-    success,
-    eventAlreadyExists,
-    invalidEvent,
-    invalidDistance,
-    invalidDate,
-    invalidUnitOfMeasure,
-    invalidTime,
-    recordAdded
+
+sealed class PersonalRecordCrudEvent{
+    data class OnDateChanged(val formattedDate: String) : PersonalRecordCrudEvent()
+    data class OnNewRecordAddedSuccess(val msg: String) : PersonalRecordCrudEvent()
+    data class OnFailureToAddRecord(val msg: String) : PersonalRecordCrudEvent()
+    data class OnInvalidStroke(val msg: String) : PersonalRecordCrudEvent()
+    data class OnInvalidDistance(val msg: String) : PersonalRecordCrudEvent()
+    data class OnInvalidUnitOfMeasure(val msg: String) : PersonalRecordCrudEvent()
+    data class OnInvalidTime(val msg: String) : PersonalRecordCrudEvent()
+    data class OnRecordAlreadyExists(val msg: String): PersonalRecordCrudEvent()
+    object OnLoading : PersonalRecordCrudEvent()
 }
 
 class PersonalRecordCrudViewModel @Inject constructor(private val personalRecordsRepository: PersonalRecordsRepository){
 
+    private val personalRecordCrudEvent: MutableLiveData<PersonalRecordCrudEvent> = MutableLiveData(PersonalRecordCrudEvent.OnLoading)
 
-    val viewModelState : MutableLiveData<RecordCrudResult> = MutableLiveData(RecordCrudResult.success)
+    val viewModelEvent : LiveData<PersonalRecordCrudEvent>
+            get() = personalRecordCrudEvent
 
-    //probably won't need this
-    protected val scope = CoroutineScope(
-            Job() + Dispatchers.Main
-    )
-
-    //probably won't need this
-    fun onCleared() {
-        scope.cancel("exiting view model")
-    }
+    private val dateFormatForRecord = SimpleDateFormat("MMMM d yyyy", Locale.US)
 
 
-    @ExperimentalTime
     suspend fun onAddNewRecord(record: RawRecord){
-        if(record.stroke == null || record.stroke.isBlank()){
-            viewModelState.value = RecordCrudResult.invalidEvent
-            return
+
+        when{
+            record.stroke == null || record.stroke.isBlank() ->
+                personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnInvalidStroke("Stroke is required.")
+            record.distance == null || record.distance <= 0 ->
+                personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnInvalidDistance("Distance is required.")
+            record.unitOfMeasure == null ->
+                personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnInvalidUnitOfMeasure("Select unit of measure.")
+            record.time.minutes == 0 && record.time.seconds == 0 && record.time.milliseconds == 0 ->
+                personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnInvalidTime("Please enter a time for the record.")
+            else -> {
+                //check to see if the event is in the DB already
+                val existingRecords = personalRecordsRepository.getAllRecords()
+
+                val matchingRecord = existingRecords.firstOrNull{
+                    it.record.distance == record.distance && it.record.stroke == record.stroke
+                }
+
+                if(matchingRecord != null) {
+                    personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnRecordAlreadyExists("This event already has a record, please edit that record.")
+                    return
+                }
+
+                val newRecord = PersonalRecord(stroke = record.stroke, distance = record.distance)
+                val newRecordTime = RecordTime(recordID = 0, date = record.dateOfRecord,
+                        hours = 0, minutes = record.time.minutes, seconds = record.time.seconds,
+                        milliseconds = record.time.milliseconds, unitOfMeasure = record.unitOfMeasure)
+
+                personalRecordsRepository.addNewRecordWithTime(newRecord, newRecordTime)
+
+                personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnNewRecordAddedSuccess("Added record for ${record.distance} ${record.stroke}!!")
+            }
         }
-
-        if(record.distance == null || record.distance <= 0){
-            viewModelState.value = RecordCrudResult.invalidDistance
-            return
-        }
-
-        if(record.dateOfRecord == null){
-            viewModelState.value = RecordCrudResult.invalidDate
-            return
-        }
-
-        if(record.unitOfMeasure == null){
-            viewModelState.value = RecordCrudResult.invalidUnitOfMeasure
-            return
-        }
-
-        if(record.recordTime == null){
-            viewModelState.value = RecordCrudResult.invalidTime
-            return
-        }
-
-        //check to see if the event is in the DB already
-        val existingRecords = personalRecordsRepository.getAllRecords()
-
-        val matchingRecord = existingRecords.firstOrNull{
-            it.record.distance == record.distance && it.record.stroke == record.stroke
-        }
-
-        if(matchingRecord != null) {
-            viewModelState.value = RecordCrudResult.eventAlreadyExists
-            return
-        }
-
-        val newRecord = PersonalRecord(stroke = record.stroke, distance = record.distance)
-        var hours = 0
-        var minutes = 0
-        var seconds = 0
-        var milliseconds = 0
-        record.recordTime.toComponents { h, m, s, ns ->
-            hours = h
-            minutes = m
-            seconds = s
-            milliseconds = ns/1000
-        }
-        val newRecordTime = RecordTime(recordID = 0, date = record.dateOfRecord,
-                hours = hours, minutes = minutes, seconds = seconds, milliseconds = milliseconds, unitOfMeasure = record.unitOfMeasure)
-
-        personalRecordsRepository.addNewRecordWithTime(newRecord, newRecordTime)
-
-        RecordCrudResult.recordAdded
     }
+
+    fun onDateChanged(newRecordDate: Date){
+        personalRecordCrudEvent.value = PersonalRecordCrudEvent.OnDateChanged(dateFormatForRecord.format(newRecordDate))
+    }
+
 }
