@@ -1,10 +1,10 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
+import java.util.Date
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.util.*
 
 class WorkoutDateViewModelTest {
 
@@ -16,9 +16,8 @@ class WorkoutDateViewModelTest {
         workoutManager = WorkoutManager()
     }
 
-
     @Test
-    fun test_workoutDateSavedOnChange(){
+    fun test_workoutDateSavedOnChange() {
         val date = Date()
 
         val viewModel = WorkoutDateViewModel(workoutManager)

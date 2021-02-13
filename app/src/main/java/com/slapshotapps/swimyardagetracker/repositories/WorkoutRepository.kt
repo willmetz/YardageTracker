@@ -9,19 +9,16 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import io.reactivex.Completable
 import io.reactivex.Maybe
-import io.reactivex.functions.BiFunction
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
-
 
 class WorkoutRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
 
     fun addWorkout(workout: Workout, workoutSets: List<WorkoutSet>): Completable {
         return workoutDatabase.workoutDao().insert(workout)
                 .flatMapCompletable { workoutID ->
-                    //need to set the workout ID to the newly inserted workout for each set
+                    // need to set the workout ID to the newly inserted workout for each set
                     workoutSets.forEach({
                         it.workoutID = workoutID
                     })
@@ -41,7 +38,6 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
                     Maybe.just(WorkoutWithDetails(foundWorkout, workoutSets))
                 }
     }
-
 
     fun getWorkoutsWithDetails(): LiveData<List<WorkoutWithDetails>> {
         val workouts = workoutDatabase.workoutDao().getWorkouts()

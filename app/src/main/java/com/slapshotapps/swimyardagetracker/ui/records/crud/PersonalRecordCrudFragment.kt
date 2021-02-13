@@ -4,22 +4,17 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordCrudBinding
-import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
-import com.slapshotapps.swimyardagetracker.ui.records.PersonalRecordsViewModel
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.time.Duration
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -34,28 +29,30 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
     @Inject
     lateinit var viewModel: PersonalRecordCrudViewModel
 
-
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentPersonalRecordCrudBinding.inflate( inflater, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentPersonalRecordCrudBinding.inflate(inflater, container, false)
 
-        binding.dateEntry.setOnClickListener{
+        binding.dateEntry.setOnClickListener {
             val calendar = Calendar.getInstance()
-            val  datePickerDialog = DatePickerDialog(context!!, this, calendar.get(Calendar.YEAR),
+            val datePickerDialog = DatePickerDialog(context!!, this, calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
             datePickerDialog.show()
         }
 
         viewModel.viewModelEvent.observe(viewLifecycleOwner, androidx.lifecycle.Observer { onViewModelEvent(it) })
 
-        binding.save.setOnClickListener{
-            viewLifecycleOwner.lifecycleScope.launch{
-                //need some work here
+        binding.save.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                // need some work here
 //                val recordMinutes = binding.minutes.editText?.text.toString().toInt() ?: 0
 //                val recordSeconds = binding.seconds.editText?.text.toString().toInt() ?: 0
 //                val recordMilliseconds = binding.milliseconds.editText?.text.toString().toInt() ?: 0
@@ -68,8 +65,8 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
         return binding.root
     }
 
-    fun onViewModelEvent(event: PersonalRecordCrudEvent){
-        when(event){
+    fun onViewModelEvent(event: PersonalRecordCrudEvent) {
+        when (event) {
             is PersonalRecordCrudEvent.OnDateChanged -> {
                 binding.dateEntry.text = event.formattedDate
             }
@@ -84,7 +81,6 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
         }
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -97,5 +93,4 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
 
         viewModel.onDateChanged(dateOfRecord.time)
     }
-
 }

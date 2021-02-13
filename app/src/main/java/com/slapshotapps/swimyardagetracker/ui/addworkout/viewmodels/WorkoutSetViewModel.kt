@@ -8,9 +8,7 @@ import com.slapshotapps.swimyardagetracker.utils.KeyboardActionButtonListener
 import java.util.*
 import javax.inject.Inject
 
-
 class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) : KeyboardActionButtonListener {
-
 
     interface WorkoutSetViewModelListener {
         fun onRepsEntryError(resID: Int)
@@ -28,7 +26,6 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
     var listener: WorkoutSetViewModelListener? = null
 
     private val workoutSets = ArrayList<WorkoutSet>()
-
 
     fun onAddAnotherSetTapped() {
         addAnotherSet()
@@ -57,7 +54,7 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
     }
 
     override fun onDoneSelected() {
-       addAnotherSet()
+        addAnotherSet()
     }
 
     private fun addAnotherSet() {

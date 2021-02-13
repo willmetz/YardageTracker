@@ -20,8 +20,7 @@ class HomeFragment : Fragment(), HomeViewModel.HomeViewModelListener {
         fun newInstance() = HomeFragment()
     }
 
-
-    private var binding: HomeFragmentBinding ?= null
+    private var binding: HomeFragmentBinding ? = null
 
     @Inject
     lateinit var viewModel: HomeViewModel
@@ -38,8 +37,11 @@ class HomeFragment : Fragment(), HomeViewModel.HomeViewModelListener {
         binding?.item = viewModel
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
 
         return binding!!.root
@@ -54,7 +56,7 @@ class HomeFragment : Fragment(), HomeViewModel.HomeViewModelListener {
     override fun onDestroy() {
         super.onDestroy()
 
-        binding = null;
+        binding = null
     }
 
     override fun onStop() {

@@ -8,10 +8,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.main_activity.*
 
-
 class MainActivity : AppCompatActivity() {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this); // Call before super!
@@ -20,13 +17,12 @@ class MainActivity : AppCompatActivity() {
         setupNavigation()
     }
 
-
     private fun setupNavigation() {
         val navController = findNavController(this, R.id.main_nav_fragment)
         setupWithNavController(bottom_nav, navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id){
+            when (destination.id) {
                 R.id.homeFragment, R.id.historyFragment, R.id.personalRecordsFragment -> bottom_nav.visibility = View.VISIBLE
                 else -> bottom_nav.visibility = View.GONE
             }

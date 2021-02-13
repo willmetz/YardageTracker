@@ -10,9 +10,7 @@ import dagger.android.HasActivityInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
-
-class SwimYardageTrackerApp: Application(), HasActivityInjector, HasSupportFragmentInjector {
-
+class SwimYardageTrackerApp : Application(), HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>

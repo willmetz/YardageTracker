@@ -5,12 +5,12 @@ import androidx.lifecycle.Transformations
 import com.slapshotapps.swimyardagetracker.repositories.PersonalRecordsRepository
 import javax.inject.Inject
 
-class PersonalRecordsViewModel @Inject constructor(private val personalRecordsRepository: PersonalRecordsRepository){
-    val allRecords : LiveData<ArrayList<PersonalRecordItemViewModel>> =
-            Transformations.map(personalRecordsRepository.getAllRecordsWithTimes()){
+class PersonalRecordsViewModel @Inject constructor(private val personalRecordsRepository: PersonalRecordsRepository) {
+    val allRecords: LiveData<ArrayList<PersonalRecordItemViewModel>> =
+            Transformations.map(personalRecordsRepository.getAllRecordsWithTimes()) {
 
                 val records = ArrayList<PersonalRecordItemViewModel>()
-                if(it.isNotEmpty()){
+                if (it.isNotEmpty()) {
                     it.forEach { personalRecordWithTimes ->
                         records.add(PersonalRecordItemViewModel(personalRecordWithTimes))
                     }
@@ -20,7 +20,4 @@ class PersonalRecordsViewModel @Inject constructor(private val personalRecordsRe
 
                 records
     }
-
 }
-
-

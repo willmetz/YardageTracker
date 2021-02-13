@@ -4,8 +4,7 @@ import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryItemViewModel
 import com.slapshotapps.swimyardagetracker.widgets.DataBindingBaseAdapter
 
-
-class WorkoutSummaryAdapter(private val workoutSummaryItemViewModels:List<WorkoutSummaryItemViewModel>):
+class WorkoutSummaryAdapter(private val workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>) :
         DataBindingBaseAdapter() {
 
     override fun getObjForPosition(position: Int): Any {

@@ -7,7 +7,6 @@ import com.slapshotapps.swimyardagetracker.extensions.setSpinnerEntries
 import com.slapshotapps.swimyardagetracker.extensions.setSpinnerItemSelectedListener
 import com.slapshotapps.swimyardagetracker.extensions.setSpinnerValue
 
-
 @BindingAdapter("entries")
 fun Spinner.setEntries(entries: List<Any>?) {
     setSpinnerEntries(entries)

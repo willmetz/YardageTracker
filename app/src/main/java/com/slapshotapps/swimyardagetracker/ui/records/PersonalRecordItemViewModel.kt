@@ -1,23 +1,21 @@
 package com.slapshotapps.swimyardagetracker.ui.records
 
-import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWithTimes) {
 
     val dateFormatter: SimpleDateFormat = SimpleDateFormat("M/d/yyyy", Locale.US)
 
     val mostRecentRecordDate: Date
-        get(){
+        get() {
             var recordDate = eventsWithTimes.times[0].date
-            if(eventsWithTimes.times.size > 1){
-                eventsWithTimes.times.forEach{
-                    if(it.date.after(recordDate)){
+            if (eventsWithTimes.times.size > 1) {
+                eventsWithTimes.times.forEach {
+                    if (it.date.after(recordDate)) {
                         recordDate = it.date
                     }
                 }
@@ -39,7 +37,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
     private set
 
     var yardsDate: String = ""
-    get(){
+    get() {
         return getDateForRecord(WorkoutUoM.YARDS)
     }
     private set
@@ -51,80 +49,79 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
         private set
 
     var metricDate: String = ""
-        get(){
+        get() {
             return getDateForRecord(WorkoutUoM.METERS)
         }
         private set
 
-    private fun getDateForRecord(unitOfMeasure: WorkoutUoM) : String{
-        return when(unitOfMeasure){
+    private fun getDateForRecord(unitOfMeasure: WorkoutUoM): String {
+        return when (unitOfMeasure) {
             WorkoutUoM.METERS -> {
-                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.METERS}
-                if(record != null) {
+                val record = eventsWithTimes.times.firstOrNull { t -> t.unitOfMeasure == WorkoutUoM.METERS }
+                if (record != null) {
                     dateFormatter.format(record.date)
-                }else {
+                } else {
                     ""
                 }
             }
             WorkoutUoM.YARDS -> {
-                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.YARDS}
-                if(record == null) {
+                val record = eventsWithTimes.times.firstOrNull { t -> t.unitOfMeasure == WorkoutUoM.YARDS }
+                if (record == null) {
                     ""
-                }else {
+                } else {
                     dateFormatter.format(record.date)
                 }
             }
         }
     }
 
-
-    private fun getTimeForRecord(uOfm: WorkoutUoM) : String{
-        return when(uOfm){
+    private fun getTimeForRecord(uOfm: WorkoutUoM): String {
+        return when (uOfm) {
             WorkoutUoM.METERS -> {
-                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.METERS}
-                if(record == null) {
+                val record = eventsWithTimes.times.firstOrNull { t -> t.unitOfMeasure == WorkoutUoM.METERS }
+                if (record == null) {
                     ""
-                }else {
+                } else {
                     "Meters: " + getHours(record) + getMinutes(record) + getSeconds(record) + getMilliseconds(record)
                 }
             }
             WorkoutUoM.YARDS -> {
-                val record = eventsWithTimes.times.firstOrNull{t -> t.unitOfMeasure == WorkoutUoM.YARDS}
-                if(record == null) {
+                val record = eventsWithTimes.times.firstOrNull { t -> t.unitOfMeasure == WorkoutUoM.YARDS }
+                if (record == null) {
                     ""
-                }else {
+                } else {
                     "Yards: " + getHours(record) + getMinutes(record) + getSeconds(record) + getMilliseconds(record)
                 }
             }
         }
     }
 
-    private fun getHours(time: RecordTime) : String{
-        return when{
+    private fun getHours(time: RecordTime): String {
+        return when {
             time.hours <= 0 -> ""
-            else -> String.format("%02d:",time.hours)
+            else -> String.format("%02d:", time.hours)
         }
     }
 
-    private fun getMinutes(time: RecordTime) : String{
-        return when{
+    private fun getMinutes(time: RecordTime): String {
+        return when {
             time.minutes <= 0 -> ""
-            else -> String.format("%02d:",time.minutes)
+            else -> String.format("%02d:", time.minutes)
         }
     }
 
-    private fun getSeconds(time: RecordTime) : String{
-        return when{
+    private fun getSeconds(time: RecordTime): String {
+        return when {
             time.hours <= 0 && time.minutes > 0 -> "00:"
             time.hours <= 0 -> "00"
-            else -> String.format("%02d:",time.seconds)
+            else -> String.format("%02d:", time.seconds)
         }
     }
 
-    private fun getMilliseconds(time: RecordTime) : String{
-        return when{
+    private fun getMilliseconds(time: RecordTime): String {
+        return when {
             time.hours <= 0 -> ""
-            else -> String.format("%02d",time.milliseconds)
+            else -> String.format("%02d", time.milliseconds)
         }
     }
 }

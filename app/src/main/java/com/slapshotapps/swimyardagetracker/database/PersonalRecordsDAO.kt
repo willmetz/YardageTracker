@@ -6,8 +6,6 @@ import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 
-
-
 @Dao
 abstract class PersonalRecordsDAO {
 
@@ -15,34 +13,31 @@ abstract class PersonalRecordsDAO {
     abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
 
     @Query("SELECT * FROM `personal-records`")
-    suspend abstract fun getAllRecords(): List<PersonalRecordWithTimes>
+    abstract suspend fun getAllRecords(): List<PersonalRecordWithTimes>
 
     @Insert
-    suspend abstract fun insertPersonalRecord(record: PersonalRecord): Long
+    abstract suspend fun insertPersonalRecord(record: PersonalRecord): Long
 
     @Insert
-    suspend abstract fun insertRecordTime(time: RecordTime)
+    abstract suspend fun insertRecordTime(time: RecordTime)
 
     @Insert
-    suspend abstract fun insertRecordTimes(time: List<RecordTime>)
+    abstract suspend fun insertRecordTimes(time: List<RecordTime>)
 
     @Update
-    suspend abstract fun updatePersonalRecord(record: PersonalRecord)
+    abstract suspend fun updatePersonalRecord(record: PersonalRecord)
 
     @Update
-    suspend abstract fun updateRecordTime(time: RecordTime)
+    abstract suspend fun updateRecordTime(time: RecordTime)
 
     @Delete
-    suspend abstract fun deleteRecordAndTimes(record: PersonalRecord)
+    abstract suspend fun deleteRecordAndTimes(record: PersonalRecord)
 
-    suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>)
-    {
+    suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>) {
         val recordId = insertPersonalRecord(record)
 
-        times.forEach{r -> r.recordID = recordId}
+        times.forEach { r -> r.recordID = recordId }
 
         insertRecordTimes(times)
     }
-
-
 }

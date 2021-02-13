@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.slapshotapps.swimyardagetracker.databinding.PersonalRecordLineItemBinding
 
-
-class PersonalRecordsItemAdapter(private val items: List<PersonalRecordItemViewModel>,
-                                 private val onRecordSelected: (PersonalRecordItemViewModel)->Unit):
+class PersonalRecordsItemAdapter(
+    private val items: List<PersonalRecordItemViewModel>,
+    private val onRecordSelected: (PersonalRecordItemViewModel) -> Unit
+) :
         RecyclerView.Adapter<PersonalRecordsItemAdapter.PersonalRecordViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonalRecordViewHolder {
@@ -21,7 +22,7 @@ class PersonalRecordsItemAdapter(private val items: List<PersonalRecordItemViewM
     }
 
     override fun onBindViewHolder(holder: PersonalRecordViewHolder, position: Int) {
-        with(items[position]){
+        with(items[position]) {
             holder.binding.eventDescription.text = event
             holder.binding.metricDate.text = metricDate
             holder.binding.metricTime.text = metricTime
@@ -34,7 +35,6 @@ class PersonalRecordsItemAdapter(private val items: List<PersonalRecordItemViewM
         }
     }
 
-    inner class PersonalRecordViewHolder(val binding: PersonalRecordLineItemBinding)
-        : RecyclerView.ViewHolder(binding.root){}
-
+    inner class PersonalRecordViewHolder(val binding: PersonalRecordLineItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

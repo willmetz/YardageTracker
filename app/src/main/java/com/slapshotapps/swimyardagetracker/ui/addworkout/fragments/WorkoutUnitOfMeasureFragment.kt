@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +13,6 @@ import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeas
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -36,8 +34,11 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
         viewModel.listener = this
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_unit_of_measure, container, false)
 
@@ -45,7 +46,6 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
 
         return binding.root
     }
-
 
     override fun onAddWorkouts() {
         NavHostFragment.findNavController(this).navigate(R.id.action_workoutUnitOfMeasure_to_workoutSetFragment)

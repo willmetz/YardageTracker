@@ -10,9 +10,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-
-class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: WorkoutManager,
-                                                  private val workoutRepository: WorkoutRepository) {
+class WorkoutSummaryViewModel @Inject constructor(
+    private val workoutManager: WorkoutManager,
+    private val workoutRepository: WorkoutRepository
+) {
 
     interface WorkoutSummaryListener {
         fun onWorkoutDataReady(workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>)
@@ -25,7 +26,6 @@ class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: Wo
     private var disposables: CompositeDisposable? = null
 
     val workoutDateText = ObservableField<String>("")
-
 
     fun onViewReady() {
         disposables = CompositeDisposable()
@@ -41,7 +41,7 @@ class WorkoutSummaryViewModel @Inject constructor(private val workoutManager: Wo
     }
 
     fun onSubmitTapped() {
-        //save the workout
+        // save the workout
         val disposable = workoutRepository.addWorkout(workoutManager.getWorkout(), workoutManager.getAllWorkoutSets())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

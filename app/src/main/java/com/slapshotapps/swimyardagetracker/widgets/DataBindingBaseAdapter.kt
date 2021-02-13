@@ -7,19 +7,22 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.slapshotapps.swimyardagetracker.BR
 
-
 abstract class DataBindingBaseAdapter : RecyclerView.Adapter<DataBindingBaseAdapter.MyViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MyViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = DataBindingUtil.inflate<ViewDataBinding>(
                 layoutInflater, viewType, parent, false)
         return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder,
-                                  position: Int) {
+    override fun onBindViewHolder(
+        holder: MyViewHolder,
+        position: Int
+    ) {
         val obj = getObjForPosition(position)
         holder.bind(obj)
     }

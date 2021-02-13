@@ -6,7 +6,6 @@ import androidx.arch.core.executor.TaskExecutor
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-
 class IsMainExecutorRule : TestWatcher() {
 
     val defaultExecutor = DefaultTaskExecutor()

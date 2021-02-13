@@ -1,12 +1,10 @@
 package com.slapshotapps.swimyardagetracker.ui.history
 
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import dagger.android.support.AndroidSupportInjection
-import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.fragment_history.*
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.fragment_history.*
 
 /**
  * A simple [Fragment] subclass.
@@ -33,14 +29,16 @@ class HistoryFragment : Fragment() {
     @Inject
     lateinit var viewModel: HistoryViewModel
 
-
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_history, container, false)
 
@@ -52,18 +50,16 @@ class HistoryFragment : Fragment() {
 
         viewModel.allWorkouts.observe(viewLifecycleOwner, Observer {
 
-            if(it.isEmpty()){
-                no_history_view.visibility = View.VISIBLE;
-            }else{
-                no_history_view.visibility = View.GONE;
+            if (it.isEmpty()) {
+                no_history_view.visibility = View.VISIBLE
+            } else {
+                no_history_view.visibility = View.GONE
                 history_list.adapter = WorkoutHistoryAdapter(it)
             }
-
         })
 
         return view
     }
-
 
     companion object {
         /**

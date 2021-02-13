@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -23,7 +22,6 @@ import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSumma
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [WorkoutSummaryFragment.newInstance] factory method to
@@ -42,8 +40,11 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_summary, container, false)
 
         binding.item = viewModel

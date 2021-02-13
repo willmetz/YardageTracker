@@ -9,19 +9,18 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-
 @Module
 class AppModule {
 
     @Provides
     @Singleton
-    fun providesWorkoutMananger(): WorkoutManager{
+    fun providesWorkoutMananger(): WorkoutManager {
         return WorkoutManager()
     }
 
     @Provides
     @Singleton
-    fun providesDatabase(application: Application): WorkoutDatabase{
+    fun providesDatabase(application: Application): WorkoutDatabase {
         return Room.databaseBuilder(application.applicationContext, WorkoutDatabase::class.java, "WorkoutDB")
                 .addMigrations(MIGRATION_1_2)
                 .build()

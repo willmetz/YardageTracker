@@ -10,11 +10,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.slapshotapps.swimyardagetracker.database.extensions.blockingObserve
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
+import java.util.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
-
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseMigrationTest {
@@ -44,11 +43,10 @@ class DatabaseMigrationTest {
             contentValues.put("workoutDate", recordDate.time)
             contentValues.put("updateDate", recordDate.time)
 
-            insert("workouts", SQLiteDatabase.CONFLICT_REPLACE, contentValues);
+            insert("workouts", SQLiteDatabase.CONFLICT_REPLACE, contentValues)
             // Prepare for the next version.
             close()
         }
-
 
         helper.runMigrationsAndValidate(TEST_DB, 2, false, MIGRATION_1_2)
 
@@ -69,6 +67,4 @@ class DatabaseMigrationTest {
         assert(workouts?.get(0)?.id == 1L)
         assert(workouts?.get(0)?.uoM == WorkoutUoM.YARDS)
     }
-
-
 }

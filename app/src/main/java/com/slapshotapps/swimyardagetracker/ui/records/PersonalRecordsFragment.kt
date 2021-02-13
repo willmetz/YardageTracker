@@ -2,11 +2,11 @@ package com.slapshotapps.swimyardagetracker.ui.records
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
-import com.slapshotapps.swimyardagetracker.ui.history.HistoryViewModel
 import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 import kotlinx.android.synthetic.main.fragment_personal_records.*
 import kotlinx.android.synthetic.main.fragment_personal_records.view.*
-import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -41,24 +39,26 @@ class PersonalRecordsFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentPersonalRecordsBinding.inflate(inflater, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val decoration = DividerItemDecoration(context, layoutManager.orientation)
         val drawable = ContextCompat.getDrawable(context!!, R.drawable.transparent_spacer)
-        if(drawable != null){
+        if (drawable != null) {
             decoration.setDrawable(drawable)
         }
 
         binding.recordsList.layoutManager = layoutManager
         binding.recordsList.addItemDecoration(decoration)
 
-        viewModel.allRecords.observe(viewLifecycleOwner, Observer{
+        viewModel.allRecords.observe(viewLifecycleOwner, Observer {
             onListChanged(it)
         })
-
 
         binding.addNewRecord.setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_personalRecordCrudFragment)
@@ -67,14 +67,14 @@ class PersonalRecordsFragment : Fragment() {
         return binding.root
     }
 
-    private fun onListChanged(items: List<PersonalRecordItemViewModel>){
+    private fun onListChanged(items: List<PersonalRecordItemViewModel>) {
 
-        //TODO - not best to renew the adapter as you lose scroll position, switch this over to the DiffUtil instead
-        if(items.count() > 0){
+        // TODO - not best to renew the adapter as you lose scroll position, switch this over to the DiffUtil instead
+        if (items.count() > 0) {
             binding.noRecords.visibility = View.GONE
             binding.recordsList.visibility = View.VISIBLE
             binding.recordsList.adapter = PersonalRecordsItemAdapter(items, this::onEditRecordSelected)
-        }else{
+        } else {
             binding.noRecords.visibility = View.VISIBLE
             binding.recordsList.visibility = View.GONE
         }
@@ -85,8 +85,8 @@ class PersonalRecordsFragment : Fragment() {
         _binding = null
     }
 
-    private fun onEditRecordSelected(item: PersonalRecordItemViewModel){
-        //TODO, need to pass the data
+    private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
+        // TODO, need to pass the data
         NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_personalRecordCrudFragment)
     }
 

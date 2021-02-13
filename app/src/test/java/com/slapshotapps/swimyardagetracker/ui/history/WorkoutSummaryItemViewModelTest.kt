@@ -4,11 +4,11 @@ import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
+import java.util.Date
+import kotlin.collections.ArrayList
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.util.*
-import kotlin.collections.ArrayList
 
 class WorkoutSummaryItemViewModelTest {
 
@@ -16,8 +16,6 @@ class WorkoutSummaryItemViewModelTest {
 
     @Before
     fun setUp() {
-
-
     }
 
     @Test

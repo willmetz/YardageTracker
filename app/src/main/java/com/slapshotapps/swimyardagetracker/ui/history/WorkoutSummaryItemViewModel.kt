@@ -3,7 +3,6 @@ package com.slapshotapps.swimyardagetracker.ui.history
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 
-
 class WorkoutSummaryItemViewModel(val workout: WorkoutWithDetails) {
 
     var totalDistanceWithUoM: String = ""
@@ -36,5 +35,4 @@ class WorkoutSummaryItemViewModel(val workout: WorkoutWithDetails) {
             return strokes
         }
         private set
-
 }
