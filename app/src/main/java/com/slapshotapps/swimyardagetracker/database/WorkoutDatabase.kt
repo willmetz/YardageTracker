@@ -9,6 +9,7 @@ import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import io.reactivex.Completable
 
 @Database(entities = arrayOf(Workout::class, WorkoutSet::class, PersonalRecord::class, RecordTime::class), version = 2, exportSchema = true)
 @TypeConverters(DatabaseTypeConverters::class)
