@@ -1,0 +1,12 @@
+
+task installGitHook(type: Copy) {
+    from file("$rootProject.rootDir/scripts/klint-precommit-hook")
+    into file("$rootProject.rootDir/.git/hooks")
+    fileMode 0777
+}
+
+tasks.getByPath(':app:preBuild').dependsOn installGitHook
+tasks.getByPath(':app:preBuild').dependsOn ktlintFormat
+
+
+check.dependsOn ktlint
