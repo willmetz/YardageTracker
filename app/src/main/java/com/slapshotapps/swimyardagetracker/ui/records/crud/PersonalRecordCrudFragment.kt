@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordCrudBinding
+import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import dagger.android.support.AndroidSupportInjection
 import java.util.*
 import javax.inject.Inject
@@ -52,14 +54,15 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
 
         binding.save.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                // need some work here
-//                val recordMinutes = binding.minutes.editText?.text.toString().toInt() ?: 0
-//                val recordSeconds = binding.seconds.editText?.text.toString().toInt() ?: 0
-//                val recordMilliseconds = binding.milliseconds.editText?.text.toString().toInt() ?: 0
-//
-//                val timeForRecord = TimeForPersonalRecord(recordMinutes, recordSeconds, recordMilliseconds)
-//                val record = RawRecord(binding.stroke, binding.distance, dateOfRecord.time, binding.unitOfMeasureLabel, binding.timeEntry)
-//                viewModel.onAddNewRecord()
+                val recordMinutes = binding.minutes.editText?.text.toString().toInt() ?: 0
+                val recordSeconds = binding.seconds.editText?.text.toString().toInt() ?: 0
+                val recordMilliseconds = binding.milliseconds.editText?.text.toString().toInt() ?: 0
+
+                val timeForRecord = TimeForPersonalRecord(recordMinutes, recordSeconds, recordMilliseconds)
+                val record = RawRecord(binding.stroke.editText.toString(),
+                    binding.distance.editText.toString().toInt(),
+                    Date(), WorkoutUoM.YARDS, timeForRecord)
+                viewModel.onAddNewRecord(record)
             }
         }
         return binding.root
@@ -72,12 +75,14 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
             }
             is PersonalRecordCrudEvent.OnNewRecordAddedSuccess -> TODO()
             is PersonalRecordCrudEvent.OnFailureToAddRecord -> TODO()
-            is PersonalRecordCrudEvent.OnInvalidStroke -> TODO()
-            is PersonalRecordCrudEvent.OnInvalidDistance -> TODO()
-            is PersonalRecordCrudEvent.OnInvalidUnitOfMeasure -> TODO()
-            is PersonalRecordCrudEvent.OnInvalidTime -> TODO()
-            is PersonalRecordCrudEvent.OnRecordAlreadyExists -> TODO()
-            PersonalRecordCrudEvent.OnLoading -> TODO()
+            is PersonalRecordCrudEvent.OnInvalidStroke -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            is PersonalRecordCrudEvent.OnInvalidDistance -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            is PersonalRecordCrudEvent.OnInvalidUnitOfMeasure -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            is PersonalRecordCrudEvent.OnInvalidTime -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            is PersonalRecordCrudEvent.OnRecordAlreadyExists -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            PersonalRecordCrudEvent.OnLoading -> {
+                // show spinner?
+            }
         }
     }
 
