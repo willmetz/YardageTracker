@@ -1,6 +1,6 @@
 
 task installGitHook(type: Copy) {
-    from file("$rootProject.rootDir/scripts/klint-precommit-hook")
+    from file("$rootProject.rootDir/scripts/pre-commit")
     into file("$rootProject.rootDir/.git/hooks")
     fileMode 0777
 }
