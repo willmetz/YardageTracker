@@ -54,14 +54,14 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
 
         binding.save.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                val recordMinutes = binding.minutes.editText?.text.toString().toInt() ?: 0
-                val recordSeconds = binding.seconds.editText?.text.toString().toInt() ?: 0
-                val recordMilliseconds = binding.milliseconds.editText?.text.toString().toInt() ?: 0
+                val recordMinutes = binding.minutes.editText?.text.toString().toIntOrNull() ?: 0
+                val recordSeconds = binding.seconds.editText?.text.toString().toIntOrNull() ?: 0
+                val recordMilliseconds = binding.milliseconds.editText?.text.toString().toIntOrNull() ?: 0
+                val distance = binding.distance.editText.toString().toIntOrNull() ?: 0
 
                 val timeForRecord = TimeForPersonalRecord(recordMinutes, recordSeconds, recordMilliseconds)
                 val record = RawRecord(binding.stroke.editText.toString(),
-                    binding.distance.editText.toString().toInt(),
-                    Date(), WorkoutUoM.YARDS, timeForRecord)
+                    distance, Date(), WorkoutUoM.YARDS, timeForRecord)
                 viewModel.onAddNewRecord(record)
             }
         }
@@ -75,11 +75,11 @@ class PersonalRecordCrudFragment : Fragment(), OnDateSetListener {
             }
             is PersonalRecordCrudEvent.OnNewRecordAddedSuccess -> TODO()
             is PersonalRecordCrudEvent.OnFailureToAddRecord -> TODO()
-            is PersonalRecordCrudEvent.OnInvalidStroke -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
-            is PersonalRecordCrudEvent.OnInvalidDistance -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
-            is PersonalRecordCrudEvent.OnInvalidUnitOfMeasure -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
-            is PersonalRecordCrudEvent.OnInvalidTime -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
-            is PersonalRecordCrudEvent.OnRecordAlreadyExists -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT)
+            is PersonalRecordCrudEvent.OnInvalidStroke -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
+            is PersonalRecordCrudEvent.OnInvalidDistance -> binding.distance.error = event.msg
+            is PersonalRecordCrudEvent.OnInvalidUnitOfMeasure -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
+            is PersonalRecordCrudEvent.OnInvalidTime -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
+            is PersonalRecordCrudEvent.OnRecordAlreadyExists -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
             PersonalRecordCrudEvent.OnLoading -> {
                 // show spinner?
             }
