@@ -52,12 +52,11 @@ android {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
-    dataBinding {
-        enabled = true
-    }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
+
     buildTypes {
         release {
             minifyEnabled true

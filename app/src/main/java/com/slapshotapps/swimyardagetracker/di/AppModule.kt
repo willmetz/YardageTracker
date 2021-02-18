@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.slapshotapps.swimyardagetracker.database.MIGRATION_1_2
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
+import com.slapshotapps.swimyardagetracker.utils.StringProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -25,4 +26,8 @@ class AppModule {
                 .addMigrations(MIGRATION_1_2)
                 .build()
     }
+
+    @Provides
+    @Singleton
+    fun providesStrings(application: Application): StringProvider = StringProvider(application)
 }

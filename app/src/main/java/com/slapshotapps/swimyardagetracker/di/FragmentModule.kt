@@ -7,7 +7,7 @@ import com.slapshotapps.swimyardagetracker.ui.addworkout.fragments.WorkoutUnitOf
 import com.slapshotapps.swimyardagetracker.ui.history.HistoryFragment
 import com.slapshotapps.swimyardagetracker.ui.home.HomeFragment
 import com.slapshotapps.swimyardagetracker.ui.records.PersonalRecordsFragment
-import com.slapshotapps.swimyardagetracker.ui.records.crud.PersonalRecordCrudFragment
+import com.slapshotapps.swimyardagetracker.ui.records.newRecord.AddNewPersonalRecordFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -36,5 +36,5 @@ abstract class FragmentModule {
     abstract fun contributePersonalRecordsFragment(): PersonalRecordsFragment
 
     @ContributesAndroidInjector
-    abstract fun contributePersonalRecordsCrudFragment(): PersonalRecordCrudFragment
+    abstract fun contributePersonalRecordsCrudFragment(): AddNewPersonalRecordFragment
 }

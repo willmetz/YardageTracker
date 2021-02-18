@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/personalRecordCrudFragment"
-        android:name="com.slapshotapps.swimyardagetracker.ui.records.crud.PersonalRecordCrudFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.records.newRecord.AddNewPersonalRecordFragment"
         android:label="fragment_personal_record_crud"
         tools:layout="@layout/fragment_personal_record_crud" />
 </navigation>

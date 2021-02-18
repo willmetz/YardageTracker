@@ -31,4 +31,12 @@
     <string name="add_new_personal_record">Add new personal record</string>
     <string name="save">save</string>
     <string name="no_records_yet_create_one">No records yet, create one!!</string>
+    <string name="stroke_required">Stroke is required.</string>
+    <string name="distance_required">Distance is required.</string>
+    <string name="unit_of_measure_required">Select unit of measure.</string>
+    <string name="time_required">Please enter a time for the record.</string>
+    <string name="date_required">Date is required</string>
+    <string name="record_already_exists_error">This event already has a record, please edit that record.</string>
+
+    <string name="record_added_success">Added record for %1$d %2$s!!</string>
 </resources>
