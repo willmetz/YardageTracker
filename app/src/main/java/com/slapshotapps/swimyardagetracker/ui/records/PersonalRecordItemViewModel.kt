@@ -72,6 +72,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
                     dateFormatter.format(record.date)
                 }
             }
+            else -> ""
         }
     }
 
@@ -93,6 +94,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
                     "Yards: " + getHours(record) + getMinutes(record) + getSeconds(record) + getMilliseconds(record)
                 }
             }
+            else -> ""
         }
     }
 

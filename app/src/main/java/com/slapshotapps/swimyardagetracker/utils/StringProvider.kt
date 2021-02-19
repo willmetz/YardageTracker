@@ -8,5 +8,5 @@ class StringProvider @Inject constructor(val app: Application) {
 
     fun getString(@StringRes id: Int): String = app.getString(id)
 
-    fun getString(@StringRes id: Int, vararg arguments: Any): String = app.getString(id, arguments)
+    fun getString(@StringRes id: Int, vararg arguments: Any): String = app.getString(id, *arguments)
 }

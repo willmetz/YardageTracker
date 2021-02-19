@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,6 +19,9 @@
         android:hint="@string/distance">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/distanceInput"
+            android:nextFocusDown="@id/strokeInput"
+            android:maxLines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -36,6 +40,9 @@
         android:hint="@string/stroke">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/strokeInput"
+            android:maxLines="1"
+            android:nextFocusDown="@+id/minutesInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -43,12 +50,92 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/minutes"
+        app:layout_constraintTop_toBottomOf="@id/stroke"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/seconds"
+        android:nextFocusDown="@+id/seconds"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Min">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/minutesInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:nextFocusDown="@+id/secondsInput"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:maxLength="2"
+            tools:text="22"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/seconds"
+        app:layout_constraintTop_toBottomOf="@id/stroke"
+        app:layout_constraintStart_toEndOf="@+id/minutes"
+        app:layout_constraintEnd_toStartOf="@+id/milliseconds"
+        android:nextFocusDown="@+id/milliseconds"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Sec">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/secondsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/millisecondsInput"
+            android:maxLines="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:maxLength="2"
+            tools:text="35"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/milliseconds"
+        app:layout_constraintTop_toBottomOf="@id/stroke"
+        app:layout_constraintStart_toEndOf="@+id/seconds"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:nextFocusDown="@+id/save"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Sec">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/millisecondsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:nextFocusDown="@+id/save"
+            android:maxLines="1"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center"
+            tools:text="35"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
         android:id="@+id/unit_of_measure_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/unit_of_measure"
-        app:layout_constraintTop_toBottomOf="@id/stroke"
+        app:layout_constraintTop_toBottomOf="@id/minutes"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="16dp"/>
 
@@ -73,81 +160,11 @@
         app:drawableTint="@color/colorPrimary"
         tools:targetApi="m" />
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/minutes"
-        app:layout_constraintTop_toBottomOf="@id/date_entry"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/seconds"
-        android:nextFocusRight="@+id/seconds"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Min">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="22"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/seconds"
-        app:layout_constraintTop_toBottomOf="@id/date_entry"
-        app:layout_constraintStart_toEndOf="@+id/minutes"
-        app:layout_constraintEnd_toStartOf="@+id/milliseconds"
-        android:nextFocusRight="@+id/milliseconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Sec">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/milliseconds"
-        app:layout_constraintTop_toBottomOf="@id/date_entry"
-        app:layout_constraintStart_toEndOf="@+id/seconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:nextFocusDown="@+id/save"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Sec">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textAlignment="center"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/delete_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Delete"
+        android:text="@string/cancel"
         app:layout_constraintTop_toBottomOf="@id/date_entry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

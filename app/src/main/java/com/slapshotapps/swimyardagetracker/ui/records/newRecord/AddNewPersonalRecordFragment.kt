@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
-import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordCrudBinding
+import com.slapshotapps.swimyardagetracker.databinding.FragmentAddPersonalRecordBinding
 import com.slapshotapps.swimyardagetracker.extensions.SpinnerItemSelectedListener
 import com.slapshotapps.swimyardagetracker.extensions.setSpinnerEntries
 import com.slapshotapps.swimyardagetracker.extensions.setSpinnerItemSelectedListener
@@ -30,12 +30,17 @@ import kotlinx.coroutines.launch
  */
 class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
 
-    private var _binding: FragmentPersonalRecordCrudBinding? = null
+    private var _binding: FragmentAddPersonalRecordBinding? = null
     private val binding get() = _binding!!
 
     @Inject
     lateinit var viewModel: AddNewPersonalRecordViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
@@ -46,8 +51,7 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        _binding = FragmentPersonalRecordCrudBinding.inflate(inflater, container, false)
+        _binding = FragmentAddPersonalRecordBinding.inflate(inflater, container, false)
 
         viewModel.viewModelEvent.observe(viewLifecycleOwner, androidx.lifecycle.Observer { onViewModelEvent(it) })
 
@@ -56,9 +60,7 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
         }
 
         binding.save.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                onSaveRecord()
-            }
+            onSaveRecord()
         }
 
         setupTextWatchers()
@@ -75,15 +77,18 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
         datePickerDialog.show()
     }
 
-    private suspend fun onSaveRecord() {
-        val recordMinutes = binding.minutes.editText?.text.toString().toIntOrNull() ?: 0
-        val recordSeconds = binding.seconds.editText?.text.toString().toIntOrNull() ?: 0
-        val recordMilliseconds = binding.milliseconds.editText?.text.toString().toIntOrNull() ?: 0
-        val distance = binding.distance.editText.toString().toIntOrNull() ?: 0
-        val stroke = binding.stroke.editText.toString()
+    private fun onSaveRecord() {
+        val recordMinutes = binding.minutesInput.text.toString().toIntOrNull() ?: 0
+        val recordSeconds = binding.secondsInput.text.toString().toIntOrNull() ?: 0
+        val recordMilliseconds = binding.millisecondsInput.text.toString().toIntOrNull() ?: 0
+        val distance = binding.distanceInput.text.toString().toIntOrNull() ?: 0
+        val stroke = binding.strokeInput.text.toString()
 
         val timeForRecord = TimeForPersonalRecord(recordMinutes, recordSeconds, recordMilliseconds)
-        viewModel.onAddNewRecord(stroke, distance, timeForRecord)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.onAddNewRecord(stroke, distance, timeForRecord)
+        }
     }
 
     private fun setupTextWatchers() {
@@ -103,7 +108,8 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
     }
 
     private fun setupUnitOfMeasureList() {
-        binding.uom.setSpinnerEntries(listOf(resources.getStringArray(R.array.unit_of_measure_list)))
+        val unitsOfMeasure = resources.getStringArray(R.array.unit_of_measure_list)
+        binding.uom.setSpinnerEntries(listOf(*unitsOfMeasure))
 
         binding.uom.setSpinnerItemSelectedListener(object : SpinnerItemSelectedListener {
             override fun onItemSelected(item: Any) {
