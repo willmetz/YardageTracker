@@ -45,18 +45,18 @@ class AddNewPersonalRecordViewModel @Inject constructor(
         val dateOfRecord = recordDate
 
         when {
-            stroke == null || stroke.isBlank() ->
-                addPersonalRecordEvent.value =
-                    AddNewPersonalRecordEvent.OnInvalidStroke(stringProvider.getString(R.string.stroke_required))
             distance == null || distance <= 0 ->
                 addPersonalRecordEvent.value =
                     AddNewPersonalRecordEvent.OnInvalidDistance(stringProvider.getString(R.string.distance_required))
-            uomForRecord == null ->
+            stroke == null || stroke.isBlank() ->
                 addPersonalRecordEvent.value =
-                    AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.unit_of_measure_required))
+                    AddNewPersonalRecordEvent.OnInvalidStroke(stringProvider.getString(R.string.stroke_required))
             time.minutes <= 0 && time.seconds <= 0 && time.milliseconds <= 0 ->
                 addPersonalRecordEvent.value =
                     AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.time_required))
+            uomForRecord == null ->
+                addPersonalRecordEvent.value =
+                    AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.unit_of_measure_required))
             dateOfRecord == null ->
                 addPersonalRecordEvent.value =
                     AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.date_required))

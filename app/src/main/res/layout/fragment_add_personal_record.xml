@@ -149,19 +149,29 @@
         app:layout_constraintBottom_toBottomOf="@id/unit_of_measure_label"/>
 
 
-    <TextView
-        android:id="@+id/date_entry"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
+    <ImageView
+        android:id="@+id/date_icon"
+        android:contentDescription="@string/add_date_of_record"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/uom"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/colorPrimary"
         android:layout_marginTop="24dp"
-        app:drawableStartCompat="@drawable/ic_calendar"
-        app:drawableTint="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/date_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/date_icon"
+        android:background="@drawable/bottom_line"
         tools:targetApi="m" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/delete_cancel"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
@@ -178,7 +188,7 @@
         android:text="@string/save"
         app:layout_constraintTop_toBottomOf="@id/date_entry"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/delete_cancel"
+        app:layout_constraintStart_toEndOf="@id/cancel"
         app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

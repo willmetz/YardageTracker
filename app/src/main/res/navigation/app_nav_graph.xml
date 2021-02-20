@@ -79,15 +79,12 @@
         android:label="fragment_personal_records"
         tools:layout="@layout/fragment_personal_records" >
         <action
-            android:id="@+id/action_personalRecordsFragment_to_personalRecordCrudFragment"
-            app:destination="@id/personalRecordCrudFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@id/personalRecordsFragment" />
+            android:id="@+id/action_personalRecordsFragment_to_addNewPersonalRecordFragment"
+            app:destination="@id/addNewPersonalRecordFragment" />
     </fragment>
     <fragment
-        android:id="@+id/personalRecordCrudFragment"
+        android:id="@+id/addNewPersonalRecordFragment"
         android:name="com.slapshotapps.swimyardagetracker.ui.records.newRecord.AddNewPersonalRecordFragment"
-        android:label="fragment_personal_record_crud"
+        android:label="fragment_add_personal_record"
         tools:layout="@layout/fragment_add_personal_record" />
 </navigation>

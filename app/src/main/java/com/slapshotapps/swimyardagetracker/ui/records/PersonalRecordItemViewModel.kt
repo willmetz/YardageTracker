@@ -8,7 +8,7 @@ import java.util.*
 
 class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWithTimes) {
 
-    val dateFormatter: SimpleDateFormat = SimpleDateFormat("M/d/yyyy", Locale.US)
+    private val dateFormatter: SimpleDateFormat = SimpleDateFormat("M/d/yyyy", Locale.US)
 
     val mostRecentRecordDate: Date
         get() {
@@ -108,21 +108,21 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
     private fun getMinutes(time: RecordTime): String {
         return when {
             time.minutes <= 0 -> ""
-            else -> String.format("%02d:", time.minutes)
+            else -> String.format("%d:", time.minutes)
         }
     }
 
     private fun getSeconds(time: RecordTime): String {
         return when {
-            time.hours <= 0 && time.minutes > 0 -> "00:"
-            time.hours <= 0 -> "00"
+            time.seconds <= 0 && time.minutes > 0 -> "00:"
+            time.seconds <= 0 -> "00"
             else -> String.format("%02d:", time.seconds)
         }
     }
 
     private fun getMilliseconds(time: RecordTime): String {
         return when {
-            time.hours <= 0 -> ""
+            time.milliseconds <= 0 -> ""
             else -> String.format("%02d", time.milliseconds)
         }
     }

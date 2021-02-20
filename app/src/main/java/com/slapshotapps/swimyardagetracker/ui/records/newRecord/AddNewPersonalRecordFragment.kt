@@ -59,8 +59,16 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
             showCalendar()
         }
 
+        binding.dateIcon.setOnClickListener {
+            showCalendar()
+        }
+
         binding.save.setOnClickListener {
             onSaveRecord()
+        }
+
+        binding.cancel.setOnClickListener {
+            NavHostFragment.findNavController(this).popBackStack()
         }
 
         setupTextWatchers()
@@ -126,6 +134,7 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
                 binding.dateEntry.text = event.formattedDate
             }
             is AddNewPersonalRecordEvent.OnNewRecordAddedSuccess -> {
+                Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
                 NavHostFragment.findNavController(this).popBackStack()
             }
             is AddNewPersonalRecordEvent.OnFailureToAddRecord -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()

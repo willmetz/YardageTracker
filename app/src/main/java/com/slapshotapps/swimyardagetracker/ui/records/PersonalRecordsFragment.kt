@@ -61,7 +61,7 @@ class PersonalRecordsFragment : Fragment() {
         })
 
         binding.addNewRecord.setOnClickListener {
-            NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_personalRecordCrudFragment)
+            NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_addNewPersonalRecordFragment)
         }
 
         return binding.root
@@ -86,8 +86,7 @@ class PersonalRecordsFragment : Fragment() {
     }
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
-        // TODO, need to pass the data
-        NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_personalRecordCrudFragment)
+        // TODO
     }
 
     companion object {
