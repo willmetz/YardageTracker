@@ -20,4 +20,10 @@
         <item name="android:padding">4dp</item>
     </style>
 
+    <style name="YardageTracker.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>
