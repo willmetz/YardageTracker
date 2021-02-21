@@ -30,12 +30,22 @@
 
     <TextView
         android:id="@+id/yardage_label"
+        style="@style/YardageTracker.Header2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/yardage_record_enabled"
         app:layout_constraintTop_toBottomOf="@id/yard_time_spacer"
         android:text="@string/yardage_time"/>
+
+    <CheckBox
+        android:id="@+id/yardage_record_enabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have Record"
+        app:layout_constraintStart_toEndOf="@id/yardage_label"
+        app:layout_constraintTop_toBottomOf="@id/yard_time_spacer"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/yardage_minutes"
@@ -112,24 +122,65 @@
             android:longClickable="false"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/yardage_time_entry_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="yardage_milliseconds,yardage_seconds,yardage_minutes"/>
+
+
+    <ImageView
+        android:id="@+id/yardage_date_icon"
+        android:contentDescription="@string/date_for_yardage_record"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yardage_time_entry_end"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/colorPrimary"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/yardage_date_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintStart_toEndOf="@+id/yardage_date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/yardage_date_icon"
+        android:background="@drawable/bottom_line"
+        tools:targetApi="m" />
+
     <View
         android:id="@+id/metric_time_spacer"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:background="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yardage_minutes"/>
+        app:layout_constraintTop_toBottomOf="@id/yardage_date_icon"/>
 
     <TextView
         android:id="@+id/metric_label"
+        style="@style/YardageTracker.Header2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/metric_record_enabled"
         app:layout_constraintTop_toBottomOf="@id/metric_time_spacer"
         android:text="@string/metric_time"/>
+
+    <CheckBox
+        android:id="@+id/metric_record_enabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have Record"
+        app:layout_constraintStart_toEndOf="@id/metric_label"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_spacer"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/metric_minutes"
@@ -209,19 +260,41 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/input_end_spacer"
+        android:id="@+id/metric_time_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="metric_milliseconds,metric_seconds,metric_minutes"/>
 
+    <ImageView
+        android:id="@+id/metric_date_icon"
+        android:contentDescription="@string/date_for_metric_record"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_end"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/colorPrimary"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/metric_date_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintStart_toEndOf="@+id/metric_date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/metric_date_icon"
+        android:background="@drawable/bottom_line"
+        tools:targetApi="m" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cancel"
-        app:layout_constraintTop_toBottomOf="@id/input_end_spacer"
+        app:layout_constraintTop_toBottomOf="@id/metric_date_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/save"/>
@@ -230,7 +303,7 @@
         android:id="@+id/save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/input_end_spacer"
+        app:layout_constraintTop_toBottomOf="@id/metric_date_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cancel"

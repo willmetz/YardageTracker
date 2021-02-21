@@ -45,4 +45,6 @@
     <string name="seconds">Seconds</string>
     <string name="milliseconds">Milliseconds</string>
     <string name="yardage_time">Yardage Time</string>
+    <string name="date_for_yardage_record">Date for yardage record</string>
+    <string name="date_for_metric_record">Date for metric record</string>
 </resources>
