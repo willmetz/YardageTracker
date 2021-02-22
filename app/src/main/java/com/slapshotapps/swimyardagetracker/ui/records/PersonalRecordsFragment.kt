@@ -48,7 +48,7 @@ class PersonalRecordsFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val decoration = DividerItemDecoration(context, layoutManager.orientation)
-        val drawable = ContextCompat.getDrawable(context!!, R.drawable.transparent_spacer)
+        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.transparent_spacer)
         if (drawable != null) {
             decoration.setDrawable(drawable)
         }
@@ -87,7 +87,8 @@ class PersonalRecordsFragment : Fragment() {
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
         // TODO need to pass in the record id here
-        NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_editPersonalRecord)
+        val action = PersonalRecordsFragmentDirections.actionEditPersonalRecord(item.getYardageTrackerRecord())
+        NavHostFragment.findNavController(this).navigate(action)
     }
 
     companion object {

@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [EditPersonalRecord.newInstance] factory method to
+ * Use the [EditPersonalRecordFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditPersonalRecord : Fragment() {
+class EditPersonalRecordFragment : Fragment() {
 
     private var _binding: FragmentEditPersonalRecordBinding ? = null
     private val binding get() = _binding!!

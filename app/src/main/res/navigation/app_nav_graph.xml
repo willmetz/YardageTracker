@@ -82,11 +82,8 @@
             android:id="@+id/action_personalRecordsFragment_to_addNewPersonalRecordFragment"
             app:destination="@id/addNewPersonalRecordFragment" />
         <action
-            android:id="@+id/action_personalRecordsFragment_to_editPersonalRecord"
-            app:destination="@id/editPersonalRecord"
-            app:enterAnim="@anim/slide_in_from_left"
-            app:exitAnim="@anim/slide_out_to_left"
-            app:popUpTo="@id/personalRecordsFragment" />
+            android:id="@+id/action_editPersonalRecord"
+            app:destination="@id/editPersonalRecordFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewPersonalRecordFragment"
@@ -94,8 +91,11 @@
         android:label="fragment_add_personal_record"
         tools:layout="@layout/fragment_add_personal_record" />
     <fragment
-        android:id="@+id/editPersonalRecord"
-        android:name="com.slapshotapps.swimyardagetracker.ui.records.editRecord.EditPersonalRecord"
-        android:label="fragment_edit_personal_record"
-        tools:layout="@layout/fragment_edit_personal_record" />
+        android:id="@+id/editPersonalRecordFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.records.editRecord.EditPersonalRecordFragment"
+        android:label="fragment_edit_personal_record">
+        <argument
+            android:name="recordToEdit"
+            app:argType="com.slapshotapps.swimyardagetracker.models.personalrecords.YardageTrackerPersonalRecord" />
+    </fragment>
 </navigation>
