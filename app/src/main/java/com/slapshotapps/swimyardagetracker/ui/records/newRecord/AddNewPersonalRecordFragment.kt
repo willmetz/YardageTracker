@@ -36,11 +36,6 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
     @Inject
     lateinit var viewModel: AddNewPersonalRecordViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-    }
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
@@ -86,13 +81,10 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
     }
 
     private fun onSaveRecord() {
-        val recordMinutes = binding.minutesInput.text.toString().toIntOrNull() ?: 0
-        val recordSeconds = binding.secondsInput.text.toString().toIntOrNull() ?: 0
-        val recordMilliseconds = binding.millisecondsInput.text.toString().toIntOrNull() ?: 0
         val distance = binding.distanceInput.text.toString().toIntOrNull() ?: 0
         val stroke = binding.strokeInput.text.toString()
 
-        val timeForRecord = TimeForPersonalRecord(recordMinutes, recordSeconds, recordMilliseconds)
+        val timeForRecord = binding.timeEntry.getTimeEntered()
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.onAddNewRecord(stroke, distance, timeForRecord)
@@ -141,6 +133,10 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
             is AddNewPersonalRecordEvent.OnInvalidStroke -> binding.stroke.error = event.msg
             is AddNewPersonalRecordEvent.OnInvalidDistance -> binding.distance.error = event.msg
             is AddNewPersonalRecordEvent.OnInvalidRecord -> Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
+            is AddNewPersonalRecordEvent.OnInvalidTimeEntry -> {
+                Toast.makeText(context, event.msg, Toast.LENGTH_SHORT).show()
+                binding.timeEntry.setError()
+            }
             is AddNewPersonalRecordEvent.OnReady -> {
                 // hide spinner?
             }

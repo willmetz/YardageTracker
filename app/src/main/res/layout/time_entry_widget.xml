@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/minutes"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/seconds"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/minutes">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/minutesInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:nextFocusDown="@+id/yardage_secondsInput"
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:maxLength="2"
+            tools:text="22"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/seconds"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/minutes"
+        app:layout_constraintEnd_toStartOf="@+id/milliseconds"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/seconds">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/secondsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusDown="@+id/yardage_millisecondsInput"
+            android:maxLines="1"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:maxLength="2"
+            tools:text="35"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/milliseconds"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/seconds"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/milliseconds">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/millisecondsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:inputType="number"
+            android:maxLength="3"
+            android:textAlignment="center"
+            tools:text="35"
+            android:longClickable="false"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+</merge>

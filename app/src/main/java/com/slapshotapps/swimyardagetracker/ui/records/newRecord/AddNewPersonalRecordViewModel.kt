@@ -20,6 +20,7 @@ sealed class AddNewPersonalRecordEvent {
     data class OnInvalidStroke(val msg: String) : AddNewPersonalRecordEvent()
     data class OnInvalidDistance(val msg: String) : AddNewPersonalRecordEvent()
     data class OnInvalidRecord(val msg: String) : AddNewPersonalRecordEvent()
+    data class OnInvalidTimeEntry(val msg: String) : AddNewPersonalRecordEvent()
     object OnReady : AddNewPersonalRecordEvent()
 }
 
@@ -53,7 +54,7 @@ class AddNewPersonalRecordViewModel @Inject constructor(
                     AddNewPersonalRecordEvent.OnInvalidStroke(stringProvider.getString(R.string.stroke_required))
             time.minutes <= 0 && time.seconds <= 0 && time.milliseconds <= 0 ->
                 addPersonalRecordEvent.value =
-                    AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.time_required))
+                    AddNewPersonalRecordEvent.OnInvalidTimeEntry(stringProvider.getString(R.string.time_required))
             uomForRecord == null ->
                 addPersonalRecordEvent.value =
                     AddNewPersonalRecordEvent.OnInvalidRecord(stringProvider.getString(R.string.unit_of_measure_required))

@@ -86,7 +86,8 @@ class PersonalRecordsFragment : Fragment() {
     }
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
-        // TODO
+        // TODO need to pass in the record id here
+        NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_editPersonalRecord)
     }
 
     companion object {

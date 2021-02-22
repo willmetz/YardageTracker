@@ -47,95 +47,20 @@
         app:layout_constraintTop_toBottomOf="@id/yard_time_spacer"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/yardage_minutes"
-        app:layout_constraintTop_toBottomOf="@id/yardage_label"
+    <com.slapshotapps.swimyardagetracker.widgets.TimeEntryWidgetView
+        android:id="@+id/yardage_time_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/yardage_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/yardage_seconds"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/minutes">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/yardage_minutesInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:nextFocusDown="@+id/yardage_secondsInput"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="22"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/yardage_seconds"
-        app:layout_constraintTop_toBottomOf="@id/yardage_label"
-        app:layout_constraintStart_toEndOf="@+id/yardage_minutes"
-        app:layout_constraintEnd_toStartOf="@+id/yardage_milliseconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/seconds">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/yardage_secondsInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nextFocusDown="@+id/yardage_millisecondsInput"
-            android:maxLines="1"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/yardage_milliseconds"
-        app:layout_constraintTop_toBottomOf="@id/yardage_label"
-        app:layout_constraintStart_toEndOf="@+id/yardage_seconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/milliseconds">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/yardage_millisecondsInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textAlignment="center"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/yardage_time_entry_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="yardage_milliseconds,yardage_seconds,yardage_minutes"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
     <ImageView
         android:id="@+id/yardage_date_icon"
         android:contentDescription="@string/date_for_yardage_record"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/yardage_time_entry_end"
+        app:layout_constraintTop_toBottomOf="@id/yardage_time_entry"
         android:src="@drawable/ic_calendar"
         app:tint="@color/colorPrimary"
         android:layout_marginTop="24dp"
@@ -182,96 +107,19 @@
         app:layout_constraintTop_toBottomOf="@id/metric_time_spacer"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/metric_minutes"
-        app:layout_constraintTop_toBottomOf="@id/metric_label"
+    <com.slapshotapps.swimyardagetracker.widgets.TimeEntryWidgetView
+        android:id="@+id/metric_time_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/metric_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/metric_seconds"
-        android:nextFocusDown="@+id/metric_seconds"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/minutes">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/metric_minutesInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:nextFocusDown="@+id/metric_secondsInput"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="22"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/metric_seconds"
-        app:layout_constraintTop_toBottomOf="@id/metric_label"
-        app:layout_constraintStart_toEndOf="@+id/metric_minutes"
-        app:layout_constraintEnd_toStartOf="@+id/metric_milliseconds"
-        android:nextFocusDown="@+id/metric_milliseconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/seconds">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/metric_secondsInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nextFocusDown="@+id/metric_millisecondsInput"
-            android:maxLines="1"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:maxLength="2"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/metric_milliseconds"
-        app:layout_constraintTop_toBottomOf="@id/metric_label"
-        app:layout_constraintStart_toEndOf="@+id/metric_seconds"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/milliseconds">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/metric_millisecondsInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:imeOptions="actionDone"
-            android:maxLines="1"
-            android:inputType="number"
-            android:maxLength="3"
-            android:textAlignment="center"
-            tools:text="35"
-            android:longClickable="false"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/metric_time_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="metric_milliseconds,metric_seconds,metric_minutes"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/metric_date_icon"
         android:contentDescription="@string/date_for_metric_record"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/metric_time_end"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_entry"
         android:src="@drawable/ic_calendar"
         app:tint="@color/colorPrimary"
         android:layout_marginTop="24dp"
