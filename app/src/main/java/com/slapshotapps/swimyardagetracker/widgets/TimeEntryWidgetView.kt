@@ -3,6 +3,7 @@ package com.slapshotapps.swimyardagetracker.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.slapshotapps.swimyardagetracker.R
@@ -54,5 +55,11 @@ class TimeEntryWidgetView(context: Context, attrs: AttributeSet?) : ConstraintLa
         val milliseconds = binding.millisecondsInput.text.toString().toIntOrNull() ?: 0
 
         return TimeForPersonalRecord(minutes, seconds, milliseconds)
+    }
+
+    fun setTime(minutes: String, seconds: String, milliseconds: String) {
+        binding.minutesInput.setText(minutes, TextView.BufferType.EDITABLE)
+        binding.secondsInput.setText(seconds, TextView.BufferType.EDITABLE)
+        binding.millisecondsInput.setText(milliseconds, TextView.BufferType.EDITABLE)
     }
 }
