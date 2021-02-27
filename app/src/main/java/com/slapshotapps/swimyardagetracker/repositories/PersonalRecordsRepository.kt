@@ -1,10 +1,9 @@
 package com.slapshotapps.swimyardagetracker.repositories
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
-import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
-import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
-import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
+import com.slapshotapps.swimyardagetracker.models.personalrecords.*
 import javax.inject.Inject
 
 class PersonalRecordsRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
@@ -19,6 +18,10 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
 
     suspend fun deleteRecord(record: PersonalRecord) {
         workoutDatabase.personalRecordDao().deleteRecordAndTimes(record)
+    }
+
+    suspend fun deleteRecordTime(time: RecordTime) {
+        workoutDatabase.personalRecordDao().deleteRecordTime(time)
     }
 
     suspend fun updateRecordTime(time: RecordTime) {
@@ -40,5 +43,13 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
 
     suspend fun getAllRecords(): List<PersonalRecordWithTimes> {
         return workoutDatabase.personalRecordDao().getAllRecords()
+    }
+
+    fun getRecord(recordID: Long): LiveData<YardageTrackerPersonalRecord> {
+        val dbRecord = workoutDatabase.personalRecordDao().getRecord(recordID)
+
+        return Transformations.map(dbRecord) {
+            YardageTrackerPersonalRecord.fromEntities(it.record, it.times)
+        }
     }
 }

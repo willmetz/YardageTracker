@@ -30,6 +30,7 @@ data class RecordTime(
     val milliseconds: Int
 )
 
+@Keep
 data class PersonalRecordWithTimes(
     @Embedded val record: PersonalRecord,
     @Relation(parentColumn = "id", entityColumn = "recordID")val times: List<RecordTime>

@@ -2,7 +2,6 @@ package com.slapshotapps.swimyardagetracker.ui.records
 
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
-import com.slapshotapps.swimyardagetracker.models.personalrecords.YardageTrackerPersonalRecord
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,8 +54,11 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
         }
         private set
 
-    fun getYardageTrackerRecord(): YardageTrackerPersonalRecord =
-        YardageTrackerPersonalRecord.FromEntities(eventsWithTimes.record, eventsWithTimes.times)
+    var recordID: Long = 0
+        get() {
+            return eventsWithTimes.record.id
+        }
+        private set
 
     private fun getDateForRecord(unitOfMeasure: WorkoutUoM): String {
         return when (unitOfMeasure) {

@@ -96,6 +96,6 @@
         android:label="fragment_edit_personal_record">
         <argument
             android:name="recordToEdit"
-            app:argType="com.slapshotapps.swimyardagetracker.models.personalrecords.YardageTrackerPersonalRecord" />
+            app:argType="long" />
     </fragment>
 </navigation>

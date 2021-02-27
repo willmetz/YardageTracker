@@ -75,7 +75,7 @@ class AddNewPersonalRecordFragment : Fragment(), OnDateSetListener {
 
     private fun showCalendar() {
         val calendar = Calendar.getInstance()
-        val datePickerDialog = DatePickerDialog(context!!, this, calendar.get(Calendar.YEAR),
+        val datePickerDialog = DatePickerDialog(requireContext(), this, calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         datePickerDialog.show()
     }

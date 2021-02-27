@@ -39,7 +39,7 @@ class YardageTrackerPersonalRecord(
             return arrayOfNulls(size)
         }
 
-        fun FromEntities(record: PersonalRecord, times: List<RecordTime>): YardageTrackerPersonalRecord {
+        fun fromEntities(record: PersonalRecord, times: List<RecordTime>): YardageTrackerPersonalRecord {
             val recordTimes = ArrayList<YardageTrackerRecordTime>()
             for (time: RecordTime in times) {
                 recordTimes.add(YardageTrackerRecordTime(time.id, time.date, time.unitOfMeasure, time.hours,
@@ -52,17 +52,17 @@ class YardageTrackerPersonalRecord(
 }
 
 class YardageTrackerRecordTime(
-    val id: Long,
-    val date: Date,
+    val id: Long = 0L,
+    val date: Date?,
     val uom: WorkoutUoM,
-    val hours: Int,
+    val hours: Int = 0,
     val minutes: Int,
     val seconds: Int,
     val milliseconds: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
-        Date(parcel.readLong()),
+        if (parcel.readLong() == 0L) null else Date(parcel.readLong()),
         WorkoutUoM.fromString(parcel.readString()!!),
         parcel.readInt(),
         parcel.readInt(),
@@ -70,9 +70,13 @@ class YardageTrackerRecordTime(
         parcel.readInt()) {
     }
 
+    fun toRecordTime(recordId: Long): RecordTime? {
+        return if (date == null) null else RecordTime(id, recordId, date, uom, hours, minutes, seconds, milliseconds)
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(id)
-        parcel.writeLong(date.time)
+        parcel.writeLong(date?.time ?: 0)
         parcel.writeString(uom.label)
         parcel.writeInt(hours)
         parcel.writeInt(minutes)

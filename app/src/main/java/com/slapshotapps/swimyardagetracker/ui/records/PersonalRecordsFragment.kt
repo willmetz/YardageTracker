@@ -86,7 +86,7 @@ class PersonalRecordsFragment : Fragment() {
     }
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
-        val action = PersonalRecordsFragmentDirections.actionEditPersonalRecord(item.getYardageTrackerRecord())
+        val action = PersonalRecordsFragmentDirections.actionEditPersonalRecord(item.recordID)
         NavHostFragment.findNavController(this).navigate(action)
     }
 

@@ -15,6 +15,9 @@ abstract class PersonalRecordsDAO {
     @Query("SELECT * FROM `personal-records`")
     abstract suspend fun getAllRecords(): List<PersonalRecordWithTimes>
 
+    @Query("SELECT * FROM `personal-records` WHERE id = :recordID")
+    abstract fun getRecord(recordID: Long): LiveData<PersonalRecordWithTimes>
+
     @Insert
     abstract suspend fun insertPersonalRecord(record: PersonalRecord): Long
 
@@ -32,6 +35,9 @@ abstract class PersonalRecordsDAO {
 
     @Delete
     abstract suspend fun deleteRecordAndTimes(record: PersonalRecord)
+
+    @Delete
+    abstract suspend fun deleteRecordTime(recordTime: RecordTime)
 
     suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>) {
         val recordId = insertPersonalRecord(record)

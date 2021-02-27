@@ -47,4 +47,6 @@
     <string name="yardage_time">Yardage Time</string>
     <string name="date_for_yardage_record">Date for yardage record</string>
     <string name="date_for_metric_record">Date for metric record</string>
+    <string name="delete_unavailable">At least one time is required, to delete event use the previous screen</string>
+    <string name="update_record_success">Updated record</string>
 </resources>
