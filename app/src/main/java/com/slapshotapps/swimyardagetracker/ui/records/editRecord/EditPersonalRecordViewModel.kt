@@ -2,7 +2,7 @@ package com.slapshotapps.swimyardagetracker.ui.records.editRecord
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.asLiveData
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.models.personalrecords.RecordTime
 import com.slapshotapps.swimyardagetracker.models.personalrecords.YardageTrackerPersonalRecord
@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlinx.coroutines.flow.map
 
 sealed class EditPersonalRecordEvent {
     object Ready : EditPersonalRecordEvent()
@@ -37,15 +38,15 @@ class EditPersonalRecordViewModel @Inject constructor(
     val viewModelEvent: LiveData<EditPersonalRecordEvent>
         get() = viewModelMutableEvent
 
-    private val personalRecordData: LiveData<EditableRecordModel> =
-        Transformations.map(personalRecordsRepository.getRecord(recordID)) { existingRecord ->
+    private val personalRecordData: LiveData<EditableRecordModel> by lazy {
+        personalRecordsRepository.getRecord(recordID).map { existingRecord ->
 
             personalRecord = existingRecord
 
             viewModelMutableEvent.value = EditPersonalRecordEvent.Ready
 
             createViewDataForRecord(existingRecord)
-    }
+    }.asLiveData() }
 
     fun getRecord(recordId: Long): LiveData<EditableRecordModel> {
         this.recordID = recordId

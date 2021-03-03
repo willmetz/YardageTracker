@@ -1,10 +1,11 @@
 package com.slapshotapps.swimyardagetracker.repositories
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.personalrecords.*
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class PersonalRecordsRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
 
@@ -45,10 +46,10 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
         return workoutDatabase.personalRecordDao().getAllRecords()
     }
 
-    fun getRecord(recordID: Long): LiveData<YardageTrackerPersonalRecord> {
+    fun getRecord(recordID: Long): Flow<YardageTrackerPersonalRecord> {
         val dbRecord = workoutDatabase.personalRecordDao().getRecord(recordID)
 
-        return Transformations.map(dbRecord) {
+        return dbRecord.map {
             YardageTrackerPersonalRecord.fromEntities(it.record, it.times)
         }
     }
