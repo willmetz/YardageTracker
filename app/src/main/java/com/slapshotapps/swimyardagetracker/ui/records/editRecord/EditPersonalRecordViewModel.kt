@@ -113,7 +113,7 @@ class EditPersonalRecordViewModel @Inject constructor(
         val newRecordTimes = ArrayList<RecordTime>()
         for (updatedRecord in updatedRecords) {
             val timeId = currentRecord.recordTimes.firstOrNull { it.uom == updatedRecord.uom }?.id ?: 0
-            val time = updatedRecord.toRecordTime(timeId)
+            val time = updatedRecord.toRecordTime(timeId, currentRecord.recordID)
             newRecordTimes.add(time!!)
         }
 
@@ -122,7 +122,7 @@ class EditPersonalRecordViewModel @Inject constructor(
             for (existingRecord in currentRecord.recordTimes) {
                 if (newRecordTimes.firstOrNull { it.unitOfMeasure == existingRecord.uom } == null) {
                     // the parent record doesn't matter here as we are just deleting this record time so the record ID can be 0
-                    personalRecordsRepository.deleteRecordTime(existingRecord.toRecordTime(0L)!!)
+                    personalRecordsRepository.deleteRecordTime(existingRecord.toRecordTime(0L, existingRecord.id)!!)
                 }
             }
         }

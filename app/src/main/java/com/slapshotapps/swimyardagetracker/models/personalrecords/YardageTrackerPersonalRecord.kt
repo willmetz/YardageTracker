@@ -70,8 +70,8 @@ class YardageTrackerRecordTime(
         parcel.readInt()) {
     }
 
-    fun toRecordTime(recordId: Long): RecordTime? {
-        return if (date == null) null else RecordTime(id, recordId, date, uom, hours, minutes, seconds, milliseconds)
+    fun toRecordTime(recordId: Long, timeRecordId: Long): RecordTime? {
+        return if (date == null) null else RecordTime(timeRecordId, recordId, date, uom, hours, minutes, seconds, milliseconds)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
