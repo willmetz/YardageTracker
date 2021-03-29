@@ -38,6 +38,9 @@ abstract class PersonalRecordsDAO {
     abstract suspend fun deleteRecordAndTimes(record: PersonalRecord)
 
     @Delete
+    abstract suspend fun deleteRecordAndTimes(recordId: Long)
+
+    @Delete
     abstract suspend fun deleteRecordTime(recordTime: RecordTime)
 
     suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>) {

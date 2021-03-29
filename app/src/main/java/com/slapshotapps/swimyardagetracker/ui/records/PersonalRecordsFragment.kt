@@ -1,5 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.records
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,8 +18,7 @@ import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_personal_records.*
-import kotlinx.android.synthetic.main.fragment_personal_records.view.*
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -28,6 +29,8 @@ class PersonalRecordsFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: PersonalRecordsViewModel
+
+    private var adapter = PersonalRecordsItemAdapter(ArrayList(), this::onEditRecordSelected, this::onDeleteRecord)
 
     private var _binding: FragmentPersonalRecordsBinding? = null
     // This property is only valid between onCreateView and
@@ -64,16 +67,25 @@ class PersonalRecordsFragment : Fragment() {
             NavHostFragment.findNavController(this).navigate(R.id.action_personalRecordsFragment_to_addNewPersonalRecordFragment)
         }
 
+        viewModel.confirmDelete.observe(viewLifecycleOwner) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setMessage(it.msg)
+            builder.setTitle(it.title)
+            builder.setPositiveButton("Yes") { _, _ ->
+                lifecycleScope.launch {
+                    viewModel.onConfirmedDelete(it.itemToDelete)
+                }
+            }
+        }
+
         return binding.root
     }
 
     private fun onListChanged(items: List<PersonalRecordItemViewModel>) {
-
-        // TODO - not best to renew the adapter as you lose scroll position, switch this over to the DiffUtil instead
         if (items.count() > 0) {
             binding.noRecords.visibility = View.GONE
             binding.recordsList.visibility = View.VISIBLE
-            binding.recordsList.adapter = PersonalRecordsItemAdapter(items, this::onEditRecordSelected)
+            adapter.submitList(items)
         } else {
             binding.noRecords.visibility = View.VISIBLE
             binding.recordsList.visibility = View.GONE
@@ -88,6 +100,10 @@ class PersonalRecordsFragment : Fragment() {
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
         val action = PersonalRecordsFragmentDirections.actionEditPersonalRecord(item.recordID)
         NavHostFragment.findNavController(this).navigate(action)
+    }
+
+    private fun onDeleteRecord(item: PersonalRecordItemViewModel) {
+            viewModel.onDelete(item)
     }
 
     companion object {

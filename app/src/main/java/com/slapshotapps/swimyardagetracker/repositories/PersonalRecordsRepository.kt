@@ -21,6 +21,10 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
         workoutDatabase.personalRecordDao().deleteRecordAndTimes(record)
     }
 
+    suspend fun deleteRecord(recordId: Long) {
+        workoutDatabase.personalRecordDao().deleteRecordAndTimes(recordId)
+    }
+
     suspend fun deleteRecordTime(time: RecordTime) {
         workoutDatabase.personalRecordDao().deleteRecordTime(time)
     }
