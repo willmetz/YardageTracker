@@ -22,7 +22,7 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
     }
 
     suspend fun deleteRecord(recordId: Long) {
-        workoutDatabase.personalRecordDao().deleteRecordAndTimes(recordId)
+        // workoutDatabase.personalRecordDao().deleteRecordAndTimes(recordId)
     }
 
     suspend fun deleteRecordTime(time: RecordTime) {

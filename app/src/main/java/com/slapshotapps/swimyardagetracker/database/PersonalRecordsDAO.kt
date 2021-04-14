@@ -10,12 +10,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 abstract class PersonalRecordsDAO {
 
+    @Transaction
     @Query("SELECT * FROM `personal-records`")
     abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
 
+    @Transaction
     @Query("SELECT * FROM `personal-records`")
     abstract suspend fun getAllRecords(): List<PersonalRecordWithTimes>
 
+    @Transaction
     @Query("SELECT * FROM `personal-records` WHERE id = :recordID")
     abstract fun getRecord(recordID: Long): Flow<PersonalRecordWithTimes>
 
@@ -37,8 +40,8 @@ abstract class PersonalRecordsDAO {
     @Delete
     abstract suspend fun deleteRecordAndTimes(record: PersonalRecord)
 
-    @Delete
-    abstract suspend fun deleteRecordAndTimes(recordId: Long)
+//    @Delete
+//    abstract suspend fun deleteRecordAndTimes(recordId: Long)
 
     @Delete
     abstract suspend fun deleteRecordTime(recordTime: RecordTime)

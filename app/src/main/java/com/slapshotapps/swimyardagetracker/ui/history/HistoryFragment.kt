@@ -9,12 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.slapshotapps.swimyardagetracker.R
+import com.slapshotapps.swimyardagetracker.databinding.FragmentHistoryBinding
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_history.*
 
 /**
  * A simple [Fragment] subclass.
@@ -29,6 +27,8 @@ class HistoryFragment : Fragment() {
     @Inject
     lateinit var viewModel: HistoryViewModel
 
+    private var binding: FragmentHistoryBinding ? = null
+
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
@@ -39,22 +39,21 @@ class HistoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_history, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val historyList = view.findViewById<RecyclerView>(R.id.history_list)
 
-        historyList.layoutManager = layoutManager
-        historyList.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
+        binding?.historyList?.layoutManager = layoutManager
+        binding?.historyList?.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
 
         viewModel.allWorkouts.observe(viewLifecycleOwner, Observer {
 
             if (it.isEmpty()) {
-                no_history_view.visibility = View.VISIBLE
+                binding?.noHistoryView?.visibility = View.VISIBLE
             } else {
-                no_history_view.visibility = View.GONE
-                history_list.adapter = WorkoutHistoryAdapter(it)
+                binding?.noHistoryView?.visibility = View.GONE
+                binding?.historyList?.adapter = WorkoutHistoryAdapter(it)
             }
         })
 
