@@ -30,7 +30,7 @@ class PersonalRecordsFragment : Fragment() {
     @Inject
     lateinit var viewModel: PersonalRecordsViewModel
 
-    private var adapter = PersonalRecordsItemAdapter(ArrayList(), this::onEditRecordSelected, this::onDeleteRecord)
+    private var adapter = PersonalRecordsItemAdapter(this::onEditRecordSelected, this::onDeleteRecord)
 
     private var _binding: FragmentPersonalRecordsBinding? = null
     // This property is only valid between onCreateView and
@@ -46,7 +46,7 @@ class PersonalRecordsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPersonalRecordsBinding.inflate(inflater, container, false)
 
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -58,6 +58,7 @@ class PersonalRecordsFragment : Fragment() {
 
         binding.recordsList.layoutManager = layoutManager
         binding.recordsList.addItemDecoration(decoration)
+        binding.recordsList.adapter = adapter
 
         viewModel.allRecords.observe(viewLifecycleOwner, Observer {
             onListChanged(it)

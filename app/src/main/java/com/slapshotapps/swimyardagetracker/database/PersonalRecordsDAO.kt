@@ -20,7 +20,10 @@ abstract class PersonalRecordsDAO {
 
     @Transaction
     @Query("SELECT * FROM `personal-records` WHERE id = :recordID")
-    abstract fun getRecord(recordID: Long): Flow<PersonalRecordWithTimes>
+    abstract fun getPersonalRecordWithTime(recordID: Long): Flow<PersonalRecordWithTimes>
+
+    @Query("SELECT * FROM `personal-records` WHERE id = :recordID")
+    abstract fun getPersonalRecord(recordID: Long): Flow<PersonalRecord>
 
     @Insert
     abstract suspend fun insertPersonalRecord(record: PersonalRecord): Long
@@ -39,9 +42,6 @@ abstract class PersonalRecordsDAO {
 
     @Delete
     abstract suspend fun deleteRecordAndTimes(record: PersonalRecord)
-
-//    @Delete
-//    abstract suspend fun deleteRecordAndTimes(recordId: Long)
 
     @Delete
     abstract suspend fun deleteRecordTime(recordTime: RecordTime)

@@ -5,6 +5,7 @@ import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.personalrecords.*
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 
 class PersonalRecordsRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
@@ -22,7 +23,10 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
     }
 
     suspend fun deleteRecord(recordId: Long) {
-        // workoutDatabase.personalRecordDao().deleteRecordAndTimes(recordId)
+        val recordToDelete = workoutDatabase.personalRecordDao().getPersonalRecord(recordId).firstOrNull()
+        if (recordToDelete != null) {
+            workoutDatabase.personalRecordDao().deleteRecordAndTimes(recordToDelete)
+        }
     }
 
     suspend fun deleteRecordTime(time: RecordTime) {
@@ -51,7 +55,7 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
     }
 
     fun getRecord(recordID: Long): Flow<YardageTrackerPersonalRecord> {
-        val dbRecord = workoutDatabase.personalRecordDao().getRecord(recordID)
+        val dbRecord = workoutDatabase.personalRecordDao().getPersonalRecordWithTime(recordID)
 
         return dbRecord.map {
             YardageTrackerPersonalRecord.fromEntities(it.record, it.times)
