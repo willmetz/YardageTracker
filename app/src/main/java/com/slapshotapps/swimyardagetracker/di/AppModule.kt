@@ -9,6 +9,8 @@ import com.slapshotapps.swimyardagetracker.utils.StringProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @Module
 class AppModule {
@@ -30,4 +32,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesStrings(application: Application): StringProvider = StringProvider(application)
+
+    @Provides
+    @Singleton
+    fun providesIOScope(): CoroutineDispatcher = Dispatchers.IO
 }

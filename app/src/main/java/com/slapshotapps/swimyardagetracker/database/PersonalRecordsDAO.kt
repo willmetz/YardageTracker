@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecord
 import com.slapshotapps.swimyardagetracker.models.personalrecords.PersonalRecordWithTimes
@@ -12,7 +11,7 @@ abstract class PersonalRecordsDAO {
 
     @Transaction
     @Query("SELECT * FROM `personal-records`")
-    abstract fun getPersonalRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>>
+    abstract fun getPersonalRecordsWithTimes(): Flow<List<PersonalRecordWithTimes>>
 
     @Transaction
     @Query("SELECT * FROM `personal-records`")

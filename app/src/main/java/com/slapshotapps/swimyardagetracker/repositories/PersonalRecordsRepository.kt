@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.repositories
 
-import androidx.lifecycle.LiveData
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.personalrecords.*
 import javax.inject.Inject
@@ -46,7 +45,7 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
         workoutDatabase.personalRecordDao().updatePersonalRecord(record)
     }
 
-    fun getAllRecordsWithTimes(): LiveData<List<PersonalRecordWithTimes>> {
+    fun getAllRecordsWithTimes(): Flow<List<PersonalRecordWithTimes>> {
         return workoutDatabase.personalRecordDao().getPersonalRecordsWithTimes()
     }
 

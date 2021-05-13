@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,7 +17,6 @@ import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -73,10 +71,10 @@ class PersonalRecordsFragment : Fragment() {
             builder.setMessage(it.msg)
             builder.setTitle(it.title)
             builder.setPositiveButton("Yes") { _, _ ->
-                lifecycleScope.launch {
-                    viewModel.onConfirmedDelete(it.itemToDelete)
-                }
+                viewModel.onConfirmedDelete(it.itemToDelete)
             }
+            builder.setNegativeButton("No") { _, _ -> }
+            builder.show()
         }
 
         return binding.root
@@ -96,6 +94,11 @@ class PersonalRecordsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
     }
 
     private fun onEditRecordSelected(item: PersonalRecordItemViewModel) {
