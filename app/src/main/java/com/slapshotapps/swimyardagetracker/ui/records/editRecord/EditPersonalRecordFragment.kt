@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import com.slapshotapps.swimyardagetracker.databinding.FragmentEditPersonalRecordBinding
@@ -18,7 +17,6 @@ import dagger.android.support.AndroidSupportInjection
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
-import kotlinx.coroutines.launch
 
 class EditPersonalRecordFragment : Fragment() {
 
@@ -130,9 +128,7 @@ class EditPersonalRecordFragment : Fragment() {
                 minutes = timeEntered.minutes, seconds = timeEntered.seconds, milliseconds = timeEntered.milliseconds))
         }
 
-        lifecycleScope.launch {
-            viewModel.updateRecord(records)
-        }
+        viewModel.updateRecord(records)
     }
 
     private fun showCalendar(workoutUoM: WorkoutUoM) {
@@ -185,5 +181,10 @@ class EditPersonalRecordFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
     }
 }

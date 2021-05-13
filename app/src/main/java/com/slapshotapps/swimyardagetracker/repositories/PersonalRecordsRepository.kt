@@ -33,7 +33,7 @@ class PersonalRecordsRepository @Inject constructor(private val workoutDatabase:
     }
 
     suspend fun updateRecordTime(time: RecordTime) {
-        workoutDatabase.personalRecordDao().updateRecordTime(time)
+        workoutDatabase.personalRecordDao().upsertRecordTimes(time)
     }
 
     suspend fun addTimeForRecord(record: PersonalRecord, time: RecordTime) {

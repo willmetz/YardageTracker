@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.map
 
 sealed class EditPersonalRecordEvent {
@@ -28,10 +29,13 @@ sealed class EditPersonalRecordEvent {
 
 class EditPersonalRecordViewModel @Inject constructor(
     private val personalRecordsRepository: PersonalRecordsRepository,
-    private val stringProvider: StringProvider
+    private val stringProvider: StringProvider,
+    private val io: CoroutineDispatcher
 ) {
     private val dateFormatForRecord = SimpleDateFormat("MMMM d yyyy", Locale.US)
     private var recordID = 0L
+
+    private val ioScope = CoroutineScope(io + Job())
 
     private var personalRecord: YardageTrackerPersonalRecord ? = null
     private val viewModelMutableEvent: MutableLiveData<EditPersonalRecordEvent> = MutableLiveData(EditPersonalRecordEvent.Loading)
@@ -87,10 +91,14 @@ class EditPersonalRecordViewModel @Inject constructor(
         viewModelMutableEvent.value = EditPersonalRecordEvent.UpdateRecordDisplayDate(dateFormatForRecord.format(calendar.time), uom)
     }
 
-    suspend fun updateRecord(updatedRecords: List<YardageTrackerRecordTime>) {
+    fun onDestroy() {
+        ioScope.cancel()
+    }
+
+    fun updateRecord(updatedRecords: List<YardageTrackerRecordTime>) {
         if (updatedRecords.isEmpty()) {
-            viewModelMutableEvent.value =
-                EditPersonalRecordEvent.DeleteRecordError(stringProvider.getString(R.string.delete_unavailable))
+            viewModelMutableEvent.postValue(
+                EditPersonalRecordEvent.DeleteRecordError(stringProvider.getString(R.string.delete_unavailable)))
             return
         }
 
@@ -98,12 +106,11 @@ class EditPersonalRecordViewModel @Inject constructor(
         for (record in updatedRecords) {
             // check that time is valid
             if (record.minutes <= 0 && record.seconds <= 0 && record.milliseconds <= 0) {
-                viewModelMutableEvent.value =
-                    EditPersonalRecordEvent.InvalidTimeError("Time is required", record.uom)
+                viewModelMutableEvent.postValue(EditPersonalRecordEvent.InvalidTimeError("Time is required", record.uom))
                 return
             }
             if (record.date == null) {
-                viewModelMutableEvent.value = EditPersonalRecordEvent.InvalidDate("Date is required", record.uom)
+                viewModelMutableEvent.postValue(EditPersonalRecordEvent.InvalidDate("Date is required", record.uom))
                 return
             }
         }
@@ -113,7 +120,7 @@ class EditPersonalRecordViewModel @Inject constructor(
         val newRecordTimes = ArrayList<RecordTime>()
         for (updatedRecord in updatedRecords) {
             val timeId = currentRecord.recordTimes.firstOrNull { it.uom == updatedRecord.uom }?.id ?: 0
-            val time = updatedRecord.toRecordTime(timeId, currentRecord.recordID)
+            val time = updatedRecord.toRecordTime(currentRecord.recordID, timeId)
             newRecordTimes.add(time!!)
         }
 
@@ -121,17 +128,21 @@ class EditPersonalRecordViewModel @Inject constructor(
             // a record needs to be deleted
             for (existingRecord in currentRecord.recordTimes) {
                 if (newRecordTimes.firstOrNull { it.unitOfMeasure == existingRecord.uom } == null) {
-                    // the parent record doesn't matter here as we are just deleting this record time so the record ID can be 0
-                    personalRecordsRepository.deleteRecordTime(existingRecord.toRecordTime(0L, existingRecord.id)!!)
+                    ioScope.launch {
+                        // the parent record doesn't matter here as we are just deleting this record time so the record ID can be 0
+                        personalRecordsRepository.deleteRecordTime(existingRecord.toRecordTime(0L, existingRecord.id)!!)
+                    }
                 }
             }
         }
 
-        for (time in newRecordTimes) {
-            personalRecordsRepository.updateRecordTime(time)
-        }
+        ioScope.launch {
+            for (time in newRecordTimes) {
+                personalRecordsRepository.updateRecordTime(time)
+            }
 
-        viewModelMutableEvent.value =
-            EditPersonalRecordEvent.Success(stringProvider.getString(R.string.update_record_success))
+            viewModelMutableEvent.postValue(
+                EditPersonalRecordEvent.Success(stringProvider.getString(R.string.update_record_success)))
+        }
     }
 }

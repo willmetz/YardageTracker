@@ -24,6 +24,9 @@ abstract class PersonalRecordsDAO {
     @Query("SELECT * FROM `personal-records` WHERE id = :recordID")
     abstract fun getPersonalRecord(recordID: Long): Flow<PersonalRecord>
 
+    @Query("SELECT * FROM `record-time` WHERE id = :id")
+    abstract fun getRecordTime(id: Long): RecordTime?
+
     @Insert
     abstract suspend fun insertPersonalRecord(record: PersonalRecord): Long
 
@@ -44,6 +47,14 @@ abstract class PersonalRecordsDAO {
 
     @Delete
     abstract suspend fun deleteRecordTime(recordTime: RecordTime)
+
+    suspend fun upsertRecordTimes(time: RecordTime) {
+        if (getRecordTime(time.id) != null) {
+            updateRecordTime(time)
+        } else {
+            insertRecordTime(time)
+        }
+    }
 
     suspend fun insertRecordWithTimes(record: PersonalRecord, times: List<RecordTime>) {
         val recordId = insertPersonalRecord(record)
