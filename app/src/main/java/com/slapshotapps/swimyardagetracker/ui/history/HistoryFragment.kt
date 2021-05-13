@@ -2,13 +2,12 @@ package com.slapshotapps.swimyardagetracker.ui.history
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentHistoryBinding
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import dagger.android.support.AndroidSupportInjection
@@ -19,7 +18,7 @@ import javax.inject.Inject
  * Use the [HistoryFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HistoryFragment : Fragment() {
+class HistoryFragment : Fragment(R.layout.fragment_history) {
 
     @Inject
     lateinit var repository: WorkoutRepository
@@ -34,14 +33,10 @@ class HistoryFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        // Inflate the layout for this fragment
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding = FragmentHistoryBinding.bind(view)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         binding?.historyList?.layoutManager = layoutManager
@@ -56,19 +51,10 @@ class HistoryFragment : Fragment() {
                 binding?.historyList?.adapter = WorkoutHistoryAdapter(it)
             }
         })
-
-        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment.
-         *
-         * @return A new instance of fragment HistoryFragment.
-         */
-        @JvmStatic
-        fun newInstance() =
-                HistoryFragment()
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

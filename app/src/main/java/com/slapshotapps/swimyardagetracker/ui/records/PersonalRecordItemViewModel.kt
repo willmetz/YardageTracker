@@ -114,7 +114,7 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
     private fun getMinutes(time: RecordTime): String {
         return when {
             time.minutes <= 0 -> ""
-            else -> String.format("%d:", time.minutes)
+            else -> String.format("%d", time.minutes)
         }
     }
 
@@ -122,14 +122,14 @@ class PersonalRecordItemViewModel(private val eventsWithTimes: PersonalRecordWit
         return when {
             time.seconds <= 0 && time.minutes > 0 -> "00:"
             time.seconds <= 0 -> "00"
-            else -> String.format("%02d:", time.seconds)
+            else -> String.format(":%02d", time.seconds)
         }
     }
 
     private fun getMilliseconds(time: RecordTime): String {
         return when {
             time.milliseconds <= 0 -> ""
-            else -> String.format("%02d", time.milliseconds)
+            else -> String.format(":%02d", time.milliseconds)
         }
     }
 }
