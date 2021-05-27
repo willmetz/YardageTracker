@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.slapshotapps.swimyardagetracker.repositories.PersonalRecordsRepository
+import com.slapshotapps.swimyardagetracker.utils.EventWrapper
 import com.slapshotapps.swimyardagetracker.utils.StringProvider
 import javax.inject.Inject
 import kotlinx.coroutines.*
@@ -31,12 +32,12 @@ class PersonalRecordsViewModel @Inject constructor(
             records
         }.asLiveData()
 
-    private val _confirmDelete = MutableLiveData<DeleteRecord>()
-    val confirmDelete: LiveData<DeleteRecord> = _confirmDelete
+    private val _confirmDelete = MutableLiveData<EventWrapper<DeleteRecord>>()
+    val confirmDelete: LiveData<EventWrapper<DeleteRecord>> = _confirmDelete
 
     fun onDelete(item: PersonalRecordItemViewModel) {
         val record = DeleteRecord("Are you sure you want to delete: ${item.event}", "Confirm Delete", item)
-        _confirmDelete.postValue(record)
+        _confirmDelete.postValue(EventWrapper(record))
     }
 
     fun onConfirmedDelete(item: PersonalRecordItemViewModel) {

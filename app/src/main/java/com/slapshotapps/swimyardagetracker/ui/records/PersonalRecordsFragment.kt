@@ -67,14 +67,17 @@ class PersonalRecordsFragment : Fragment() {
         }
 
         viewModel.confirmDelete.observe(viewLifecycleOwner) {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage(it.msg)
-            builder.setTitle(it.title)
-            builder.setPositiveButton("Yes") { _, _ ->
-                viewModel.onConfirmedDelete(it.itemToDelete)
+
+            it.getContentIfNotHandled()?.let { deleteRecordItem ->
+                val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogCustom)
+                builder.setMessage(deleteRecordItem.msg)
+                builder.setTitle(deleteRecordItem.title)
+                builder.setPositiveButton("Yes") { _, _ ->
+                    viewModel.onConfirmedDelete(deleteRecordItem.itemToDelete)
+                }
+                builder.setNegativeButton("No") { _, _ -> }
+                builder.show()
             }
-            builder.setNegativeButton("No") { _, _ -> }
-            builder.show()
         }
 
         return binding.root

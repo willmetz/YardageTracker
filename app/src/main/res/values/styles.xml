@@ -30,4 +30,13 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="CustomDialogButtonStyle">
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomDialogButtonStyle</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomDialogButtonStyle</item>
+    </style>
+
 </resources>
