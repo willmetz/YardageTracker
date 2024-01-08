@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.util.*
 
-
 class DatabaseTypeConverters {
 
     companion object {
@@ -28,12 +27,11 @@ class DatabaseTypeConverters {
                 return WorkoutUoM.YARDS
             }
 
-            return when(uom){
+            return when (uom) {
                 WorkoutUoM.YARDS.label ->
                     WorkoutUoM.YARDS
                 else ->
                     WorkoutUoM.METERS
-
             }
         }
 
@@ -42,7 +40,5 @@ class DatabaseTypeConverters {
         fun fromWorkoutUofM(workoutUoM: WorkoutUoM): String {
             return workoutUoM.toString()
         }
-
     }
-
 }

@@ -3,8 +3,7 @@ package com.slapshotapps.swimyardagetracker.ui.history
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.widgets.DataBindingBaseAdapter
 
-
-class WorkoutHistoryAdapter(private val workoutSummaryItemViewModels:List<WorkoutSummaryItemViewModel>):
+class WorkoutHistoryAdapter(private val workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>) :
         DataBindingBaseAdapter() {
 
     override fun getObjForPosition(position: Int): Any {

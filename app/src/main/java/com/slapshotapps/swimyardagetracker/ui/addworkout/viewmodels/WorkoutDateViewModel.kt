@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-
 class WorkoutDateViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
 
     interface WorkoutDateViewModelListener {
@@ -17,7 +16,6 @@ class WorkoutDateViewModel @Inject constructor(private val workoutManager: Worko
     private var listener: WorkoutDateViewModelListener? = null
     private val dateFormatter = SimpleDateFormat("MMM d yyyy", Locale.US)
     val formattedWorkoutDate = ObservableField<String>(formatDate())
-
 
     fun setListener(listener: WorkoutDateViewModelListener) {
         this.listener = listener
@@ -36,8 +34,7 @@ class WorkoutDateViewModel @Inject constructor(private val workoutManager: Worko
         formattedWorkoutDate.set(formatDate())
     }
 
-    private fun formatDate(): String{
+    private fun formatDate(): String {
         return dateFormatter.format(workoutManager.workoutDate)
     }
-
 }

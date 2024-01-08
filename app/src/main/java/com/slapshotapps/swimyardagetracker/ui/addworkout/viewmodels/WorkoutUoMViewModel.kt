@@ -6,14 +6,12 @@ import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import javax.inject.Inject
 
-
 class WorkoutUoMViewModel @Inject constructor(private val workoutManager: WorkoutManager) :
         SpinnerItemSelectedListener {
 
     val uomEntries = ObservableField(arrayListOf("Yards", "Meters"))
     var uomValue = "Yards"
     var listener: WorkoutViewModelUoMListener? = null
-
 
     interface WorkoutViewModelUoMListener {
         fun onAddWorkouts()

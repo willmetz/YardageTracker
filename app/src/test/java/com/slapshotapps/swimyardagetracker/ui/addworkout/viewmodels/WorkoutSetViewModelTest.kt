@@ -7,11 +7,11 @@ import com.nhaarman.mockitokotlin2.verify
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 class WorkoutSetViewModelTest {
 
@@ -25,7 +25,7 @@ class WorkoutSetViewModelTest {
     @Test
     fun test_addSetSelectedWithNoRepsSetResultsInErrorMessage() {
 
-        //given
+        // given
         val countDownLatch = CountDownLatch(1)
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.listener = object : WorkoutSetViewModelListenerHelper() {
@@ -38,17 +38,17 @@ class WorkoutSetViewModelTest {
         viewModel.setStroke.set("Free")
         viewModel.setDistance.set("100")
 
-        //when
+        // when
         viewModel.onAddAnotherSetTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(50, TimeUnit.MILLISECONDS))
     }
 
     @Test
     fun test_addSetSelectedWithNoDistanceSetResultsInErrorMessage() {
 
-        //given
+        // given
         val countDownLatch = CountDownLatch(1)
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.listener = object : WorkoutSetViewModelListenerHelper() {
@@ -61,17 +61,17 @@ class WorkoutSetViewModelTest {
         viewModel.setStroke.set("Free")
         viewModel.setReps.set("2")
 
-        //when
+        // when
         viewModel.onAddAnotherSetTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(50, TimeUnit.MILLISECONDS))
     }
 
     @Test
     fun test_addSetSelectedWithNoStrokeSetResultsInErrorMessage() {
 
-        //given
+        // given
         val countDownLatch = CountDownLatch(1)
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.listener = object : WorkoutSetViewModelListenerHelper() {
@@ -84,17 +84,17 @@ class WorkoutSetViewModelTest {
         viewModel.setDistance.set("100")
         viewModel.setReps.set("2")
 
-        //when
+        // when
         viewModel.onAddAnotherSetTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(50, TimeUnit.MILLISECONDS))
     }
 
     @Test
     fun test_goToNextStepWithNoSetsResultsInErrorMessage() {
 
-        //given
+        // given
         val countDownLatch = CountDownLatch(1)
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.listener = object : WorkoutSetViewModelListenerHelper() {
@@ -104,26 +104,26 @@ class WorkoutSetViewModelTest {
             }
         }
 
-        //when
+        // when
         viewModel.onNextTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(50, TimeUnit.MILLISECONDS))
     }
 
     @Test
     fun test_addValidSetClearsInputs() {
 
-        //given
+        // given
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.setDistance.set("100")
         viewModel.setReps.set("2")
         viewModel.setStroke.set("Free")
 
-        //when
+        // when
         viewModel.onAddAnotherSetTapped()
 
-        //then
+        // then
         assert(viewModel.setDistance.get() == "")
         assert(viewModel.setReps.get() == "")
         assert(viewModel.setStroke.get() == "")
@@ -132,7 +132,7 @@ class WorkoutSetViewModelTest {
     @Test
     fun test_addMultipleSetsAndDoneWorks() {
 
-        //given
+        // given
         val viewModel = WorkoutSetViewModel(workoutManager)
         viewModel.setDistance.set("100")
         viewModel.setReps.set("2")
@@ -143,10 +143,10 @@ class WorkoutSetViewModelTest {
         viewModel.setReps.set("3")
         viewModel.setStroke.set("Fly")
 
-        //when
+        // when
         viewModel.onNextTapped()
 
-        //then
+        // then
         argumentCaptor<WorkoutSet>().apply {
 
             verify(workoutManager, times(2)).addWorkoutSet(capture())
@@ -155,7 +155,7 @@ class WorkoutSetViewModelTest {
             assertEquals("Fly", allValues[1].stroke)
         }
 
-        //set info is cleared
+        // set info is cleared
         assertEquals("", viewModel.setDistance.get())
         assertEquals("", viewModel.setReps.get())
         assertEquals("", viewModel.setStroke.get())
@@ -163,27 +163,21 @@ class WorkoutSetViewModelTest {
 
     open class WorkoutSetViewModelListenerHelper() : WorkoutSetViewModel.WorkoutSetViewModelListener {
         override fun onRepsEntryError(resID: Int) {
-
         }
 
         override fun onDistanceEntryError(resID: Int) {
-
         }
 
         override fun onStrokeEntryError(resID: Int) {
-
         }
 
         override fun onShowNoSetErrorMsg(resID: Int) {
-
         }
 
         override fun onValidSetAdded() {
-
         }
 
         override fun onShowWorkoutSummary() {
-
         }
     }
 }

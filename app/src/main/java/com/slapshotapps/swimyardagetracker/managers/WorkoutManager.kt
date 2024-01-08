@@ -5,7 +5,6 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import java.util.*
 
-
 class WorkoutManager {
 
     private val workoutSets = ArrayList<WorkoutSet>()
@@ -14,19 +13,19 @@ class WorkoutManager {
 
     var workoutDate = Date()
 
-    fun addWorkoutSet(workoutSet: WorkoutSet){
+    fun addWorkoutSet(workoutSet: WorkoutSet) {
         workoutSets.add(workoutSet)
     }
 
-    fun clearWorkoutSets(){
+    fun clearWorkoutSets() {
         workoutSets.clear()
     }
 
-    fun getAllWorkoutSets(): List<WorkoutSet>{
+    fun getAllWorkoutSets(): List<WorkoutSet> {
         return workoutSets
     }
 
-    fun getWorkout(): Workout{
+    fun getWorkout(): Workout {
         return Workout(unitOfMeasure, workoutDate, Date())
     }
 }

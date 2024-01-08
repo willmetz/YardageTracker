@@ -20,6 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-ignorewarnings
+
+##Coroutines rule
+-dontwarn kotlinx.coroutines.**
+
 ## Dagger rules
 -dontwarn com.google.errorprone.annotations.**
 

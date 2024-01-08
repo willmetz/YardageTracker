@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -18,7 +17,6 @@ import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSetBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSetViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
-
 
 /**
  * A simple [Fragment] subclass.
@@ -38,14 +36,16 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelLi
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_set, container, false)
         binding.item = viewModel
 
-
         val hintedStrokes = arrayOf("Fly", "Free", "Back", "Breast", "IM", "Kick")
-        val autoCompleteAdapter = ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
+        val autoCompleteAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
 
         binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
 

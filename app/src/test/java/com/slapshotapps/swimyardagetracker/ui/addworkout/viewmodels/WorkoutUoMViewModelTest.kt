@@ -16,7 +16,7 @@ class WorkoutUoMViewModelTest {
     }
 
     @Test
-    fun test_unitOfMeasureYardsSelected(){
+    fun test_unitOfMeasureYardsSelected() {
         val viewModel = WorkoutUoMViewModel(workoutManager)
 
         viewModel.uomValue = WorkoutUoM.YARDS.toString()
@@ -27,7 +27,7 @@ class WorkoutUoMViewModelTest {
     }
 
     @Test
-    fun test_unitOfMeasureMetersSelected(){
+    fun test_unitOfMeasureMetersSelected() {
         val viewModel = WorkoutUoMViewModel(workoutManager)
 
         viewModel.uomValue = WorkoutUoM.METERS.toString()

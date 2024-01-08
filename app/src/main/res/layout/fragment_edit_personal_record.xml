@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/event"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/YardageTracker.Title"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="100 Free"/>
+
+    <View
+        android:id="@+id/yard_time_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event"/>
+
+    <TextView
+        android:id="@+id/yardage_label"
+        style="@style/YardageTracker.Header2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/yardage_record_enabled"
+        app:layout_constraintTop_toBottomOf="@id/yard_time_spacer"
+        android:text="@string/yardage_time"/>
+
+    <CheckBox
+        android:id="@+id/yardage_record_enabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have Record"
+        app:layout_constraintStart_toEndOf="@id/yardage_label"
+        app:layout_constraintTop_toBottomOf="@id/yard_time_spacer"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.slapshotapps.swimyardagetracker.widgets.TimeEntryWidgetView
+        android:id="@+id/yardage_time_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/yardage_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/yardage_date_icon"
+        android:contentDescription="@string/date_for_yardage_record"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yardage_time_entry"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/colorPrimary"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/yardage_date_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintStart_toEndOf="@+id/yardage_date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/yardage_date_icon"
+        android:background="@drawable/bottom_line"
+        tools:targetApi="m" />
+
+    <View
+        android:id="@+id/metric_time_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/yardage_date_icon"/>
+
+    <TextView
+        android:id="@+id/metric_label"
+        style="@style/YardageTracker.Header2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/metric_record_enabled"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_spacer"
+        android:text="@string/metric_time"/>
+
+    <CheckBox
+        android:id="@+id/metric_record_enabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Have Record"
+        app:layout_constraintStart_toEndOf="@id/metric_label"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_spacer"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.slapshotapps.swimyardagetracker.widgets.TimeEntryWidgetView
+        android:id="@+id/metric_time_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/metric_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/metric_date_icon"
+        android:contentDescription="@string/date_for_metric_record"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/metric_time_entry"
+        android:src="@drawable/ic_calendar"
+        app:tint="@color/colorPrimary"
+        android:layout_marginTop="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/metric_date_entry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintStart_toEndOf="@+id/metric_date_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/metric_date_icon"
+        android:background="@drawable/bottom_line"
+        tools:targetApi="m" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        app:layout_constraintTop_toBottomOf="@id/metric_date_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/save"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/metric_date_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cancel"
+        android:text="@string/save"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

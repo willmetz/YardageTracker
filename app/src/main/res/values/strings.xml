@@ -26,4 +26,27 @@
     <string name="next">Next</string>
     <string name="history">History</string>
     <string name="no_history_available">No History Available.</string>
+    <string name="personal_records">Records</string>
+    <string name="home">Home</string>
+    <string name="add_new_personal_record">Add new personal record</string>
+    <string name="save">save</string>
+    <string name="no_records_yet_create_one">No records yet, create one!!</string>
+    <string name="stroke_required">Stroke is required.</string>
+    <string name="distance_required">Distance is required.</string>
+    <string name="unit_of_measure_required">Select unit of measure.</string>
+    <string name="time_required">Please enter a time for the record.</string>
+    <string name="date_required">Date is required</string>
+    <string name="record_already_exists_error">This event already has a record, please edit that record.</string>
+
+    <string name="record_added_success">Added record for %1$d %2$s!!</string>
+    <string name="add_date_of_record">Add Date of Record</string>
+    <string name="metric_time">Metric Time</string>
+    <string name="minutes">Minutes</string>
+    <string name="seconds">Seconds</string>
+    <string name="milliseconds">Milliseconds</string>
+    <string name="yardage_time">Yardage Time</string>
+    <string name="date_for_yardage_record">Date for yardage record</string>
+    <string name="date_for_metric_record">Date for metric record</string>
+    <string name="delete_unavailable">At least one time is required, to delete event use the previous screen</string>
+    <string name="update_record_success">Updated record</string>
 </resources>

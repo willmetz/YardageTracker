@@ -15,8 +15,8 @@
             app:destination="@id/workoutDateFragment"
             app:enterAnim="@anim/nav_default_pop_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
-            app:popUpTo="@+id/homeFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/workoutDateFragment"
@@ -73,4 +73,29 @@
         android:name="com.slapshotapps.swimyardagetracker.ui.history.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/personalRecordsFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.records.PersonalRecordsFragment"
+        android:label="fragment_personal_records"
+        tools:layout="@layout/fragment_personal_records" >
+        <action
+            android:id="@+id/action_personalRecordsFragment_to_addNewPersonalRecordFragment"
+            app:destination="@id/addNewPersonalRecordFragment" />
+        <action
+            android:id="@+id/action_editPersonalRecord"
+            app:destination="@id/editPersonalRecordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNewPersonalRecordFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.records.newRecord.AddNewPersonalRecordFragment"
+        android:label="fragment_add_personal_record"
+        tools:layout="@layout/fragment_add_personal_record" />
+    <fragment
+        android:id="@+id/editPersonalRecordFragment"
+        android:name="com.slapshotapps.swimyardagetracker.ui.records.editRecord.EditPersonalRecordFragment"
+        android:label="fragment_edit_personal_record">
+        <argument
+            android:name="recordToEdit"
+            app:argType="long" />
+    </fragment>
 </navigation>

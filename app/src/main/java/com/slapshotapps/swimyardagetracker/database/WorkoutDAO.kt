@@ -1,12 +1,12 @@
 package com.slapshotapps.swimyardagetracker.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import io.reactivex.Completable
 import io.reactivex.Maybe
-
 
 @Dao
 interface WorkoutDAO {
@@ -26,7 +26,9 @@ interface WorkoutDAO {
     @Query("SELECT COUNT(`workoutDate`) FROM  workouts WHERE workoutDate > :fromTimeStamp")
     fun getWorkoutCountFromDate(fromTimeStamp: Long): Maybe<Int>
 
-    @Query("SELECT w.uoM as uoM, w.workoutDate as workoutDate, s.reps as reps, s.distance as distance, s.stroke as stroke FROM workouts AS w INNER JOIN `workout-sets` as s ON w.id = s.workoutID WHERE workoutDate > :sinceTimeStamp ORDER BY workoutDate DESC")
+    @Query("SELECT w.uoM as uoM, w.workoutDate as workoutDate, s.reps as reps, " +
+        "s.distance as distance, s.stroke as stroke FROM workouts AS w INNER JOIN `workout-sets` as s ON w.id = s.workoutID " +
+        "WHERE workoutDate > :sinceTimeStamp ORDER BY workoutDate DESC")
     fun getWorkoutSetsWithUoMSinceDate(sinceTimeStamp: Long): Maybe<List<WorkoutWithUoM>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -46,4 +48,10 @@ interface WorkoutDAO {
 
     @Delete
     fun delete(workoutSet: WorkoutSet): Completable
+
+    @Query("SELECT * FROM workouts ORDER BY id")
+    fun getWorkouts(): LiveData<List<Workout>>
+
+    @Query("SELECT * FROM `workout-sets` ORDER BY id")
+    fun getWorkoutSets(): LiveData<List<WorkoutSet>>
 }

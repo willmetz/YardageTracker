@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
@@ -18,7 +17,6 @@ import dagger.android.support.AndroidSupportInjection
 import java.util.*
 import javax.inject.Inject
 
-
 /**
  * A simple [Fragment] subclass.
  * Use the [WorkoutDateFragment.newInstance] factory method to
@@ -27,7 +25,6 @@ import javax.inject.Inject
  */
 class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewModelListener,
         DatePickerDialog.OnDateSetListener {
-
 
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var binding: FragmentWorkoutDateBinding
@@ -40,15 +37,17 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
         super.onAttach(context)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_date, container, false)
         viewModel.setListener(this)
         binding.item = viewModel
 
         return binding.root
     }
-
 
     override fun onShowDateSelection(currentWorkoutDate: Date) {
         val calendar = Calendar.getInstance()

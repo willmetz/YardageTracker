@@ -1,5 +1,7 @@
 package com.slapshotapps.swimyardagetracker.repositories
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.slapshotapps.swimyardagetracker.database.WorkoutDatabase
 import com.slapshotapps.swimyardagetracker.models.workout.Workout
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
@@ -7,18 +9,16 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import io.reactivex.Completable
 import io.reactivex.Maybe
-import io.reactivex.functions.BiFunction
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
-
+import kotlin.collections.ArrayList
 
 class WorkoutRepository @Inject constructor(private val workoutDatabase: WorkoutDatabase) {
 
     fun addWorkout(workout: Workout, workoutSets: List<WorkoutSet>): Completable {
         return workoutDatabase.workoutDao().insert(workout)
                 .flatMapCompletable { workoutID ->
-                    //need to set the workout ID to the newly inserted workout for each set
+                    // need to set the workout ID to the newly inserted workout for each set
                     workoutSets.forEach({
                         it.workoutID = workoutID
                     })
@@ -39,22 +39,38 @@ class WorkoutRepository @Inject constructor(private val workoutDatabase: Workout
                 }
     }
 
-    fun getAllWorkoutsWithDetails(): Maybe<List<WorkoutWithDetails>> {
+    fun getWorkoutsWithDetails(): LiveData<List<WorkoutWithDetails>> {
+        val workouts = workoutDatabase.workoutDao().getWorkouts()
+        val workoutSets = workoutDatabase.workoutDao().getWorkoutSets()
 
-        val getAllWorkoutsRequest = workoutDatabase.workoutDao().getAllWorkouts().subscribeOn(Schedulers.io())
+        val allWorkouts = MediatorLiveData<List<WorkoutWithDetails>>()
 
-        val getAllWorkoutSetsRequest = workoutDatabase.workoutDao().getAllWorkoutSets().subscribeOn(Schedulers.io())
+        allWorkouts.addSource(workouts) {
+            allWorkouts.value = buildAllWorkouts(workouts, workoutSets)
+        }
 
-        return Maybe.zip(getAllWorkoutsRequest, getAllWorkoutSetsRequest, BiFunction { allWorkouts, allWorkoutSets ->
+        allWorkouts.addSource(workoutSets) {
+            allWorkouts.value = buildAllWorkouts(workouts, workoutSets)
+        }
 
-            val workoutsWithDetails = ArrayList<WorkoutWithDetails>()
+        return allWorkouts
+    }
 
-            for (workout: Workout in allWorkouts) {
-                workoutsWithDetails.add(WorkoutWithDetails(workout, allWorkoutSets.filter {set -> set.workoutID == workout.id }))
-            }
+    private fun buildAllWorkouts(workoutResult: LiveData<List<Workout>>, setResult: LiveData<List<WorkoutSet>>): List<WorkoutWithDetails> {
+        val workouts = workoutResult.value
+        val sets = setResult.value
 
-            workoutsWithDetails
-        });
+        val allWorkoutInfo = ArrayList<WorkoutWithDetails>()
+
+        if (workouts == null || sets == null) {
+            return allWorkoutInfo
+        }
+
+        for (workout: Workout in workouts) {
+            allWorkoutInfo.add(WorkoutWithDetails(workout, sets.filter { set -> set.workoutID == workout.id }))
+        }
+
+        return allWorkoutInfo
     }
 
     fun getWorkoutsCountSinceDate(fromDate: Date): Maybe<Int> {

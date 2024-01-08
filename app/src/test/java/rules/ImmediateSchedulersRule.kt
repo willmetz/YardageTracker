@@ -6,9 +6,6 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-
-
-
 class ImmediateSchedulersRule : TestWatcher() {
 
     override fun starting(description: Description?) {
@@ -23,7 +20,7 @@ class ImmediateSchedulersRule : TestWatcher() {
     override fun finished(description: Description?) {
         super.finished(description)
 
-        RxJavaPlugins.reset();
-        RxAndroidPlugins.reset();
+        RxJavaPlugins.reset()
+        RxAndroidPlugins.reset()
     }
 }

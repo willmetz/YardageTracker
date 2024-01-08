@@ -10,13 +10,13 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import io.reactivex.Completable
+import java.util.Date
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import rules.ImmediateSchedulersRule
-import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 
 class WorkoutSummaryViewModelTest {
 
@@ -34,9 +34,9 @@ class WorkoutSummaryViewModelTest {
     }
 
     @Test
-    fun test_onWorkoutAddFailure(){
+    fun test_onWorkoutAddFailure() {
 
-        //given
+        // given
         val countDownLatch = CountDownLatch(1)
         whenever(workoutManager.getWorkout()).thenReturn(Workout(WorkoutUoM.YARDS, Date(), Date()))
         whenever(workoutManager.getAllWorkoutSets()).thenReturn(ArrayList<WorkoutSet>())
@@ -45,23 +45,23 @@ class WorkoutSummaryViewModelTest {
 
         whenever(workoutRepository.addWorkout(any(), any())).thenReturn(Completable.error(Throwable()))
 
-        viewModel.listener = object: WorkoutSummaryHelper(){
+        viewModel.listener = object : WorkoutSummaryHelper() {
             override fun onErrorAddingWorkout(msgID: Int) {
                 assert(msgID == R.string.error_adding_workout)
                 countDownLatch.countDown()
             }
         }
 
-        //when
+        // when
         viewModel.onSubmitTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(20, TimeUnit.MILLISECONDS))
     }
 
     @Test
-    fun test_onWorkoutAddSuccess(){
-        //given
+    fun test_onWorkoutAddSuccess() {
+        // given
         val countDownLatch = CountDownLatch(1)
         whenever(workoutManager.getWorkout()).thenReturn(Workout(WorkoutUoM.YARDS, Date(), Date()))
         whenever(workoutManager.getAllWorkoutSets()).thenReturn(ArrayList<WorkoutSet>())
@@ -70,35 +70,30 @@ class WorkoutSummaryViewModelTest {
 
         whenever(workoutRepository.addWorkout(any(), any())).thenReturn(Completable.complete())
 
-        viewModel.listener = object: WorkoutSummaryHelper(){
+        viewModel.listener = object : WorkoutSummaryHelper() {
             override fun onWorkAdded() {
                 countDownLatch.countDown()
             }
         }
 
-        //when
+        // when
         viewModel.onSubmitTapped()
 
-        //then
+        // then
         assert(countDownLatch.await(20, TimeUnit.MILLISECONDS))
     }
 
-
-    open class WorkoutSummaryHelper : WorkoutSummaryViewModel.WorkoutSummaryListener{
+    open class WorkoutSummaryHelper : WorkoutSummaryViewModel.WorkoutSummaryListener {
         override fun onWorkoutDataReady(workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>) {
-
         }
 
         override fun onWorkAdded() {
-
         }
 
         override fun onCancelAdd() {
-
         }
 
         override fun onErrorAddingWorkout(msgID: Int) {
-
         }
     }
 }
