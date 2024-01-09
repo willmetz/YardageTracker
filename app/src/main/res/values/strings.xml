@@ -18,6 +18,7 @@
 
     <string name="error_adding_workout">Unable to add workout, please try again</string>
     <string name="no_workouts">No workouts found</string>
+    <string name="no_workout_data">N/A</string>
     <string name="stroke">Stroke</string>
     <string name="distance">Distance</string>
     <string name="x">X</string>

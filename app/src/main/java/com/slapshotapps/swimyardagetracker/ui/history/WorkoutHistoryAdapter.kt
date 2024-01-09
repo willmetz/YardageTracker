@@ -1,20 +1,34 @@
 package com.slapshotapps.swimyardagetracker.ui.history
 
-import com.slapshotapps.swimyardagetracker.R
-import com.slapshotapps.swimyardagetracker.widgets.DataBindingBaseAdapter
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.slapshotapps.swimyardagetracker.databinding.WorkoutSummaryLineItemBinding
 
 class WorkoutHistoryAdapter(private val workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>) :
-        DataBindingBaseAdapter() {
+    RecyclerView.Adapter<WorkoutHistoryAdapter.WorkoutHistoryViewHolder>() {
 
-    override fun getObjForPosition(position: Int): Any {
-        return workoutSummaryItemViewModels[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutHistoryViewHolder {
+        val binding = WorkoutSummaryLineItemBinding.inflate(LayoutInflater.from(parent.context),
+            parent, false)
+
+        return WorkoutHistoryViewHolder(binding)
     }
 
-    override fun getLayoutIdForPosition(position: Int): Int {
-        return R.layout.workout_summary_line_item
+    override fun onBindViewHolder(holder: WorkoutHistoryViewHolder, position: Int) {
+        holder.onBind(workoutSummaryItemViewModels[position])
     }
 
     override fun getItemCount(): Int {
         return workoutSummaryItemViewModels.size
     }
+
+    inner class WorkoutHistoryViewHolder(private val binding: WorkoutSummaryLineItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+            fun onBind(item: WorkoutSummaryItemViewModel) {
+                binding.workoutDate.text = item.workoutDate
+                binding.workoutDistance.text = item.totalDistanceWithUoM
+                binding.strokesUsed.text = item.workoutStrokes
+            }
+        }
 }

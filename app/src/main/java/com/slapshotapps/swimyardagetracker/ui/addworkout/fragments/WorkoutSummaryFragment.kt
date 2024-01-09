@@ -3,12 +3,9 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,9 +25,9 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummaryListener {
+class WorkoutSummaryFragment : Fragment(R.layout.fragment_workout_summary), WorkoutSummaryViewModel.WorkoutSummaryListener {
 
-    lateinit var binding: FragmentWorkoutSummaryBinding
+    private var binding: FragmentWorkoutSummaryBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutSummaryViewModel
@@ -40,16 +37,14 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_summary, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentWorkoutSummaryBinding.bind(view)
 
-        binding.item = viewModel
+        binding?.workoutDate?.text = viewModel.getWorkoutDate()
 
-        return binding.root
+        binding?.submit?.setOnClickListener { viewModel.onSubmitTapped() }
+        binding?.cancel?.setOnClickListener { viewModel.onCancelTapped() }
     }
 
     override fun onResume() {
@@ -66,9 +61,9 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
         val adapter = WorkoutSummaryAdapter(workoutSummaryItemViewModels)
 
         val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        binding.workoutSets.layoutManager = layoutManager
-        binding.workoutSets.addItemDecoration(DividerItemDecoration(context, layoutManager.getOrientation()))
-        binding.workoutSets.adapter = adapter
+        binding?.workoutSets?.layoutManager = layoutManager
+        binding?.workoutSets?.addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
+        binding?.workoutSets?.adapter = adapter
     }
 
     override fun onWorkAdded() {
@@ -86,8 +81,15 @@ class WorkoutSummaryFragment : Fragment(), WorkoutSummaryViewModel.WorkoutSummar
     }
 
     private fun hideKeyboard() {
-        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.hideSoftInputFromWindow(binding.root.getWindowToken(), 0)
+        binding?.let {
+            val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.hideSoftInputFromWindow(it.root.getWindowToken(), 0)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     companion object {

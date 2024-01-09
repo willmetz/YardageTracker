@@ -3,18 +3,16 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.DatePicker
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutDateBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutDateViewModel
 import dagger.android.support.AndroidSupportInjection
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 /**
@@ -23,11 +21,10 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewModelListener,
-        DatePickerDialog.OnDateSetListener {
+class WorkoutDateFragment : Fragment(R.layout.fragment_workout_date), DatePickerDialog.OnDateSetListener {
 
-    private lateinit var datePickerDialog: DatePickerDialog
-    private lateinit var binding: FragmentWorkoutDateBinding
+    private var datePickerDialog: DatePickerDialog? = null
+    private var binding: FragmentWorkoutDateBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutDateViewModel
@@ -37,24 +34,22 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_date, container, false)
-        viewModel.setListener(this)
-        binding.item = viewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentWorkoutDateBinding.bind(view)
 
-        return binding.root
+        binding?.workoutDate?.setOnClickListener { onShowDateSelection(viewModel.getWorkoutDate()) }
+        binding?.workoutDateLabel?.setOnClickListener { onShowDateSelection(viewModel.getWorkoutDate()) }
+        binding?.addWorkoutButton?.setOnClickListener { onSetWorkoutUoM() }
+        binding?.workoutDate?.text = viewModel.getFormattedWorkoutDate()
     }
 
-    override fun onShowDateSelection(currentWorkoutDate: Date) {
+    private fun onShowDateSelection(currentWorkoutDate: Date) {
         val calendar = Calendar.getInstance()
         calendar.time = currentWorkoutDate
-        datePickerDialog = DatePickerDialog(context!!, this, calendar.get(Calendar.YEAR),
+        datePickerDialog = DatePickerDialog(requireContext(), this, calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-        datePickerDialog.show()
+        datePickerDialog?.show()
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -65,9 +60,10 @@ class WorkoutDateFragment : Fragment(), WorkoutDateViewModel.WorkoutDateViewMode
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
         viewModel.onDateChanged(calendar.time)
+        binding?.workoutDate?.text = viewModel.getFormattedWorkoutDate()
     }
 
-    override fun onSetWorkoutUoM() {
+    private fun onSetWorkoutUoM() {
         NavHostFragment.findNavController(this).navigate(R.id.action_workoutDateFragment_to_workoutUnitOfMeasure)
     }
 

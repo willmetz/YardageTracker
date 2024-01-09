@@ -2,14 +2,14 @@ package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutUnitOfMeasureBinding
+import com.slapshotapps.swimyardagetracker.extensions.SpinnerItemSelectedListener
+import com.slapshotapps.swimyardagetracker.extensions.setSpinnerEntries
+import com.slapshotapps.swimyardagetracker.extensions.setSpinnerItemSelectedListener
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutUoMViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
@@ -20,9 +20,9 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutViewModelUoMListener {
+class WorkoutUnitOfMeasureFragment : Fragment(R.layout.fragment_workout_unit_of_measure), SpinnerItemSelectedListener {
 
-    lateinit var binding: FragmentWorkoutUnitOfMeasureBinding
+    private var binding: FragmentWorkoutUnitOfMeasureBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutUoMViewModel
@@ -30,29 +30,37 @@ class WorkoutUnitOfMeasureFragment : Fragment(), WorkoutUoMViewModel.WorkoutView
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
         super.onAttach(context)
-
-        viewModel.listener = this
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_unit_of_measure, container, false)
+        binding = FragmentWorkoutUnitOfMeasureBinding.bind(view)
+        binding?.uom?.setSpinnerEntries(viewModel.uomEntries)
+        binding?.uom?.setSpinnerItemSelectedListener(this)
 
-        binding.item = viewModel
-
-        return binding.root
+        binding?.previous?.setOnClickListener { onChangeDate() }
+        binding?.next?.setOnClickListener { onAddWorkouts() }
     }
 
-    override fun onAddWorkouts() {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+    private fun onAddWorkouts() {
+        viewModel.onNext()
         NavHostFragment.findNavController(this).navigate(R.id.action_workoutUnitOfMeasure_to_workoutSetFragment)
     }
 
-    override fun onChangeDate() {
+    private fun onChangeDate() {
         NavHostFragment.findNavController(this).popBackStack()
+    }
+
+    override fun onItemSelected(item: Any) {
+        if (item is String) {
+            viewModel.uomValue = item
+        }
     }
 
     companion object {

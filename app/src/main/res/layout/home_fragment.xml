@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="item"
-            type="com.slapshotapps.swimyardagetracker.ui.home.HomeViewModel"/>
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/home"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
 
         <TextView
             android:id="@+id/last_workout_label"
@@ -35,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{item.lastWorkoutDate}"
             app:layout_constraintEnd_toStartOf="@+id/yardage"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +37,6 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.lastWorkoutDistance}"
             app:layout_constraintBottom_toBottomOf="@+id/workout_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/workout_date"
@@ -83,7 +72,6 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.yearWorkoutCount}"
             app:layout_constraintBottom_toBottomOf="@+id/workout_count_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/workout_count_label"
@@ -107,24 +95,21 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.workoutDistanceForYear}"
             app:layout_constraintBottom_toBottomOf="@+id/total_yardage_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/total_yardage_label"
             tools:text="4000"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_workout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="12dp"
             app:fabSize="normal"
-            android:onClick="@{()->item.onAddWorkoutTapped()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_add"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
