@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/seconds"
+        android:background="@android:color/transparent"
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -23,6 +24,7 @@
             android:id="@+id/minutesInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:inputType="number"
             android:nextFocusDown="@+id/yardage_secondsInput"
             android:maxLines="1"
@@ -37,6 +39,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/minutes"
         app:layout_constraintEnd_toStartOf="@+id/milliseconds"
+        android:background="@android:color/transparent"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
@@ -48,6 +51,7 @@
             android:id="@+id/secondsInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:nextFocusDown="@+id/yardage_millisecondsInput"
             android:maxLines="1"
             android:inputType="number"
@@ -60,6 +64,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/milliseconds"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toEndOf="@+id/seconds"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -71,6 +76,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/millisecondsInput"
+            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"

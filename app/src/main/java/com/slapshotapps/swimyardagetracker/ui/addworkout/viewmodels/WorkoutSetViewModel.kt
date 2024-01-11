@@ -1,14 +1,12 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
-import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutSet
-import com.slapshotapps.swimyardagetracker.utils.KeyboardActionButtonListener
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
-class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) : KeyboardActionButtonListener {
+class WorkoutSetViewModel @Inject constructor(private val workoutManager: WorkoutManager) {
 
     interface WorkoutSetViewModelListener {
         fun onRepsEntryError(resID: Int)
@@ -19,30 +17,19 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
         fun onShowWorkoutSummary()
     }
 
-    val setReps = ObservableField<String>("")
-    val setDistance = ObservableField<String>("")
-    val setStroke = ObservableField<String>("")
-
     var listener: WorkoutSetViewModelListener? = null
 
     private val workoutSets = ArrayList<WorkoutSet>()
 
-    fun onAddAnotherSetTapped() {
-        addAnotherSet()
-    }
-
-    fun onNextTapped() {
-        val workout = getSetInfo()
-
-        clearSetInfo()
-
-        if (workout != null) {
-            workoutSets.add(workout)
+    fun onNextTapped(reps: String, distance: String, stroke: String): Boolean {
+        if ((reps.toIntOrNull() ?: -1) > 0 && (distance.toIntOrNull() ?: -1) > 0 && stroke.isNotBlank()) {
+            val set = WorkoutSet(reps.toIntOrNull() ?: 0, distance.toIntOrNull() ?: 0, stroke, Date())
+            workoutSets.add(set)
         }
 
         if (workoutSets.isEmpty()) {
             listener?.onShowNoSetErrorMsg(R.string.no_data_entered_msg)
-            return
+            return false
         }
 
         workoutManager.clearWorkoutSets()
@@ -51,52 +38,35 @@ class WorkoutSetViewModel @Inject constructor(private val workoutManager: Workou
         }
 
         listener?.onShowWorkoutSummary()
+
+        return true
     }
 
-    override fun onDoneSelected() {
-        addAnotherSet()
-    }
-
-    private fun addAnotherSet() {
-        val workout = getSetInfo()
-
-        if (workout == null) {
-            return
-        }
+    fun addAnotherSet(reps: String, distance: String, stroke: String) {
+        val workout = getSetInfo(reps, distance, stroke) ?: return
 
         workoutSets.add(workout)
 
         listener?.onValidSetAdded()
-
-        clearSetInfo()
     }
 
-    private fun getSetInfo(): WorkoutSet? {
-        val reps = setReps.get()?.toIntOrNull() ?: 0
-        val distance = setDistance.get()?.toIntOrNull() ?: 0
-        val stroke = setStroke.get() ?: ""
+    private fun getSetInfo(reps: String, distance: String, stroke: String): WorkoutSet? {
 
-        if (reps <= 0) {
+        if ((reps.toIntOrNull() ?: -1) < 0) {
             listener?.onRepsEntryError(R.string.rep_invalid_entry)
             return null
         }
 
-        if (distance <= 0) {
+        if ((distance.toIntOrNull() ?: -1) < 0) {
             listener?.onDistanceEntryError(R.string.distance_invalid_entry)
             return null
         }
 
-        if (stroke.isEmpty()) {
+        if (stroke.isBlank()) {
             listener?.onStrokeEntryError(R.string.stroke_invalid_entry)
             return null
         }
 
-        return WorkoutSet(reps, distance, stroke, Date())
-    }
-
-    private fun clearSetInfo() {
-        setDistance.set("")
-        setReps.set("")
-        setStroke.set("")
+        return WorkoutSet(reps.toIntOrNull() ?: 0, distance.toIntOrNull() ?: 0, stroke, Date())
     }
 }

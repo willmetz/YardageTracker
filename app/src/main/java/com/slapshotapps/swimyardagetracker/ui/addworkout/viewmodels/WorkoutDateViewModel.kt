@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
-import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,25 +12,14 @@ class WorkoutDateViewModel @Inject constructor(private val workoutManager: Worko
         fun onSetWorkoutUoM()
     }
 
-    private var listener: WorkoutDateViewModelListener? = null
     private val dateFormatter = SimpleDateFormat("MMM d yyyy", Locale.US)
-    val formattedWorkoutDate = ObservableField<String>(formatDate())
 
-    fun setListener(listener: WorkoutDateViewModelListener) {
-        this.listener = listener
-    }
+    fun getWorkoutDate() = workoutManager.workoutDate
 
-    fun onDateTapped() {
-        listener?.onShowDateSelection(workoutManager.workoutDate)
-    }
-
-    fun onAddWorkoutInfoTapped() {
-        listener?.onSetWorkoutUoM()
-    }
+    fun getFormattedWorkoutDate() = formatDate()
 
     fun onDateChanged(newDate: Date) {
         workoutManager.workoutDate = newDate
-        formattedWorkoutDate.set(formatDate())
     }
 
     private fun formatDate(): String {

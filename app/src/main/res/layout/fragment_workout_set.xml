@@ -1,127 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.addworkout.fragments.WorkoutSetFragment">
 
-    <data>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:nextFocusRight="@+id/distance"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/x_symbol"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@android:color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".2">
 
-        <variable
-            name="item"
-            type="com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSetViewModel"/>
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.addworkout.fragments.WorkoutSetFragment">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/reps"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/reps_input"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:nextFocusRight="@+id/distance"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/x_symbol"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".2">
+            android:background="@android:color/transparent"
+            android:hint="@string/reps"
+            android:imeOptions="actionNext"
+            android:inputType="number" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/reps"
-                android:inputType="number"
-                android:imeOptions="actionNext"
-                android:text="@={item.setReps}"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/x_symbol"
+        style="@style/Base.TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/x_character"
+        app:layout_constraintBottom_toBottomOf="@+id/reps"
+        app:layout_constraintEnd_toStartOf="@+id/distance"
+        app:layout_constraintStart_toEndOf="@+id/reps"
+        app:layout_constraintTop_toTopOf="@+id/reps" />
 
-        <TextView
-            android:id="@+id/x_symbol"
-            style="@style/Base.TextAppearance.AppCompat.Medium"
-            android:layout_width="wrap_content"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:nextFocusRight="@id/stroke"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/reps"
+        app:layout_constraintEnd_toStartOf="@+id/stroke"
+        app:layout_constraintStart_toEndOf="@+id/x_symbol"
+        app:layout_constraintTop_toTopOf="@+id/reps">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/distance_input"
+            android:background="@android:color/transparent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/x_character"
-            app:layout_constraintBottom_toBottomOf="@+id/reps"
-            app:layout_constraintEnd_toStartOf="@+id/distance"
-            app:layout_constraintStart_toEndOf="@+id/reps"
-            app:layout_constraintTop_toTopOf="@+id/reps"/>
+            android:hint="@string/distance"
+            android:imeOptions="actionNext"
+            android:inputType="number" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:nextFocusDown="@+id/next"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/reps"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/distance">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/stoke_autocomplete_view"
+            android:layout_width="120dp"
+            android:hint="@string/stroke"
+            android:background="@android:color/transparent"
+            android:layout_height="60dp"
+            android:completionThreshold="1"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:nextFocusRight="@id/stroke"
-            app:layout_constraintBottom_toBottomOf="@+id/reps"
-            app:layout_constraintEnd_toStartOf="@+id/stroke"
-            app:layout_constraintStart_toEndOf="@+id/x_symbol"
-            app:layout_constraintTop_toTopOf="@+id/reps">
+    <Button
+        android:id="@+id/add_another"
+        style="@style/YardageTracker.Secondary.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:nextFocusForward="@id/reps"
+        android:text="@string/add_another_set"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".35" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/distance"
-                android:inputType="number"
-                android:imeOptions="actionNext"
-                android:text="@={item.setDistance}"/>
+    <Button
+        android:id="@+id/next"
+        style="@style/YardageTracker.Primary.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_another" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/stroke"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:nextFocusDown="@+id/next"
-            app:layout_constraintBottom_toBottomOf="@+id/reps"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/distance"
-            app:layout_constraintTop_toTopOf="@+id/reps">
-
-            <AutoCompleteTextView
-                android:id="@+id/stoke_autocomplete_view"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/stroke"
-                android:completionThreshold="1"
-                android:inputType="text"
-                app:onKeyboardActionButton="@{item}"
-                android:imeOptions="actionDone"
-                android:text="@={item.setStroke}"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/add_another"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/YardageTracker.Secondary.Button"
-            android:onClick="@{() -> item.onAddAnotherSetTapped()}"
-            android:text="@string/add_another_set"
-            android:nextFocusForward="@id/reps"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".35"/>
-
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            style="@style/YardageTracker.Primary.Button"
-            android:onClick="@{() -> item.onNextTapped()}"
-            android:text="@string/next"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add_another"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

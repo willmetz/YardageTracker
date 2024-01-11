@@ -1,21 +1,35 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.adapters
 
-import com.slapshotapps.swimyardagetracker.R
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.slapshotapps.swimyardagetracker.databinding.WorkoutLineItemBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSummaryItemViewModel
-import com.slapshotapps.swimyardagetracker.widgets.DataBindingBaseAdapter
 
 class WorkoutSummaryAdapter(private val workoutSummaryItemViewModels: List<WorkoutSummaryItemViewModel>) :
-        DataBindingBaseAdapter() {
+        RecyclerView.Adapter<WorkoutSummaryAdapter.WorkoutSummaryViewHolder>() {
 
-    override fun getObjForPosition(position: Int): Any {
-        return workoutSummaryItemViewModels[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutSummaryViewHolder {
+        val binding = WorkoutLineItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return WorkoutSummaryViewHolder(binding)
     }
 
-    override fun getLayoutIdForPosition(position: Int): Int {
-        return R.layout.workout_line_item
+    override fun onBindViewHolder(holder: WorkoutSummaryViewHolder, position: Int) {
+        holder.onBind(workoutSummaryItemViewModels[position])
     }
 
     override fun getItemCount(): Int {
         return workoutSummaryItemViewModels.size
+    }
+
+    inner class WorkoutSummaryViewHolder(private val binding: WorkoutLineItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+            fun onBind(model: WorkoutSummaryItemViewModel) {
+                binding.reps.text = model.getReps()
+                binding.distance.text = model.getDistance()
+                binding.stroke.text = model.stroke
+                binding.uom.text = model.uom
+            }
     }
 }

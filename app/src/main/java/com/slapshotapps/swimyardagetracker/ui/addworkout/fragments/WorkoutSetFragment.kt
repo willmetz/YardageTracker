@@ -1,15 +1,12 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.view.KeyEvent
 import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
@@ -24,9 +21,9 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelListener {
+class WorkoutSetFragment : Fragment(R.layout.fragment_workout_set), WorkoutSetViewModel.WorkoutSetViewModelListener {
 
-    private lateinit var binding: FragmentWorkoutSetBinding
+    private var binding: FragmentWorkoutSetBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutSetViewModel
@@ -36,59 +33,81 @@ class WorkoutSetFragment : Fragment(), WorkoutSetViewModel.WorkoutSetViewModelLi
         super.onAttach(context)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_workout_set, container, false)
-        binding.item = viewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        binding = FragmentWorkoutSetBinding.bind(view)
         val hintedStrokes = arrayOf("Fly", "Free", "Back", "Breast", "IM", "Kick")
-        val autoCompleteAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_dropdown_item_1line, hintedStrokes)
+        val autoCompleteAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, hintedStrokes)
+        binding?.stokeAutocompleteView?.setAdapter(autoCompleteAdapter)
 
-        binding.stokeAutocompleteView.setAdapter(autoCompleteAdapter)
+        binding?.next?.setOnClickListener {
+            val reps = binding?.repsInput?.text.toString()
+            val distance = binding?.distanceInput?.text.toString()
+            val stroke = binding?.stokeAutocompleteView?.text.toString()
+            viewModel.onNextTapped(reps, distance, stroke)
+        }
 
-        return binding.root
+        binding?.addAnother?.setOnClickListener {
+            val reps = binding?.repsInput?.text.toString()
+            val distance = binding?.distanceInput?.text.toString()
+            val stroke = binding?.stokeAutocompleteView?.text.toString()
+            viewModel.addAnotherSet(reps, distance, stroke)
+        }
+
+        binding?.stokeAutocompleteView?.setOnEditorActionListener { textView, action, keyEvent ->
+            if (keyEvent?.keyCode == KeyEvent.KEYCODE_ENTER || action == EditorInfo.IME_ACTION_DONE) {
+                val reps = binding?.repsInput?.text.toString()
+                val distance = binding?.distanceInput?.text.toString()
+                val stroke = binding?.stokeAutocompleteView?.text.toString()
+                viewModel.addAnotherSet(reps, distance, stroke)
+                true
+            } else false
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        binding.reps.requestFocus()
-        val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
-        imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
-
+        binding?.reps?.requestFocus()
         viewModel.listener = this
     }
 
     override fun onPause() {
         super.onPause()
-
         viewModel.listener = null
     }
 
     override fun onRepsEntryError(resID: Int) {
-        binding.reps.error = getString(resID)
+        binding?.reps?.error = getString(resID)
     }
 
     override fun onDistanceEntryError(resID: Int) {
-        binding.distance.error = getString(resID)
+        binding?.distance?.error = getString(resID)
     }
 
     override fun onStrokeEntryError(resID: Int) {
-        binding.stroke.error = getString(resID)
+        binding?.stroke?.error = getString(resID)
     }
 
     override fun onShowNoSetErrorMsg(resID: Int) {
-        Toast.makeText(context!!, resID, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), resID, Toast.LENGTH_SHORT).show()
     }
 
     override fun onValidSetAdded() {
-        binding.reps.error = null
-        binding.distance.error = null
-        binding.stroke.error = null
+        binding?.let {
+            it.reps.error = null
+            it.distance.error = null
+            it.stroke.error = null
+            it.repsInput.text = null
+            it.distanceInput.text = null
+            it.stokeAutocompleteView.text = null
+            it.reps.requestFocus()
+        }
+    }
 
-        binding.reps.requestFocus()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onShowWorkoutSummary() {

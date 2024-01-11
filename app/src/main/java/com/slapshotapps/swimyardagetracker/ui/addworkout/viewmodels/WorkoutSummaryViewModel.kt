@@ -1,13 +1,14 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels
 
 import androidx.annotation.StringRes
-import androidx.databinding.ObservableField
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.managers.WorkoutManager
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 class WorkoutSummaryViewModel @Inject constructor(
@@ -25,7 +26,11 @@ class WorkoutSummaryViewModel @Inject constructor(
     var listener: WorkoutSummaryListener? = null
     private var disposables: CompositeDisposable? = null
 
-    val workoutDateText = ObservableField<String>("")
+    private val dateFormatter = SimpleDateFormat("MMM d yyyy", Locale.US)
+
+    fun getWorkoutDate(): String {
+        return runCatching { dateFormatter.format(workoutManager.workoutDate) }.getOrNull() ?: ""
+    }
 
     fun onViewReady() {
         disposables = CompositeDisposable()
@@ -33,9 +38,9 @@ class WorkoutSummaryViewModel @Inject constructor(
 
         val viewModels = ArrayList<WorkoutSummaryItemViewModel>(data.size)
 
-        data.forEach({
+        data.forEach {
             viewModels.add(WorkoutSummaryItemViewModel(it, workoutManager.unitOfMeasure.toString()))
-        })
+        }
 
         listener?.onWorkoutDataReady(viewModels)
     }
