@@ -1,7 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
 import android.app.DatePickerDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.DatePicker
@@ -10,7 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutDateBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutDateViewModel
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -21,18 +20,13 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutDateFragment : Fragment(R.layout.fragment_workout_date), DatePickerDialog.OnDateSetListener {
+class WorkoutDateFragment : DaggerFragment(R.layout.fragment_workout_date), DatePickerDialog.OnDateSetListener {
 
     private var datePickerDialog: DatePickerDialog? = null
     private var binding: FragmentWorkoutDateBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutDateViewModel
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
-        super.onAttach(context)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

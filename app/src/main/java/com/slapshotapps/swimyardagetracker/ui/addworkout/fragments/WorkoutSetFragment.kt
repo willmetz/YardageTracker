@@ -1,6 +1,5 @@
 package com.slapshotapps.swimyardagetracker.ui.addworkout.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentWorkoutSetBinding
 import com.slapshotapps.swimyardagetracker.ui.addworkout.viewmodels.WorkoutSetViewModel
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 /**
@@ -21,17 +20,12 @@ import javax.inject.Inject
  * create an instance of this fragment.
  *
  */
-class WorkoutSetFragment : Fragment(R.layout.fragment_workout_set), WorkoutSetViewModel.WorkoutSetViewModelListener {
+class WorkoutSetFragment : DaggerFragment(R.layout.fragment_workout_set), WorkoutSetViewModel.WorkoutSetViewModelListener {
 
     private var binding: FragmentWorkoutSetBinding? = null
 
     @Inject
     lateinit var viewModel: WorkoutSetViewModel
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
-        super.onAttach(context)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
