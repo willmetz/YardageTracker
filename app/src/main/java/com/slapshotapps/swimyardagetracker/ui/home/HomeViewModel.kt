@@ -5,10 +5,10 @@ import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithDetails
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutWithUoM
 import com.slapshotapps.swimyardagetracker.repositories.WorkoutRepository
-import io.reactivex.Maybe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Maybe
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
     private val _homeScreenEffect: MutableSharedFlow<HomeEffect> = MutableSharedFlow()
     val homeScreenEffect: SharedFlow<HomeEffect> = _homeScreenEffect.asSharedFlow()
 
-    private var disposables: CompositeDisposable ? = null
+    private var disposables: CompositeDisposable? = null
     private var homeScreenData: HomeScreenData ? = null
 
     private data class HomeScreenData(

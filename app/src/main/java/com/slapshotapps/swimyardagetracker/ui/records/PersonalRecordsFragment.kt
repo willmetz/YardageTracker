@@ -1,7 +1,6 @@
 package com.slapshotapps.swimyardagetracker.ui.records
 
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.slapshotapps.swimyardagetracker.R
 import com.slapshotapps.swimyardagetracker.databinding.FragmentPersonalRecordsBinding
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 /**
@@ -23,7 +21,7 @@ import javax.inject.Inject
  * Use the [PersonalRecordsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PersonalRecordsFragment : Fragment() {
+class PersonalRecordsFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModel: PersonalRecordsViewModel
@@ -34,11 +32,6 @@ class PersonalRecordsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

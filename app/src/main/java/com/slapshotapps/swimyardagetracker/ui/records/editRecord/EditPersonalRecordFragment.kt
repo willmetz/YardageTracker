@@ -10,15 +10,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
+import com.slapshotapps.swimyardagetracker.SwimYardageTrackerApp
 import com.slapshotapps.swimyardagetracker.databinding.FragmentEditPersonalRecordBinding
 import com.slapshotapps.swimyardagetracker.models.personalrecords.YardageTrackerRecordTime
 import com.slapshotapps.swimyardagetracker.models.workout.WorkoutUoM
 import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class EditPersonalRecordFragment : Fragment() {
+class EditPersonalRecordFragment : DaggerFragment() {
 
     private var _binding: FragmentEditPersonalRecordBinding? = null
     private val binding get() = _binding!!
@@ -27,11 +29,6 @@ class EditPersonalRecordFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: EditPersonalRecordViewModel
-
-    override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this) // Providing the dependency, must call before super
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
