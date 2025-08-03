@@ -15,15 +15,15 @@ android {
         applicationId = "com.slapshotapps.swimyardagetracker"
         minSdk = 29
         targetSdk = 35
-        versionCode = 8
-        versionName = "1.4"
+        versionCode = 9
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
     implementation(libs.reactiverx.android)
+    implementation(libs.androidx.core)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
