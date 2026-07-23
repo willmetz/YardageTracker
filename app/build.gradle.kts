@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.slapshotapps.swimyardagetracker"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.slapshotapps.swimyardagetracker"
         minSdk = 29
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 9
         versionName = "1.6"
 
