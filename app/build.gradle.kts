@@ -10,14 +10,14 @@ plugins {
 
 android {
     namespace = "com.slapshotapps.swimyardagetracker"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.slapshotapps.swimyardagetracker"
         minSdk = 29
         targetSdk = 36
-        versionCode = 9
-        versionName = "1.6"
+        versionCode = 10
+        versionName = "1.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,6 +25,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
