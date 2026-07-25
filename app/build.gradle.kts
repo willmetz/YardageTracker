@@ -1,22 +1,23 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp.plugin)
-    alias(libs.plugins.kapt.plugin)
     alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
     namespace = "com.slapshotapps.swimyardagetracker"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.slapshotapps.swimyardagetracker"
         minSdk = 29
-        targetSdk = 35
-        versionCode = 9
-        versionName = "1.6"
+        targetSdk = 36
+        versionCode = 10
+        versionName = "1.7"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,6 +25,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,9 +36,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
     }
+
     buildFeatures {
         compose = true
         viewBinding = true
@@ -59,8 +64,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation(libs.google.dagger)
     implementation(libs.google.dagger.android.support)
-    kapt(libs.google.dagger.compiler)
-    kapt(libs.google.dagger.android)
+    ksp(libs.google.dagger.compiler)
+    ksp(libs.google.dagger.android)
     implementation(libs.androidx.room.rxjava3)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.runtime)
